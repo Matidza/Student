@@ -1,0 +1,32 @@
+ <!--
+        <div class="btn btn-primary" style="
+            margin-top:65%;
+            margin-left: 83%;
+            height: 61px;width: 59px;
+            border-radius: 15px;
+            border-radius: 15px;        
+            text-align: center;
+            ">
+            
+            <a href="{{ url_for('modules')}}">
+                  <h3 style="
+                  text-align: center;
+                margin-left: 6px;
+                margin-top: 8px;
+                width: 18.88px;
+                height: 32.85px;
+                transform: scaleX(-1) rotate(180deg);
+                 font-size: medium;
+                                  
+                                  font-style: normal;
+                                  font-family: sans-serif;
+                                  color: #ffffff;
+               
+                font-size: 26px;
+                font-weight: 900;
+                text-align: center;
+                
+                ">+</h3>
+            </a>
+            
+        </div>-->

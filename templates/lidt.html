@@ -1,0 +1,101 @@
+<br/><br/>
+                <br/><br/>
+                <br/><br/>
+                <br/><br/>
+
+                <br/>
+                    <!-- This selects a specific item in the list-->
+                    <h5>
+                        This selects a specific item in the list
+                    </h5>
+                    <div>
+                        <h5>car name: {{ cars.0 }}</h5>
+                    </div>
+
+                    <br/>
+                    <h5>
+                        This displays all item in a single list
+                    </h5>
+                    <div>
+                        <h5>car name: {{ cars }}</h5>
+                    </div>   
+                    <h5>
+                        This displays all items in the list in list form
+                    </h5>
+                     {% for car in cars %}
+                            
+                                <div>
+                                    <h5>car is: {{ car}}</h5> 
+                                </div>  <br/>
+                    {%endfor%}
+                    <br/>
+                    <br/>
+                    <!--I you want to display a specificiten in a list
+                    or DB, also include if statements-->
+                    <h5>
+                        If you want to display a specific item in a 
+                    DB, also include if statements
+                    </h5>
+                    {% for user in user_info %}
+                        {% if user.username == 'patrick' %}
+                            <div>
+                                <h5>Name: {{ user.name}}</h5>
+                            </div>
+                            <div>
+                                <h5>Surname: {{ user.surname}}</h5>
+                            </div>
+                        {% endif %}
+                    {%endfor%}
+
+                    {% for user in user_info %}
+                            
+                                <div>
+                                    <h5>{{ user.name|lower}}</h5>
+                                    <h5>{{ user.surname|upper}}</h5>
+                                </div>  <br/>
+                        {%endfor%}
+
+
+
+
+                        form = RegisterForm()
+    update_user = Users.query.get_or_404(id)
+    if request.method == 'POST':
+        update_user.username = request.form['username']
+        update_user.title = request.form['title']
+        update_user.surname = request.form['surname']
+        update_user.name = request.form['name']
+        update_user.initials = request.form['initials']
+        update_user.degree = request.form['degree']
+        update_user.campus = request.form['campus']
+        update_user.student = request.form['student']
+        update_user.password_hash = request.form['password_hash']
+        try:
+            # Validate on submit Username and Student number on update before updaing
+            db.session.commit()
+            flash('User Account Updated Successfully !')
+            return redirect(url_for('dashboard'))
+        except Exception as e:
+            flash('To-do Update was Mot Successful !')
+            return render_template('update.html', form=form, update_user=update_user)
+    else:
+
+        return render_template('update.html', form=form, update_user=update_user)
+
+        <!--We can also use the variable definded 
+                                in the def delete handler( delete_user= delete_user)
+                                in the action="(/delete/{{ delete_user.id }})"-->
+
+                                @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute!!')
+    
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return bcrypt.check_password_hash(self.password_hash.encode('utf-8'), password.encode('utf-8'))
+    
+    def __repr__(self):
+        return 'Name %r' % self.id 
