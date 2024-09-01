@@ -131,9 +131,7 @@ We welcome contributions from the community! If you'd like to contribute to the 
 
 If you have any questions or suggestions, feel free to reach out:
 
-- **Email:** [your.email@example.com](matidza.mukwevho.z@gmail.com)
-- **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/muwevho-m-z/)
+- **Email:** [matidza.mukwevho.z@gmail.com](matidza.mukwevho.z@gmail.com)
+- **Portfolio:** [https://matidza.w3spaces.com/index.html](https://matidza.w3spaces.com/index.html)
 
----
 
-This version includes detailed instructions for setting up the project in Visual Studio Code and guidelines for contributing to the project. Be sure to replace placeholder information with your actual details.
