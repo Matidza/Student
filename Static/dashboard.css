@@ -111,14 +111,47 @@ a {
 /* ========= SMALL SCREENS ===========*/
 @media screen and (min-width: 428px){
     /* ========= Home Page( home.html) ===========*/
-    .content{
-        max-width: 90%;
+    .container{
+        margin-left: 5%;
+        
         margin: 0 auto;
         padding: 20px;
-        position: center;
-        
+        position: absolute;  
         background-color: rgb(255, 252, 252);
-        
+    }
+    
+
+    .module-item{
+        position: relative;
+        cursor: pointer;
+        max-width: 900px;
+        max-height: 26%;
+         
+        background-color: rgb(255, 252, 252);
+    }
+    .header {
+        display: flex;
+        justify-content: space-between; /* Space between module name and icon */
+        align-items: center; /* Center align items vertically */
+    }
+    .dropdown-content {
+        position: absolute;
+        color: #007bff;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        /* Position the dropdown content 5px below the icon */
+        top: 100%;
+        right: 0;
+        margin-top: 1px; /* 5px gap below the icon */
+        width:90px; /* Adjust width as needed */
+    }
+    .open-dropdown {
+        /* Optional: change the color or style of the icon when dropdown is open */
+        color: #007bff; /* Example color change */
     }
 }
 

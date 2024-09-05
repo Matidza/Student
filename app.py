@@ -7,6 +7,8 @@ from wtforms.validators import  Length, ValidationError, DataRequired, EqualTo, 
 from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
+from datetime import datetime
+from flask_login import current_user
 
 app = Flask(__name__)
 # Postgre SQL Connection
@@ -71,7 +73,8 @@ class Vaal(db.Model):
     Session  = db.Column(db.Text)
     Duration = db.Column(db.Text)
     Venue = db.Column(db.Text)
-    Students = db.Column(db.Text)    
+    Students = db.Column(db.Text)
+      
 
 
 
@@ -217,8 +220,10 @@ def register():
                             title=form.title.data , surname=form.surname.data,
                             initials=form.initials.data, degree=form.degree.data,
                             name=form.name.data, campus=form.campus.data)
+            # Register user to DB
             db.session.add(new_user)
             db.session.commit()
+            # return a message 
             flash('Form was submited successfully!')
             return redirect(url_for('login'))
         except Exception as e:
@@ -229,11 +234,13 @@ def register():
         return render_template('register.html', form=form)
 
 
-
+# User DashBoard
 @app.route('/dashboard', methods=["GET","POST"])
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    
+    modules = UserModules.query.filter_by(user_id=UserModules.user_id).all()
+    return render_template('dashboard.html', modules=modules)
 
 # Delete User Account
 @app.route('/delete/<id>', methods=['GET', 'POST'])
@@ -245,10 +252,10 @@ def delete(id):
         db.session.commit()
         flash('Account Deleted Successfully !')
         return redirect('login')
-        
     except:
-        flash('Account Deletion Not Successful !')
-        return render_template('dashboard.html', current_user=current_user)
+            flash('Accont Deletion Not Successful !')
+            return render_template('dashboard.html')
+    
 
 # Update User Account
 @app.route('/update/<id>', methods=['GET', 'POST'])
@@ -278,14 +285,105 @@ def update(id):
 
         return render_template('update.html', form=form, current_user=current_user)
     
+# Create Model for Notes
+class UserModules(db.Model):
+    __tablename__ = 'UserModules'
+    id = db.Column(db.Integer, primary_key=True)
+    module_id = db.Column(db.Integer, db.ForeignKey('vaal.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    Vaal = db.relationship('Vaal', backref='Vaal')
+    users= db.relationship('Users', backref='Users')
 
+    
+    
 
 # Add Modules To User DashBoard
 @app.route('/modules', methods=['GET', 'POST'])
 @login_required
 def modules():
+    if request.method == 'POST':
+        module_id = request.form.get('module_id')
+        user_id = request.form.get('user_id')
+        new_user_module = UserModules(module_id=module_id, user_id=user_id)
+        db.session.add(new_user_module)
+        db.session.commit()
+        flash('Module added successfully!')
+        return redirect(url_for('dashboard'))  # or wherever you want to redirect
     all_modules = Vaal.query.order_by(Vaal.Module)
     return render_template('modules.html', all_modules=all_modules)
+    #all_modules = Vaal.query.order_by(Vaal.Module) # I use Vaal.Module and not Vaal.id since Vaal.Module will be Alphabetic order
+    
+    #if request.method == 'POST':
+    #    selected_modules = request.form.getlist('Vaal.id')
+
+      #  for module_id in selected_modules:
+      #      # Check if the module is already added to the user's dashboard
+      #      existing_module = UserModules.query.filter_by(user_id=current_user.id, module_id=module_id).first()
+      #      if not existing_module:
+       #         user_module = UserModules(user_id=current_user.id, module_id=module_id)
+      #          db.session.add(user_module)
+
+     #   db.session.commit()
+    #    flash('Modules added to your dashboard!', 'success')
+    #    return redirect(url_for('dashboard'))
+
+   # return render_template('modules.html', all_modules=all_modules)
+
+
+# Individual Module
+@app.route('/module', methods=['GET', 'POST'])
+@login_required
+def module():
+    
+    return render_template('module.html')
+# Delete Individual Module
+@login_required
+@app.route('/deletemod/<id>', methods=['GET', 'POST'])
+def deletemod(id):
+    if request.method == "POST":
+
+        delete = UserModules.query.get_or_404(id)
+        try:
+            db.session.delete(delete)
+            db.session.commit()
+            flash('Module Deleted!')
+            return redirect(url_for('dashboard'))
+        except Exception as e:
+            flash('Module Not Deleted !')
+            return f"ERROR:{e}"
+   
+
+
+# Notes Model
+# Later You should Link this table To each particular Module
+class Notes:
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    title = db.Column(db.String(500), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    module = db.Column(db.String(50), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+# Add Notes to Modele
+@app.route('/notes', methods=['GET', 'POST'])
+@login_required
+def notes():
+    all_notes = Notes.query.order_by(Notes.id)
+    return render_template('modules.html', all_notes=all_notes)
+
+
+# Delete Notes to Modele
+@app.route('/delete_notes/<id>', methods=['GET', 'POST'])
+@login_required
+def delete_notes():
+    all_notes = Notes.query.order_by(Notes.id)
+    return render_template('modules.html', all_notes=all_notes)
+
+# Update  Notes to Modele
+@app.route('/update_notes/<id>', methods=['GET', 'POST'])
+@login_required
+def update_notes(id):
+    all_notes = Notes.query.order_by(Notes.id)
+    return render_template('modules.html', all_notes=all_notes)
 
 if __name__ == "__main__":
     with app.app_context():
