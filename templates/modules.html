@@ -15,83 +15,35 @@
     <title>Modules</title>
   </head>
 <body class="body">
-    <div class="first__div">
-        <div class="container p-3 mb-2 bg-light text-dark">
+ 
+    <div class="container p-3 mb-2 bg-light text-dark">
+        <!-- Form Inline placed above the contain class -->
+        <form class="form-inline">
+            <a class="register" href="{{ url_for('dashboard')}}" >
+                <h2><i class="uil uil-arrow-left"></i></h2>
+            </a>
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
 
-            <form class="form-inline">
-                <a class="register" href="{{ url_for('dashboard')}}" >
-                    <h2><i  class="uil uil-arrow-left"></i></h2>
-                </a>
-                <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        
+        <!-- Contain class starts here -->
+        <div class="contain border border-white p-3 mb-2 bg-white text-dark shadow p-3 mb-5 bg-white rounded">
+            <form method="POST" id="moduleForm">
+                <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+                <input type="hidden" id="module_id" name="module_id" value="">
+
+                {% for module in all_modules %}
+                    <div class="clickable-div" onclick="submitModule('{{ module.id }}')">
+                        <!-- Module details -->
+                        <h4>{{ module.Module }}</h4>
+                        <i class="h4">students: {{ module.Students }}</i>
+                        <hr>
+                    </div>
+                {% endfor %}
             </form>
-    
-            <br>
-            <div class="contain border border-white p-3 mb-2 bg-white text-dark shadow p-3 mb-5 bg-white rounded" >
-
-                <!--<form method="POST">
-                    <label for="module_id">Select a module:</label>
-                    <br>
-                    <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-
-                    <select id="module_id" name="module_id">
-                        {% for module in modules %}
-                            <option value="{{ module.id }}">{{ module.Module }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="Add Module">
-                </form>-->
-
-                <!--<form method="POST">
-                    {% for module in all_modules %}
-                        <div  class="" style="width: 370px; margin-top:10px;">
-                        <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-                            <input type="radio"  id="module_id"  name="module_id" value="{{ module.id }}" 
-                            onchange="this.form.submit()" required>
-                            <h4><b>{{ module.Module }}</b></h4>
-                            <i>students:</i> {{ module.Students }}
-                            <br>
-                            <button type="submit">Add to Dashboard</button>
-                            <hr>
-                        </div>
-                    {% endfor %}
-                    
-                </form>-->
-                <!--<form method="POST" id="moduleForm">
-                    <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-                    <input type="hidden" id="module_id" name="module_id" value="">
-
-                    {% for module in all_modules %}
-                        <div class="" style="width: 370px; margin-top: 10px;">
-                            
-                            <h4><b>{{ module.Module }}</b></h4>
-                            <i>students:</i> {{ module.Students }}
-                            <br>
-                            
-                            <button type="button" onclick="submitModule('{{ module.id }}')">Add to Dashboard</button>
-                            <hr>
-                        </div>
-                    {% endfor %}
-                </form>-->
-
-                <form method="POST" id="moduleForm">
-                    <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-                    <input type="hidden" id="module_id" name="module_id" value="">
-
-                    {% for module in all_modules %}
-                        <div class="clickable-div" onclick="submitModule('{{ module.id }}')">
-                            <!-- Module details -->
-                            <h4>{{ module.Module }}</h4>
-                            <i class="h4">students: {{ module.Students }}</i>
-                            <hr>
-                        </div>
-                    {% endfor %}
-                </form>
-            </div>         
-        </div>
+        </div>         
     </div>
-
-
 
 
     <script>

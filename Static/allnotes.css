@@ -83,6 +83,7 @@ html {
     scroll-behavior: smooth;
 }
 
+/* General Styles */
 .body {
     font-family: 'Poppins', sans-serif;
     background-color: rgb(247, 247, 247);
@@ -103,6 +104,7 @@ html {
     color: hsl(216, 8%, 15%); /* Adjust the title color */
     font-weight: 350; /* Semi-bold font weight */
 }
+
 
 /* The <a> tag (back button) styles */
 .dropdown-item {
@@ -156,4 +158,69 @@ html {
 .btn-danger {
     background-color: #dc3545;
     color: white;
+}
+
+/* Media Queries */
+
+/* For small devices (max-width: 491px) */
+@media (max-width: 491px) {
+    .header {
+        flex-direction: row; /* Keep items in a row */
+        justify-content: space-between; /* Align items to the far left and right */
+        align-items: center; /* Center align items vertically */
+        padding: 5px 0; /* Reduce padding */
+    }
+
+    .header h4 {
+        font-size: 1rem; /* Adjust font size */
+    }
+
+    .dropdown-item {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+
+    .module-item {
+        padding: 0.75rem; /* Reduce padding */
+    }
+
+    .dropdown-content {
+        width: 100px; /* Adjust width for smaller screens */
+    }
+}
+
+/* For larger devices (min-width: 492px) */
+@media (min-width: 492px) {
+    .module-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width and fit */
+        gap: 1rem; /* Space between grid items */
+        padding: 0 1rem; /* Optional: padding inside the container */
+    }
+
+    .module-item {
+        /* Ensure the module item takes full width in the grid cell */
+        width: 100%;
+        max-width: none; /* Remove any max-width if set */
+    }
+    .header {
+        flex-direction: row; /* Align items in a row */
+        align-items: center; /* Align items in the center */
+        padding: 10px 0; /* Default padding */
+    }
+
+    .header h4 {
+        font-size: 1.25rem; /* Default font size */
+    }
+
+    .dropdown-item {
+        font-size: 1.25rem; /* Default font size */
+    }
+
+    .module-item {
+        padding: 1rem; /* Default padding */
+    }
+
+    .dropdown-content {
+        width: 120px; /* Adjust width for larger screens */
+    }
 }

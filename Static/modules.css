@@ -110,173 +110,214 @@ a {
 
        
 
-/* ========= SMALL SCREENS ===========*/
-@media screen and (min-width: 300px){
-    /* ========= Home Page( home.html) ===========*/
-    .first__div {
-        max-width: 1000px;
-        margin: 0 auto;
-         /* Add this */
-    } 
-    .contain{
-        
-        margin: 0 ;
-        padding: 20px;
-        position: absolute;  
-        background-color: rgb(255, 252, 252);
-        max-width: 130px;
-        max-height: 750px; 
-        overflow-y:auto;
-        border-radius: 8px;
-        border: 1.5px solid white;
+/* Default styles for small screens (max-width: 491px) */
+.container {
+    display: flex;
+    justify-content: center; /* Horizontally center the container */
+    align-items: center;     /* Vertically center the container */
+    flex-direction: column;  /* Stack the items vertically */
+    min-height: 100vh;       /* Make sure it takes the full height of the viewport */
+    margin: 0 auto;          /* Ensure the container is centered horizontally */
+}
+
+.contain {
+    margin: 0;
+    padding: 20px;
+    position: relative;  /* Changed to relative */
+    background-color: rgb(255, 252, 252);
+    max-width: 130px;
+    max-height: 750px; 
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1.5px solid white;
+    margin-top: 10px;  /* Adds a 5px gap above the contain div */
+}
+
+.clickable-div {
+    margin-left: 20px;
+    width: 370px;
+    margin-top: 10px;
+    cursor: pointer;
+    font: var(--body-font);
+    font-family: var(--body-font);
+    font-size: var(--small-font-size);
+    font-weight: var(--font-small);
+}
+
+.register {
+    margin-left: 10px;
+}
+
+.uil {
+    width: 10px;
+    height: 10px;
+}
+
+.form-control {
+    max-width: 150px;
+    margin-left: 45px;
+}
+
+.btn {
+    margin-left: 15px;
+}
+
+.h4 {
+    color: grey;
+    margin-left: 5px;
+}
+.form-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgb(255, 252, 252);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Link styles */
+.form-inline a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-inline a:hover {
+    text-decoration: underline;
+}
+
+/* Input field styles */
+.form-inline .form-control {
+    flex: 1;
+    margin: 0 10px;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* Button styles */
+.form-inline .btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 1rem;
+}
+
+.form-inline .btn:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
+
+/* Styles for larger screens (min-width: 492px) */
+@media (min-width: 492px) {
+    .contain {
+        max-width: 100%;
+        max-height: 750px;
+        padding: 30px;
+        border-radius: 10px;
+        border: 2px solid white;
     }
-    .clickable-div{
+
+    .clickable-div {
+        margin-left: 40px;
+        width: 450px;
+        font-size: 1rem; /* Increase font size for larger screens */
+        margin-top: 15px;
+    }
+
+    .register {
         margin-left: 20px;
     }
-    .register{
-        margin-left:10px;
+
+    .uil {
+        width: 15px;
+        height: 15px;
     }
-    .uil{
-        width:10px;
-        height:10px;
+
+    .form-control {
+        max-width: 200px;
+        margin-left: 100px;
     }
-    .form-control{
-        max-width:150px;
-        margin-left:75px;
+
+    .btn {
+        margin-left: 20px;
     }
-    .btn{
-        margin-left:15px;
+
+    .h4 {
+        font-size: 1.25rem; /* Larger font size for larger screens */
+        margin-left: 10px;
     }
-    .clickable-div{
-        width: 370px; 
-        margin-top: 10px; 
-        cursor: pointer;
-        font: var(--body-font);
-        font-family: var(--body-font);
-        font-size: var(--small-font-size);
-        font-weight: var(--font-small);
+    .form-inline {
+        padding: 15px; /* More padding for larger screens */
+        justify-content: space-between; /* Ensure proper spacing */
     }
-    .contain{
-        
-        margin: 0 ;
-        padding: 20px;
-        position: absolute;  
-        background-color: rgb(255, 252, 252);
-        
-        max-width: 470px;
-        max-height: 750px; 
-        overflow-y:auto;
-        border-radius: 8px;
-        border: 1.5px solid white;  
+
+    .form-inline .form-control {
+        margin: 0 15px; /* More spacing between elements */
+        max-width: 300px; /* Set a max-width for larger screens */
     }
-    .h4{
-        
-        color: grey;
+
+    .form-inline .btn {
+        padding: 10px 20px; /* Larger padding for the button */
+        font-size: 1.1rem; /* Slightly larger font size */
+    }
+    
+}
+
+/* Styles for extra small screens (max-width: 491px) */
+@media (max-width: 491px) {
+    .contain {
+        max-width: 100%;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid white;
+    }
+
+    .clickable-div {
+        margin-left: 10px;
+        width: 320px;
+        font-size: 0.85rem; /* Smaller font size for small screens */
+        margin-top: 5px;
+    }
+
+    .register {
         margin-left: 5px;
     }
 
-}
+    .uil {
+        width: 8px;
+        height: 8px;
+    }
 
+    .form-control {
+        max-width: 170px;
+        margin-left: 30px;
+    }
 
-/* ========= MEDIUM SCREENS ===========*/
-@media screen and (min-width: 600px){
-    .first__div{
-        max-width: 1000px;
-        margin: 0 auto;
-        margin-left: 32%;
-    }
-    .register{
-        margin-left:10px;
-    }
-    .uil{
-        width:10px;
-        height:10px;
-    }
-    .form-control{
-        max-width:200px;
-        margin-left:75px;
-    }
-    .btn{
-        margin-left:15px;
-    }
-    .clickable-div{
-        width: 370px; 
-        margin-top: 10px; 
-        cursor: pointer;
-        font: var(--body-font);
-        font-family: var(--body-font);
-        font-size: var(--small-font-size);
-        font-weight: var(--font-small);
-    }
-    .contain{
-        
-        margin: 0 ;
-        padding: 20px;
-        position: absolute;  
-        background-color: rgb(255, 252, 252);
-        
-        max-width: 470px;
-        max-height: 750px; 
-        overflow-y:auto;
-        border-radius: 8px;
-        border: 1.5px solid white;  
-    }
-    .h4{
-        
-        color: grey;
+    
+
+    .h4 {
+        font-size: 1rem; /* Smaller font size for small screens */
         margin-left: 5px;
     }
+    .form-inline {
+        flex-direction: column; /* Stack items vertically */
+        align-items: stretch; /* Stretch items to full width */
+        padding: 10px; /* Padding for small screens */
+    }
 
-}
+    .form-inline .form-control {
+        margin: 5px 0; /* Vertical margin for stacking */
+        width: 100%; /* Full width input */
+        margin-left: 45px;
+    }
 
-
-/* ============= LARGE DISPLAY =======*/
-@media screen and (min-width: 764px){
-    .first__div{
-        max-width: 1000px;
-        margin: 0 auto;
-        margin-left: 32%;
-    }
-    .register{
-        margin-left:10px;
-    }
-    .uil{
-        width:10px;
-        height:10px;
-    }
-    .form-control{
-        max-width:200px;
-        margin-left:75px;
-    }
-    .btn{
-        margin-left:15px;
-    }
-    .clickable-div{
-        width: 370px; 
-        margin-top: 10px; 
-        cursor: pointer;
-        font: var(--body-font);
-        font-family: var(--body-font);
-        font-size: var(--small-font-size);
-        font-weight: var(--font-small);
-    }
-    .contain{
+    .form-inline .btn {
+        width: 25%; /* Full width button */
+        margin-top: 3px; /* Space between input and button */
+        padding: 10px; /* Adjust padding for better fit */
         
-        margin: 0 ;
-        padding: 20px;
-        position: absolute;  
-        background-color: rgb(255, 252, 252);
-        
-        max-width: 470px;
-        max-height: 750px; 
-        overflow-y:auto;
-        border-radius: 8px;
-        border: 1.5px solid white;  
-    }
-    .h4{
-        
-        color: grey;
-        margin-left: 5px;
     }
 }
-  

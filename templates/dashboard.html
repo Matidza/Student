@@ -16,7 +16,7 @@
   </head>
   <body class="body">
     
-    <div class="first__div">
+    
     <div class="container">
     <!--===== Nav Bar =======-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary bold">
@@ -119,6 +119,8 @@
             <a href="{{ url_for('allnotes') }}">
                 Notes
             </a>
+               
+            <div class="module-container">
                 {% for module in modules %}
                 {% if current_user.id == module.user_id %}
                     <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
@@ -130,14 +132,14 @@
                             <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
                         </div>
 
-                        <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}"> 
+                        <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}">
                         <h6>
                             Date: {{ module.Vaal.Date }}<br>
                             Start: {{ module.Vaal.Session }}<br>
                             Venue: {{ module.Vaal.Venue }}<br>
                             Students: {{ module.Vaal.Students }}
                         </h6>
-                       </a>
+                    </a>
                         <!-- Dropdown Content (Initially Hidden) -->
                         <div class="dropdown-content" style="display: none;">
                             <form method="POST"  action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
@@ -146,8 +148,9 @@
                         </div>
                     </div>
                 {% endif %}
-                
                 {% endfor %}
+            </div>
+
             <!-- Add Module Button -->
             <br>
             
@@ -155,8 +158,8 @@
                     <button class="link navbar-expand-lg navbar-dark bg-primary bold border  border-9 rounded-lg  "  >+</button>
                 </a>           
         </div>    
-    </div>
-    </div>
+   
+    </div> 
      <script>
         function toggleDropdown(icon) {
             // Find the closest dropdown-content within the same module-item

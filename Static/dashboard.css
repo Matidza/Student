@@ -107,110 +107,147 @@ ul {
 a {
     text-decoration: none;
 }
+/* General Styles */
+.module-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust minmax value to set column width */
+    gap: 15px; /* Space between grid items */
+}
 
-       
+/* Ensure module-item fits well within grid cells */
+.module-item {
+    background-color: rgb(255, 252, 252);
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 
+/* Other General Styles */
+.username {
+    margin-left: 30px;
+}
 
+.contain {
+    margin: 0 auto;
+    padding: 20px;
+    position: absolute;
+    background-color: rgb(255, 252, 252);
+    max-height: 270px;
+}
 
+.contain__image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
 
-/* ============= LARGE DISPLAY =======*/
+.image {
+    width: 100px;
+    height: 120px;
+}
 
-    .first__div{
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-   
-    .username{
-        margin-left: 30px;
-    }
-    .contain{
-        margin-left:auto;
-        margin-right: auto;
-        margin-left: 10%;
-        margin: 0 ;
-        padding: 20px;
-        position: absolute;  
-        background-color: rgb(255, 252, 252);
-        max-height: 270px; 
-        
-        
-    }
-    .contain__image{
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        margin-right: 20px;
-    }
-    .image{
-        width: 100px; 
-        height: 120px;
-    }
-    .contain__info{
-        flex: 1; 
-        display: flex; 
-        flex-direction: column; 
-        justify-content: center;
-        color: var(--text-color);
+.contain__info {
+    margin-left: 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--text-color);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between; /* Space between module name and icon */
+    align-items: center; /* Center align items vertically */
+}
+
+.dropdown-content {
+    position: absolute;
+    color: #007bff;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    top: 100%;
+    right: 0;
+    margin-top: 1px; /* 5px gap below the icon */
+    width: 90px; /* Adjust width as needed */
+}
+
+.open-dropdown {
+    color: #007bff; /* Example color change */
+}
+
+.link {
+    color: rgba(255, 255, 255, 0.86);
+    left: 0;
+    top: 0;
+    width: 59px;
+    height: 61px;
+    border-radius: 25px;
+    background: #105be8;
+    background-blend-mode: normal;
+}
+
+.nav {
+    height: 61px;
+    max-width: 59px;
+    transform: scaleX(-1) rotate(180deg);
+    z-index: 1;
+    font: var(--body-font);
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: -700px;
+    margin-left: 500px;
+    text-align: center;
+    position: fixed;
+    display: center;
+}
+
+/* Media Queries */
+@media (max-width: 491px) {
+    /* Styles for small devices */
+    .contain {
+        margin-left: 2%;
+        padding: 10px;
+        max-width: 430px;
     }
     
+    .username {
+        margin-left: 10px;
+    }
+    
+    .module-container {
+        grid-template-columns: 1fr; /* Single column layout on very small screens */
+    }
+    
+    .nav {
+        margin-top: 0;
+        margin-left: 10px;
+    }
+}
 
-    .module-item{
-        position: relative;
-        cursor: pointer;
-        max-width: 900px;
-        max-height: 26%;
-         
-        background-color: rgb(255, 252, 252);
+@media (min-width: 492px) {
+    /* Styles for larger devices */
+    .contain {
+        margin-left: 1%;
+        max-width: 450px;
     }
-    .header {
-        display: flex;
-        justify-content: space-between; /* Space between module name and icon */
-        align-items: center; /* Center align items vertically */
+    
+    .username {
+        margin-left: 30px;
     }
-    .dropdown-content {
-        position: absolute;
-        color: #007bff;
-        background-color: white;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 10;
-        /* Position the dropdown content 5px below the icon */
-        top: 100%;
-        right: 0;
-        margin-top: 1px; /* 5px gap below the icon */
-        width:90px; /* Adjust width as needed */
+    
+    .module-container {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Two columns or more depending on screen width */
     }
-    .open-dropdown {
-        /* Optional: change the color or style of the icon when dropdown is open */
-        color: #007bff; /* Example color change */
-    }
-    .link{
-        color: rgba(255,255,255,0.86);
-        left: 0px;
-        top: 0px;
-        width: 59px;
-        height: 61px;
-        border-radius: 25px;
-        background: #105be8;
-        background-blend-mode: normal;
-    }
-    .nav{
-        height: 61px; 
-        max-width:59px;
-        transform: scaleX(-1) rotate(180deg);
-        z-index:1;
-        font: var(--body-font);
-        font-family: var(--body-font);
-        font-size: 30px;
-        font-weight: 700;
+    
+    .nav {
         margin-top: -700px;
         margin-left: 500px;
-        text-align: center;
-        position: fixed;
-        display: center;
     }
+}
 
-        
-        

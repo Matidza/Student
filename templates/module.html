@@ -51,7 +51,7 @@
             <!-- Exam Info -->
             <div class="info-section">
                 <h4 class="info-title">
-                  Exam
+                  Examination
                   
                 </h4>
                 <div class="info-details">
@@ -68,7 +68,7 @@
                   <button type="submit" class="btn btn-primary">Notes+</button>
               </a>
           </div>
-          
+          <div class="module-container">
           {% for note in notes %}
             {% if current_user.id == note.user_id %}
             <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
@@ -92,6 +92,7 @@
             </div>
             {% endif %}
           {% endfor %}
+          </div>
 
           <!-- Dropdown Content (Initially Hidden) -->
           <div class="dropdown-content" style="display: none;">

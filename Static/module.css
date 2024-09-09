@@ -82,53 +82,53 @@ body.dark-theme{
 html {
     scroll-behavior: smooth;
 }
-
+/* General Styles */
 .body {
     font-family: 'Poppins', sans-serif;
     background-color: rgb(247, 247, 247);
-    color: hsl(216, 8%, 45%); /* text color */
+    color: hsl(216, 8%, 45%);
 }
-/* Info Section */
+.module-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout for small screens */
+    gap: 1rem; /* Gap between grid items */
+}
+
 .info-section {
     margin-bottom: var(--mb-1);
 }
 
-/* Info Title */
 .info-title {
-    font:var(--body-font);
+    font: var(--body-font);
     font-weight: 500;
     font-size: 1.5rem;
     margin-bottom: var(--mb-0-5);
-    color: var(--title-color); /* Use title color variable */
+    color: var(--title-color);
     display: flex;
     align-items: center;
     cursor: pointer;
-    font-size: var(--h3-font-size); /* Use font size variable */
+    font-size: var(--h3-font-size);
 }
 
-/* Info Details */
 .info-details {
     display: none;
-    background-color: var(--container-color); /* Use container color variable */
+    background-color: var(--container-color);
     padding: var(--mb-1);
-    border-radius: 5px; /* Optional for better aesthetics */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional for a subtle shadow */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Active State for Info Section */
 .info-section.active .info-details {
     display: block;
 }
 
-/* Info Details Paragraphs */
 .info-details p {
     margin: var(--mb-0-5) 0;
-    color: var(--text-color); /* Use text color variable */
+    color: var(--text-color);
 }
 
-/* Info Details Links */
 .info-details a {
-    color: var(--first-color); /* Use primary color variable */
+    color: var(--first-color);
     text-decoration: none;
 }
 
@@ -136,51 +136,44 @@ html {
     text-decoration: underline;
 }
 
-/* Add a down arrow to the info-title */
 .info-title::after {
-    content: '\f078'; /* Font Awesome chevron-down icon */
-    font-family: 'Font Awesome 5 Free'; /* Font Awesome 5 Free for solid icons */
-    font-weight: 900; /* Required for solid icons */
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
     margin-left: var(--mb-0-5);
     transition: transform 0.3s ease;
 }
 
-/* Rotate arrow on active state */
 .info-section.active .info-title::after {
     transform: rotate(180deg);
 }
 
-
-/* Ensure full width for header container */
 .header-align-right {
     display: flex;
-    justify-content: flex-end; /* Align items to the right */
-    margin-top: 1rem; /* Add margin if needed for spacing */
+    justify-content: flex-end;
+    margin-top: 1rem;
 }
 
 .header {
     display: flex;
-    justify-content: space-between;  /* Align items to the left and right */
-    align-items: center;             /* Vertically align the items */
-    width: 100%;                     /* Make sure the header takes full width */
-    padding: 10px 0; 
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
 }
 
 .header h4 {
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(216, 8%, 15%); /* Adjust the title color */
-    font-weight: 350; /* Semi-bold font weight */
+    margin: 0;
+    color: hsl(216, 8%, 15%);
+    font-weight: 350;
 }
 
-
-/* The <a> tag (back button) styles */
 .dropdown-item {
     display: flex;
     align-items: center;
-    font-size: 1.25rem; /* Adjust font size */
+    font-size: 1.25rem;
 }
 
-/* Module item container styling */
 .module-item {
     cursor: pointer;
     background-color: rgb(255, 252, 252);
@@ -188,6 +181,7 @@ html {
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Ensure text inside is left-aligned */
 }
 
 .module-item .header {
@@ -207,7 +201,6 @@ html {
     z-index: 10;
 }
 
-/* Button styles */
 .btn {
     display: inline-block;
     font-size: 0.875rem;
@@ -225,4 +218,80 @@ html {
 .btn-danger {
     background-color: #dc3545;
     color: white;
+}
+
+/* Media Queries */
+
+/* Styles for small devices (max-width: 491px) */
+@media (max-width: 491px) {
+    .info-title {
+        font-size: 1.2rem; /* Adjust title size for small screens */
+    }
+    
+    .info-details {
+        padding: 10px; /* Adjust padding */
+    }
+    
+    .header {
+       justify-content: space-between; /* Ensure alignment even on smaller screens */
+        padding: 0; /* Remove extra padding */
+        align-items: flex-start; /* Align the content to the top left */ 
+    }
+    
+    .header h4 {
+        font-size: 1rem; /* Adjust font size */
+    }
+
+    .module-item {
+        padding: 0.75rem; /* Reduce padding */
+        margin-bottom: 0.75rem;
+    }
+
+    .dropdown-content {
+        width: 100px; /* Adjust dropdown width */
+    }
+
+    .btn {
+        font-size: 0.75rem; /* Adjust button font size */
+        padding: 0.4rem 0.75rem; /* Adjust button padding */
+    }
+}
+
+/* Styles for larger devices (min-width: 492px) */
+@media (min-width: 492px) {
+     .module-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for larger screens */
+    }
+    .info-title {
+        font-size: 1.5rem; /* Default font size */
+    }
+
+    .info-details {
+        padding: 15px; /* Default padding */
+    }
+
+    .header {
+        flex-direction: row; /* Horizontal header */
+        align-items: center; /* Center items vertically */
+        padding: 10px 0;
+        
+    }
+
+    .header h4 {
+        font-size: 1.25rem; /* Default font size */
+    }
+
+    .module-item {
+        padding: 1rem; /* Default padding */
+        margin-bottom: 1rem;
+    }
+
+    .dropdown-content {
+        width: 120px; /* Default width */
+    }
+
+    .btn {
+        font-size: 0.875rem; /* Default font size */
+        padding: 0.5rem 1rem; /* Default padding */
+    }
 }

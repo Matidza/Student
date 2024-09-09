@@ -41,7 +41,7 @@
                 
             </a>
         </div>
-
+        <div class="module-container">
         {% for note in notes %}
           {% if current_user.id == note.user_id%}
           <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
@@ -68,7 +68,7 @@
             </div>
           </div>
         {% endfor%}
-       
+        </div>
         
 
     </div> 
