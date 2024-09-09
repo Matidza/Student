@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <link rel="stylesheet" href='{{ url_for('static', filename='module.css')}}'>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,7 +17,7 @@
   <title>Module</title>
 </head>
 
-<body>
+<body class='body'>
 
 
   <div class="container">
@@ -34,32 +36,39 @@
           </div>
 
           <!-- Lecturer Info -->
-          <h6>Lecturer</h6>
-          <h6>
-            Mr. Smith J.E <br>
-            Smith@gmail.com<br>
-            Building A8<br>
-            Office 210<br>
-          </h6>
+            <div class="info-section" >
+                <h3 class="info-title">
+                  Lecturer
+                </h3>
+                <div class="info-details">
+                    <h6>Mr. Smith J.E</h6>
+                    <h6>Email: <a href="mailto:Smith@gmail.com">Smith@gmail.com</a></h6>
+                    <h6>Building A8</h6>
+                    <h6>Office 210</h6>
+                </div>
+            </div>
 
-          <!-- Exam Info -->
-          <h6>Exam</h6>
-          <h6>
-            Date: {{ module.Vaal.Date }}<br>
-            Start: {{ module.Vaal.Session }}<br>
-            Venue: {{ module.Vaal.Venue }}<br>
-            Students: {{ module.Vaal.Students }}
-          </h6>
-
-          <br>
+            <!-- Exam Info -->
+            <div class="info-section">
+                <h4 class="info-title">
+                  Exam
+                  
+                </h4>
+                <div class="info-details">
+                    <h6>Date: {{ module.Vaal.Date }}</h6>
+                    <h6>Start: {{ module.Vaal.Session }}</h6>
+                    <h6>Venue: {{ module.Vaal.Venue }}</h6>
+                    <h6>Students: {{ module.Vaal.Students }}</h6>
+                </div>
+            </div>
+        
           <!-- Add Notes Button -->
           <div class="header-align-right">
               <a href="{{ url_for('notesform') }}">
-                  <button type="submit" class="btn btn-primary btn-sm">Notes+</button>
+                  <button type="submit" class="btn btn-primary">Notes+</button>
               </a>
           </div>
-          <br>
-
+          
           {% for note in notes %}
             {% if current_user.id == note.user_id %}
             <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
@@ -110,6 +119,19 @@
           }
         }
   </script> 
+  <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const infoTitles = document.querySelectorAll('.info-title');
+
+            infoTitles.forEach(title => {
+                title.addEventListener('click', () => {
+                    const infoSection = title.parentElement;
+                    // Toggle the active class to show/hide the details
+                    infoSection.classList.toggle('active');
+                });
+            });
+        });
+    </script>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -83,11 +83,74 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
+.body {
     font-family: 'Poppins', sans-serif;
-    background-color: rgb(239, 239, 239);
+    background-color: rgb(247, 247, 247);
     color: hsl(216, 8%, 45%); /* text color */
 }
+/* Info Section */
+.info-section {
+    margin-bottom: var(--mb-1);
+}
+
+/* Info Title */
+.info-title {
+    font:var(--body-font);
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: var(--mb-0-5);
+    color: var(--title-color); /* Use title color variable */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: var(--h3-font-size); /* Use font size variable */
+}
+
+/* Info Details */
+.info-details {
+    display: none;
+    background-color: var(--container-color); /* Use container color variable */
+    padding: var(--mb-1);
+    border-radius: 5px; /* Optional for better aesthetics */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional for a subtle shadow */
+}
+
+/* Active State for Info Section */
+.info-section.active .info-details {
+    display: block;
+}
+
+/* Info Details Paragraphs */
+.info-details p {
+    margin: var(--mb-0-5) 0;
+    color: var(--text-color); /* Use text color variable */
+}
+
+/* Info Details Links */
+.info-details a {
+    color: var(--first-color); /* Use primary color variable */
+    text-decoration: none;
+}
+
+.info-details a:hover {
+    text-decoration: underline;
+}
+
+/* Add a down arrow to the info-title */
+.info-title::after {
+    content: '\f078'; /* Font Awesome chevron-down icon */
+    font-family: 'Font Awesome 5 Free'; /* Font Awesome 5 Free for solid icons */
+    font-weight: 900; /* Required for solid icons */
+    margin-left: var(--mb-0-5);
+    transition: transform 0.3s ease;
+}
+
+/* Rotate arrow on active state */
+.info-section.active .info-title::after {
+    transform: rotate(180deg);
+}
+
+
 /* Ensure full width for header container */
 .header-align-right {
     display: flex;

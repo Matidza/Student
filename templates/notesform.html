@@ -14,18 +14,11 @@
 
     <title>Notes</title>
   </head>
-  <body>
+  <body class="body" style="font-family: 'Poppins', sans-serif;
+    background-color: rgb(239, 239, 239);
+    color: hsl(216, 8%, 45%); /* text color */">
     <div class="container">
-      {% for message in get_flashed_messages()%}
-
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-        {% endfor %}
+      <div class="mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white" style="margin-top: 20%;">
         <a class="dropdown-item" href="{{ url_for('dashboard')}}"> 
           <h2>
             <i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i>
@@ -35,45 +28,40 @@
         </a>
 
         <form method="POST" >
-          <label for="title" style="color:grey;">
-            <h5>Title</h5>
-          </label>
-          <br>
-          <input  type="text" name="title" placeholder="title" class="form-control">
-          <br>
+          <div class="form-group">
+            <label for="title" style="color:grey;"><h5>Title</h5></label>
+            <input type="text" class="form-control"name="title" id="title" aria-describedby="emailHelp">
+          </div>
           <input  type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
           <br>
           <label for="selected_module_id" style="color:grey;">
             <h5>Selct Module: </h5>
           </label>
           <br>
-          
-          <select id="selected_module_id" name="selected_module_id">
-
-            {% for note in notes %}
+          <select id="selected_module_id" name="selected_module_id" class="form-control form-control-lg">
+              {% for note in notes %}
                 {% if current_user.id == note.user_id%}
-                    <option value="{{ note.module_id }}">{{ note.Vaal.Module }}</option>
+            <option value="{{ note.module_id }}">{{ note.Vaal.Module }}</option>
                 {% endif %}
             {% endfor %}
-
           </select>
-          <br>
 
           <br>
-          <label for="content" style="color:grey;">
-            <h5>Notes</h5>
-          </label>
+          
           <br>
 
-          <textarea  type="text" name="content" placeholder="" class="form-control" rows="5">
-          </textarea>
+          <div class="form-group">
+            <label for="content" style="color:grey;"><h5>Notes</h5></label>
+            <textarea type="text" name="content" class="form-control" id="content" rows="5"></textarea>
+          </div>
           <br>
-          <input class="btn btn-primary btn-sm" type="submit" value="Submit">      
+          <button type="submit" class="btn btn-primary">Submit</button>
+               
         </form>
         <br>
 
-        
-    </div> 
+      </div> 
+  </div> 
     <script>
         function toggleDropdown(icon) {
             // Find the closest dropdown-content within the same module-item

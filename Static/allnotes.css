@@ -83,9 +83,9 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
+.body {
     font-family: 'Poppins', sans-serif;
-    background-color: rgb(239, 239, 239);
+    background-color: rgb(247, 247, 247);
     color: hsl(216, 8%, 45%); /* text color */
 }
 

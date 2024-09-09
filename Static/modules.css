@@ -91,7 +91,7 @@ html {
     margin: 0 0 var(--header-height) 0;
     font-family: var(--body-font);
     font-size: var(--h2-font-size);
-    background-color: rgb(239, 239, 239);
+    background-color: rgb(247, 247, 247);
     color: var(--text-color);
     margin: 0 0 var(--header-height) 0;
 }

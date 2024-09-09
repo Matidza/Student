@@ -14,8 +14,18 @@
 
     <title>Notes</title>
   </head>
-  <body>
+  <body class="body">
     <div class="container">
+      {% for message in get_flashed_messages()%}
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        {% endfor %}
         <a class="dropdown-item" href="{{ url_for('dashboard')}}"> 
             <h2>
                 <i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i> 
@@ -27,7 +37,8 @@
             {% endif %}
             
             <a href="{{ url_for('notesform') }}">
-                <button type="submit" class="btn btn-primary btn-sm">Add Notes</button>
+              <button type="submit" class="btn btn-primary">Notes+</button>
+                
             </a>
         </div>
 
