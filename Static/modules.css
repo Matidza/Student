@@ -31,6 +31,7 @@
     --small-font-size: .813rem;
     --smaller-font-size: .75rem;
     /*== Font Weight ==*/
+    --font-small:400;
     --font-medium: 500;
     --font-semi-bold: 600;
     /* Margins Bottoms*/
@@ -91,8 +92,8 @@ html {
     font-family: var(--body-font);
     font-size: var(--h2-font-size);
     background-color: rgb(239, 239, 239);
-    /*background-color: rgb(218, 16, 16);*/
     color: var(--text-color);
+    margin: 0 0 var(--header-height) 0;
 }
 h1, h2, h3, h4 {
     color: var(--title-color);
@@ -110,61 +111,172 @@ a {
        
 
 /* ========= SMALL SCREENS ===========*/
-@media screen and (min-width: 428px){
-    
-    /*======Login Page*/
-    .container{
-        max-width: 90%;
+@media screen and (min-width: 300px){
+    /* ========= Home Page( home.html) ===========*/
+    .first__div {
+        max-width: 1000px;
         margin: 0 auto;
-        padding: 20px;
-        position: center;
-        margin-top: 45%;
-        display:0;
-        background-color: rgb(255, 252, 252);
-        box-shadow: 5px 0 0 rgb(126, 126, 126);
-        
-    }
-    .password{
-        margin-left:25%
+         /* Add this */
     } 
-}
-
-
-/* ========= MEDIUM SCREENS ( Tablets ) ===========*/
-@media screen and (min-width: 768px){
-    /*======Login Page*/
-    .container{
-        max-width: 90%;
-        margin: 0 auto;
+    .contain{
+        
+        margin: 0 ;
         padding: 20px;
-        position: center;
-        margin-top: 15%;
+        position: absolute;  
         background-color: rgb(255, 252, 252);
-        box-shadow: 5px 0 0 rgb(126, 126, 126);  
+        max-width: 130px;
+        max-height: 750px; 
+        overflow-y:auto;
+        border-radius: 8px;
+        border: 1.5px solid white;
     }
-    .password{
-        margin-left:65%
+    .clickable-div{
+        margin-left: 20px;
     }
-
-}
-
-
-/* ============= LARGE DISPLAY ( Laptops ) =======*/
-@media screen and (min-width: 998px){
-    /*======Login Page*/
-    .container{
-        max-width: 90%;
-        margin: 0 auto;
+    .register{
+        margin-left:10px;
+    }
+    .uil{
+        width:10px;
+        height:10px;
+    }
+    .form-control{
+        max-width:150px;
+        margin-left:75px;
+    }
+    .btn{
+        margin-left:15px;
+    }
+    .clickable-div{
+        width: 370px; 
+        margin-top: 10px; 
+        cursor: pointer;
+        font: var(--body-font);
+        font-family: var(--body-font);
+        font-size: var(--small-font-size);
+        font-weight: var(--font-small);
+    }
+    .contain{
+        
+        margin: 0 ;
         padding: 20px;
-        position: center;
-        margin-top: 10%;
+        position: absolute;  
         background-color: rgb(255, 252, 252);
-        box-shadow: 5px 5px 5px rgb(126, 126, 126);
         
-        
-        
+        max-width: 470px;
+        max-height: 750px; 
+        overflow-y:auto;
+        border-radius: 8px;
+        border: 1.5px solid white;  
     }
-    .password{
-        margin-left:65%
+    .h4{
+        
+        color: grey;
+        margin-left: 5px;
+    }
+
+}
+
+
+/* ========= MEDIUM SCREENS ===========*/
+@media screen and (min-width: 600px){
+    .first__div{
+        max-width: 1000px;
+        margin: 0 auto;
+        margin-left: 32%;
+    }
+    .register{
+        margin-left:10px;
+    }
+    .uil{
+        width:10px;
+        height:10px;
+    }
+    .form-control{
+        max-width:200px;
+        margin-left:75px;
+    }
+    .btn{
+        margin-left:15px;
+    }
+    .clickable-div{
+        width: 370px; 
+        margin-top: 10px; 
+        cursor: pointer;
+        font: var(--body-font);
+        font-family: var(--body-font);
+        font-size: var(--small-font-size);
+        font-weight: var(--font-small);
+    }
+    .contain{
+        
+        margin: 0 ;
+        padding: 20px;
+        position: absolute;  
+        background-color: rgb(255, 252, 252);
+        
+        max-width: 470px;
+        max-height: 750px; 
+        overflow-y:auto;
+        border-radius: 8px;
+        border: 1.5px solid white;  
+    }
+    .h4{
+        
+        color: grey;
+        margin-left: 5px;
+    }
+
+}
+
+
+/* ============= LARGE DISPLAY =======*/
+@media screen and (min-width: 764px){
+    .first__div{
+        max-width: 1000px;
+        margin: 0 auto;
+        margin-left: 32%;
+    }
+    .register{
+        margin-left:10px;
+    }
+    .uil{
+        width:10px;
+        height:10px;
+    }
+    .form-control{
+        max-width:200px;
+        margin-left:75px;
+    }
+    .btn{
+        margin-left:15px;
+    }
+    .clickable-div{
+        width: 370px; 
+        margin-top: 10px; 
+        cursor: pointer;
+        font: var(--body-font);
+        font-family: var(--body-font);
+        font-size: var(--small-font-size);
+        font-weight: var(--font-small);
+    }
+    .contain{
+        
+        margin: 0 ;
+        padding: 20px;
+        position: absolute;  
+        background-color: rgb(255, 252, 252);
+        
+        max-width: 470px;
+        max-height: 750px; 
+        overflow-y:auto;
+        border-radius: 8px;
+        border: 1.5px solid white;  
+    }
+    .h4{
+        
+        color: grey;
+        margin-left: 5px;
     }
 }
+  

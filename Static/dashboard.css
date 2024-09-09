@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 /*========= Variables=======*/
-:root {
     --header-height: 4.3rem;
 
     /* ======== Colors ========*/
@@ -31,6 +31,7 @@
     --small-font-size: .813rem;
     --smaller-font-size: .75rem;
     /*== Font Weight ==*/
+    --font-small:400;
     --font-medium: 500;
     --font-semi-bold: 600;
     /* Margins Bottoms*/
@@ -92,6 +93,7 @@ html {
     font-size: var(--h2-font-size);
     background-color: rgb(239, 239, 239);
     color: var(--text-color);
+    margin: 0 0 var(--header-height) 0;
 }
 h1, h2, h3, h4 {
     color: var(--title-color);
@@ -108,16 +110,47 @@ a {
 
        
 
-/* ========= SMALL SCREENS ===========*/
-@media screen and (min-width: 428px){
-    /* ========= Home Page( home.html) ===========*/
-    .container{
-        margin-left: 5%;
-        
+
+
+
+/* ============= LARGE DISPLAY =======*/
+
+    .first__div{
+        max-width: 1000px;
         margin: 0 auto;
+    }
+   
+    .username{
+        margin-left: 30px;
+    }
+    .contain{
+        margin-left:auto;
+        margin-right: auto;
+        margin-left: 10%;
+        margin: 0 ;
         padding: 20px;
         position: absolute;  
         background-color: rgb(255, 252, 252);
+        max-height: 270px; 
+        
+        
+    }
+    .contain__image{
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        margin-right: 20px;
+    }
+    .image{
+        width: 100px; 
+        height: 120px;
+    }
+    .contain__info{
+        flex: 1; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center;
+        color: var(--text-color);
     }
     
 
@@ -153,16 +186,31 @@ a {
         /* Optional: change the color or style of the icon when dropdown is open */
         color: #007bff; /* Example color change */
     }
-}
+    .link{
+        color: rgba(255,255,255,0.86);
+        left: 0px;
+        top: 0px;
+        width: 59px;
+        height: 61px;
+        border-radius: 25px;
+        background: #105be8;
+        background-blend-mode: normal;
+    }
+    .nav{
+        height: 61px; 
+        max-width:59px;
+        transform: scaleX(-1) rotate(180deg);
+        z-index:1;
+        font: var(--body-font);
+        font-family: var(--body-font);
+        font-size: 30px;
+        font-weight: 700;
+        margin-top: -700px;
+        margin-left: 500px;
+        text-align: center;
+        position: fixed;
+        display: center;
+    }
 
-
-/* ========= MEDIUM SCREENS ===========*/
-@media screen and (min-width: 768px){
-
-}
-
-
-/* ============= LARGE DISPLAY =======*/
-@media screen and (min-width: 998px){}
         
         

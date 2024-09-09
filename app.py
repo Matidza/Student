@@ -2,30 +2,30 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_login import UserMixin, login_user,LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField, BooleanField, ValidationError
-from wtforms.validators import  Length, ValidationError, DataRequired, EqualTo, Length
+from wtforms import StringField, PasswordField, SubmitField, ValidationError, IntegerField
+from wtforms.validators import  Length, ValidationError, DataRequired, EqualTo, Email
 from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_migrate import Migrate
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from flask_login import current_user
+from sqlalchemy import ForeignKeyConstraint
+from wtforms.widgets import TextArea
 
 app = Flask(__name__)
 # Postgre SQL Connection
-
-
 # SQLite Connection
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-
 # MySQL Connection
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1969@localhost/users'
-app.config['SQLALCHEMY_TRACK_MIDIFICATIONS'] = True 
+app.config['SQLALCHEMY_TRACK_MIDIFICATIONS'] = False
 # Connects the DB to the app
 app.config['SECRET_KEY'] = 'htnethnet'
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-migrate = Migrate(app, db)
+#migrate = Migrate(app, db)
 
 login_manager =LoginManager()
 login_manager.init_app(app)
@@ -34,7 +34,6 @@ login_manager.login_view = "login"
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
-
 
 
 # DB Table
@@ -50,6 +49,8 @@ class Users(db.Model, UserMixin):
     campus = db.Column(db.String(50), nullable=False)
     #email = db.Column(db.String(100), nullable=False)
     password_hash = db.Column(db.String(80), nullable=False)
+    UsersNotes= db.relationship('Notes', backref='UsersNotes', cascade='all, delete-orphan')
+    Users= db.relationship('UserModules', backref='Users', cascade='all, delete-orphan')#, passive_deletes=True
     
     @property
     def password(self):
@@ -74,7 +75,8 @@ class Vaal(db.Model):
     Duration = db.Column(db.Text)
     Venue = db.Column(db.Text)
     Students = db.Column(db.Text)
-      
+    Vaal = db.relationship('UserModules', backref='Vaal')
+    VaalNotes= db.relationship('Notes', backref='VaalNotes')
 
 
 
@@ -234,7 +236,7 @@ def register():
         return render_template('register.html', form=form)
 
 
-# User DashBoard
+# User DashBoard to display uer modules
 @app.route('/dashboard', methods=["GET","POST"])
 @login_required
 def dashboard():
@@ -246,15 +248,16 @@ def dashboard():
 @app.route('/delete/<id>', methods=['GET', 'POST'])
 @login_required
 def delete(id):
-    current_user = Users.query.get_or_404(id)
+
+    current_user = Users.query.get_or_404(id)    
     try:
         db.session.delete(current_user)
         db.session.commit()
         flash('Account Deleted Successfully !')
-        return redirect('login')
+        return redirect('/login')
     except:
-            flash('Accont Deletion Not Successful !')
-            return render_template('dashboard.html')
+        flash('Accont Deletion Not Successful !')
+        return render_template('dashboard.html')
     
 
 # Update User Account
@@ -284,19 +287,25 @@ def update(id):
     else:
 
         return render_template('update.html', form=form, current_user=current_user)
-    
+
+
+
+
+
+
+
+
+
+
 # Create Model for Notes
 class UserModules(db.Model):
     __tablename__ = 'UserModules'
     id = db.Column(db.Integer, primary_key=True)
     module_id = db.Column(db.Integer, db.ForeignKey('vaal.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-    Vaal = db.relationship('Vaal', backref='Vaal')
-    users= db.relationship('Users', backref='Users')
-
+    #user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    #__table_args__ = (ForeignKeyConstraint(['user_id'], ['(link unavailable)'], ondelete='CASCADE'),)
     
-    
-
 # Add Modules To User DashBoard
 @app.route('/modules', methods=['GET', 'POST'])
 @login_required
@@ -330,19 +339,26 @@ def modules():
    # return render_template('modules.html', all_modules=all_modules)
 
 
-# Individual Module
-@app.route('/module', methods=['GET', 'POST'])
+# Individual Module Page
+@app.route('/module/<id>')
 @login_required
-def module():
-    
-    return render_template('module.html')
-# Delete Individual Module
-@login_required
-@app.route('/deletemod/<id>', methods=['GET', 'POST'])
-def deletemod(id):
-    if request.method == "POST":
+def module(id):
+    notes = Notes.query.order_by(Notes.date_created)
+    module = UserModules.query.get_or_404(id)
+    return render_template('module.html', module=module, notes=notes)
 
-        delete = UserModules.query.get_or_404(id)
+
+# Delete Individual Module
+
+@app.route('/deletemod/<id>', methods=['GET', 'POST'])
+@login_required
+def deletemod(id):
+    
+    # Delete variable
+    delete = UserModules.query.get_or_404(id)
+    id = current_user.id
+    if id == delete.Users.id:
+
         try:
             db.session.delete(delete)
             db.session.commit()
@@ -351,30 +367,81 @@ def deletemod(id):
         except Exception as e:
             flash('Module Not Deleted !')
             return f"ERROR:{e}"
-   
+    else:
+        flash('Module Not Deleted!')
+        return redirect(url_for('dashboard'))
+
+
+
+
+
+
+
+
 
 
 # Notes Model
 # Later You should Link this table To each particular Module
-class Notes:
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    title = db.Column(db.String(500), nullable=False)
+class Notes(db.Model):
+    
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    selected_module_id = db.Column(db.Integer, db.ForeignKey('vaal.id'),  nullable=False)
+    
     content = db.Column(db.Text, nullable=False)
-    module = db.Column(db.String(50), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    
+
+# Notes Form
+class NotesForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(
+        min=4, max=20)], render_kw={"Placeholder": ""})
+    
+    selected_module_id = IntegerField('Module', validators=[DataRequired()], 
+                render_kw={"Placeholder": "Module"})
+    
+    content = StringField('Notes',validators=[DataRequired()], widget=TextArea(), render_kw={"Placeholder": "Add Notes"})
+    
+    slug = StringField('Slug',validators=[DataRequired(), Length(
+        min=4, max=20)], render_kw={"Placeholder": ""})
+        
+    submit = SubmitField("Submit")    
 
 # Add Notes to Modele
-@app.route('/notes', methods=['GET', 'POST'])
+@app.route('/notesform', methods=['GET', 'POST'])
 @login_required
-def notes():
-    all_notes = Notes.query.order_by(Notes.id)
-    return render_template('modules.html', all_notes=all_notes)
+def notesform():
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        user_id = request.form.get('user_id')
+        selected_module_id = request.form.get('selected_module_id')
+        content = request.form.get('content')
+        
+        notes = Notes(title=title, selected_module_id=selected_module_id, 
+                user_id=user_id, content=content)#, slug=slug
+        db.session.add(notes)
+        db.session.commit()
+        flash('Module added successfully!')
+        return redirect(url_for('allnotes'))  # or wherever you want to redirect
+    
+    notes = UserModules.query.order_by(UserModules.id)
+    return render_template('notesform.html', notes=notes)
+
+@app.route('/allnotes', methods=['GET', 'POST'])
+@login_required
+def allnotes():
+
+    notes = Notes.query.order_by(Notes.id)
+    return render_template('allnotes.html',  notes=notes)
 
 
 # Delete Notes to Modele
 @app.route('/delete_notes/<id>', methods=['GET', 'POST'])
 @login_required
-def delete_notes():
+def delete_notes(id):
     all_notes = Notes.query.order_by(Notes.id)
     return render_template('modules.html', all_notes=all_notes)
 
@@ -384,6 +451,8 @@ def delete_notes():
 def update_notes(id):
     all_notes = Notes.query.order_by(Notes.id)
     return render_template('modules.html', all_notes=all_notes)
+
+# individual Note page
 
 if __name__ == "__main__":
     with app.app_context():

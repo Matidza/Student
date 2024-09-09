@@ -16,8 +16,8 @@
   </head>
   <body class="body">
     
-    <div class="container ">
-   
+    <div class="first__div">
+    <div class="container">
     <!--===== Nav Bar =======-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary bold">
             <a class="navbar-brand" href="#" style="color: white">
@@ -33,8 +33,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent"style="color: white" >
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" style="color: white" href="#">
-                            Home 
+                        <a class="nav-link" style="color: white" href="{{ url_for('modules') }}">
+                            Add Modules
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color: white" href="{{ url_for('allnotes') }}">
+                            Notes
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -43,88 +49,98 @@
                     {% if current_user.is_authenticated %}
                     <li class="nav-item dropdown" style="color: white">
                         <a class="nav-link dropdown-toggle" style="color: white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ current_user.name| upper}}
+                                    {{ current_user.name }}
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
                             <a class="dropdown-item" href="{{ url_for('logout')}}">Logout</a>
-                            <form method="POST" action="/delete/{{ current_user.id}}" value='Delete'
+                            <form method="POST" action="/delete/{{ current_user.id}}" 
                                             onclick='return confirm("Are you sure you want to delete?")'>
-                                    <a class="dropdown-item" href="{{ url_for('delete', id=current_user.id)}}">Delete Account</a>
+                                <a class="dropdown-item" href="{{ url_for('delete', id=current_user.id)}}">Delete Account</a>
                             </form>
 
                             <a class="dropdown-item" href="{{ url_for('update', id=current_user.id)}}">
-                                Update card
+                                Update Card
                             </a>
-                            <div class="dropdown-divider"></div>
-
                         </div>
                     </li>  
                     {% endif %}
                 </ul>
             </div>
-        </nav> 
+        </nav>
         <br>
-       <!-- Body content goes here-->
+        <!-- Body content goes here-->
         {% for message in get_flashed_messages()%}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-        <!--===== Student card  =======--> 
-        <div style="margin-left: 10px;">
-            <h5 href="#" >
-                {{ current_user.name }}'s  Card
-            </h5>
-        </div>
-        
-        <div class="container mb-3 shadow-sm p-3 mb-5 rounded border-white" style="max-height: 270px; overflow: hidden; display: flex; align-items: flex-start; position: relative;">
-            <!-- Profile Image and NWU/Student labels -->
-            <div style="display: flex; flex-direction: column; align-items: center; margin-right: 20px;"> <!-- Increased margin-right to 20px for spacing -->
-                <!-- Profile Image -->
-                <img src="{{ url_for('static', filename='4.jpg')}}" alt="Profile Image" style="width: 100px; height: 120px;">
 
-                <!-- NWU and Student labels (below image) -->
-                <h2 style="margin-top: 10px;">NWU</h2>
-                <h5 style="color: grey;">Student</h5>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            
-            <!-- User Details Section (aligned with the image) -->
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
-                <h5>{{ current_user.title }} {{ current_user.surname }} {{ current_user.initials }}</h5>
-                <h5>{{ current_user.degree }}</h5>
-                <h5>{{ current_user.student }}</h5>
-                <h5>{{ current_user.campus }}</h5>
+
+        {% endfor %}
+        <div class="card__modules">
+            <!--===== Student card  =======--> 
+            <div class="username">
+                <h5 href="#" >
+                    {{ current_user.name }}'s  Card
+                </h5>
             </div>
-        </div>
-        <br/>
-            <!-- Modules Section (Separate from Student Card) -->
         
-            <h3>Modules</h3>
-            
+            <div class="contain mb-3 shadow-sm p-3 mb-5 rounded border-white" style="overflow: hidden; display: flex; align-items: flex-start; position: relative;">
+                <!-- Profile Image and NWU/Student labels -->
+                <div class="contain__image"> <!-- Increased margin-right to 20px for spacing -->
+                    <!-- Profile Image -->
+                    <img class="image"src="{{ url_for('static', filename='4.jpg')}}" alt="Profile Image" style="">
+
+                    <!-- NWU and Student labels (below image) -->
+                    <h2 style="margin-top: 10px;">NWU</h2>
+                    <h5 style="color: grey;">Student</h5>
+                </div>
+                
+                <!-- User Details Section (aligned with the image) -->
+                <div class="contain__info" >
+
+                    <h5>{{ current_user.title }} 
+                        {{ current_user.surname }} 
+                        {{ current_user.initials }}
+                    </h5>
+                    <h5>{{ current_user.degree }}</h5>
+                    <h5>{{ current_user.student }}</h5>
+                    <h5>{{ current_user.campus }}</h5>
+
+                </div>
+            </div>
+            <br/>
+
+            <!-- Modules Section (Separate from Student Card) -->
+            <a href="{{ url_for('dashboard') }}">Modules</a>
+            <a href="{{ url_for('allnotes') }}">
+                Notes
+            </a>
                 {% for module in modules %}
                 {% if current_user.id == module.user_id %}
                     <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
                         <div class="header">
                             <!-- Module Name -->
-                            <h5>{{ module.Vaal.Module }}</h5>
+                            <h4>{{ module.Vaal.Module }}</h4>
+                            
                             <!-- Toggle Icon -->
                             <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
                         </div>
 
+                        <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}"> 
                         <h6>
                             Date: {{ module.Vaal.Date }}<br>
                             Start: {{ module.Vaal.Session }}<br>
                             Venue: {{ module.Vaal.Venue }}<br>
                             Students: {{ module.Vaal.Students }}
                         </h6>
-
+                       </a>
                         <!-- Dropdown Content (Initially Hidden) -->
                         <div class="dropdown-content" style="display: none;">
-                            <form method="POST" action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
+                            <form method="POST"  action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </div>
@@ -132,44 +148,14 @@
                 {% endif %}
                 
                 {% endfor %}
-            
-        
-
             <!-- Add Module Button -->
-            <button class="navbar navbar-expand-lg navbar-dark bg-primary bold rounded-lg"  
-            style="height: 61px; max-width: 59px; position: fixed; left: 0; z-index: 1; margin-top: 690px; margin-left: 75%; width: 59px; border-radius: 25px; background: #40adec;">
-            <a href="{{ url_for('modules') }}" class="text-white" style="font-size: 30px; font-weight: 600;">+</a>
-            </button>
-            
             <br>
-            <button class="navbar navbar-expand-lg navbar-dark bg-primary bold border  border-9 rounded-lg  "  
-                style="height: 61px; max-width:59px;
-                        position: fixed; 
-                        align-item:center; 
-                        left: 0px
-                        z-index:1;
-                        margin-top:690px;
-                        margin-left: 75%;
-                        top: 0px;
-                        width: 59px;
-                        height: 61px;
-                        border-radius: 25px;
-                        background: #40adec;
-                        background-blend-mode: normal;">
-
-                <a href="{{ url_for('modules')}}"
-                    style="width: 18.88px;                                                          
-                        height: 32.85px;
-                        transform: scaleX(-1) rotate(180deg);
-                        color: rgba(255,255,255,0.86);
-                        font-family: Inter;
-                        font-size: 30px;
-                        font-weight: 600;
-                        margin-top: 12px;
-                        margin-left:2px;
-                        text-align: center;">+  
+            
+                <a class="nav" href="{{ url_for('modules')}}">
+                    <button class="link navbar-expand-lg navbar-dark bg-primary bold border  border-9 rounded-lg  "  >+</button>
                 </a>           
-            </button>
+        </div>    
+    </div>
     </div>
      <script>
         function toggleDropdown(icon) {

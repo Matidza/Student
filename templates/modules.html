@@ -6,103 +6,107 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+    <link rel="stylesheet" href='{{ url_for('static', filename='modules.css')}}'>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Dashboard</title>
+    <title>Modules</title>
   </head>
-  <body>
-  
-<div class="p-3 mb-2 bg-light text-dark">
+<body class="body">
+    <div class="first__div">
+        <div class="container p-3 mb-2 bg-light text-dark">
 
-      <form class="form-inline">
-        <a class="register" href="{{ url_for('dashboard')}}" style="margin-left:10px;">
-            <h2><i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i></h2>
-        </a>
-        <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search" style="max-width:200px;margin-left:45px;">
-        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin-left:15px;">Search</button>
-      </form>
-    
-      <br>
-      <div class="container border border-white p-3 mb-2 bg-white text-dark shadow p-3 mb-5 bg-white rounded" style="max-width: 370px; max-height: 750px; overflow-y:auto;border-radius: 8px;
-                              border: 1.5px solid #white;">
-
-            <!--<form method="POST">
-                <label for="module_id">Select a module:</label>
-                <br>
-                <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-
-                <select id="module_id" name="module_id">
-                    {% for module in modules %}
-                        <option value="{{ module.id }}">{{ module.Module }}</option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Add Module">
-            </form>-->
-
-            <!--<form method="POST">
-                {% for module in all_modules %}
-                    <div  class="" style="width: 370px; margin-top:10px;">
-                      <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-                        <input type="radio"  id="module_id"  name="module_id" value="{{ module.id }}" 
-                        onchange="this.form.submit()" required>
-                        <h4><b>{{ module.Module }}</b></h4>
-                        <i>students:</i> {{ module.Students }}
-                        <br>
-                        <button type="submit">Add to Dashboard</button>
-                        <hr>
-                    </div>
-                {% endfor %}
-                
-            </form>-->
-            <!--<form method="POST" id="moduleForm">
-                <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-                <input type="hidden" id="module_id" name="module_id" value="">
-
-                {% for module in all_modules %}
-                    <div class="" style="width: 370px; margin-top: 10px;">
-                        
-                        <h4><b>{{ module.Module }}</b></h4>
-                        <i>students:</i> {{ module.Students }}
-                        <br>
-                        
-                        <button type="button" onclick="submitModule('{{ module.id }}')">Add to Dashboard</button>
-                        <hr>
-                    </div>
-                {% endfor %}
-            </form>-->
-
-            <form method="POST" id="moduleForm">
-                <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-                <input type="hidden" id="module_id" name="module_id" value="">
-
-                {% for module in all_modules %}
-                    <div class="clickable-div" style="width: 370px; margin-top: 10px; cursor: pointer;" onclick="submitModule('{{ module.id }}')">
-                        <!-- Module details -->
-                        <h4><b>{{ module.Module }}</b></h4>
-                        <i>students:</i> {{ module.Students }}
-                        <hr>
-                    </div>
-                {% endfor %}
+            <form class="form-inline">
+                <a class="register" href="{{ url_for('dashboard')}}" >
+                    <h2><i  class="uil uil-arrow-left"></i></h2>
+                </a>
+                <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
-      </div>         
+    
+            <br>
+            <div class="contain border border-white p-3 mb-2 bg-white text-dark shadow p-3 mb-5 bg-white rounded" >
 
-  </div>
+                <!--<form method="POST">
+                    <label for="module_id">Select a module:</label>
+                    <br>
+                    <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+
+                    <select id="module_id" name="module_id">
+                        {% for module in modules %}
+                            <option value="{{ module.id }}">{{ module.Module }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Add Module">
+                </form>-->
+
+                <!--<form method="POST">
+                    {% for module in all_modules %}
+                        <div  class="" style="width: 370px; margin-top:10px;">
+                        <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+                            <input type="radio"  id="module_id"  name="module_id" value="{{ module.id }}" 
+                            onchange="this.form.submit()" required>
+                            <h4><b>{{ module.Module }}</b></h4>
+                            <i>students:</i> {{ module.Students }}
+                            <br>
+                            <button type="submit">Add to Dashboard</button>
+                            <hr>
+                        </div>
+                    {% endfor %}
+                    
+                </form>-->
+                <!--<form method="POST" id="moduleForm">
+                    <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+                    <input type="hidden" id="module_id" name="module_id" value="">
+
+                    {% for module in all_modules %}
+                        <div class="" style="width: 370px; margin-top: 10px;">
+                            
+                            <h4><b>{{ module.Module }}</b></h4>
+                            <i>students:</i> {{ module.Students }}
+                            <br>
+                            
+                            <button type="button" onclick="submitModule('{{ module.id }}')">Add to Dashboard</button>
+                            <hr>
+                        </div>
+                    {% endfor %}
+                </form>-->
+
+                <form method="POST" id="moduleForm">
+                    <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+                    <input type="hidden" id="module_id" name="module_id" value="">
+
+                    {% for module in all_modules %}
+                        <div class="clickable-div" onclick="submitModule('{{ module.id }}')">
+                            <!-- Module details -->
+                            <h4>{{ module.Module }}</h4>
+                            <i class="h4">students: {{ module.Students }}</i>
+                            <hr>
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>         
+        </div>
+    </div>
+
+
+
+
     <script>
-    function submitModule(moduleId) {
-        // Set the selected module_id value
-        document.getElementById('module_id').value = moduleId;
-        // Submit the form
-        document.getElementById('moduleForm').submit();
-    }
-</script>
+        function submitModule(moduleId) {
+            // Set the selected module_id value
+            document.getElementById('module_id').value = moduleId;
+            // Submit the form
+            document.getElementById('moduleForm').submit();
+        }
+    </script>
     <script src="{{ url_for('static', filename='js/js.js')}}"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>

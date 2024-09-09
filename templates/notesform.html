@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href='{{ url_for('static', filename='notes.css')}}'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Notes</title>
+  </head>
+  <body>
+    <div class="container">
+      {% for message in get_flashed_messages()%}
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        {% endfor %}
+        <a class="dropdown-item" href="{{ url_for('dashboard')}}"> 
+          <h2>
+            <i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i>
+            
+          </h2>
+          <br>
+        </a>
+
+        <form method="POST" >
+          <label for="title" style="color:grey;">
+            <h5>Title</h5>
+          </label>
+          <br>
+          <input  type="text" name="title" placeholder="title" class="form-control">
+          <br>
+          <input  type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+          <br>
+          <label for="selected_module_id" style="color:grey;">
+            <h5>Selct Module: </h5>
+          </label>
+          <br>
+          
+          <select id="selected_module_id" name="selected_module_id">
+
+            {% for note in notes %}
+                {% if current_user.id == note.user_id%}
+                    <option value="{{ note.module_id }}">{{ note.Vaal.Module }}</option>
+                {% endif %}
+            {% endfor %}
+
+          </select>
+          <br>
+
+          <br>
+          <label for="content" style="color:grey;">
+            <h5>Notes</h5>
+          </label>
+          <br>
+
+          <textarea  type="text" name="content" placeholder="" class="form-control" rows="5">
+          </textarea>
+          <br>
+          <input class="btn btn-primary btn-sm" type="submit" value="Submit">      
+        </form>
+        <br>
+
+        
+    </div> 
+    <script>
+        function toggleDropdown(icon) {
+            // Find the closest dropdown-content within the same module-item
+            var dropdownContent = icon.closest('.module-item').querySelector('.dropdown-content');
+            // Toggle the dropdown content's display style
+            if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
+                dropdownContent.style.display = 'block';
+                icon.classList.add('open-dropdown'); // Optional: Change icon style when dropdown is open
+            } else {
+                dropdownContent.style.display = 'none';
+                icon.classList.remove('open-dropdown'); // Optional: Revert icon style when dropdown is closed
+            }
+        }
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
