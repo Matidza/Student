@@ -29,6 +29,11 @@ app = Flask(__name__)
 
 # MySQL CONNECTION
 # Creating App Instance
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://Zwivhuya:1969Zwi%21%40%23@Zwivhuya.mysql.pythonanywhere-services.com:3306/Zwivhuya$Users'
+
+
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/users"
 
 app.config['SQLALCHEMY_TRACK_MIDIFICATIONS'] = False
@@ -628,12 +633,24 @@ def notesform():
     notes = UserModules.query.order_by(UserModules.id)
     return render_template('notesform.html', notes=notes)
 
+
+
 @app.route('/allnotes', methods=['GET', 'POST'])
 @login_required
 def allnotes():
 
-    notes = Notes.query.order_by(Notes.id)
-    return render_template('allnotes.html',  notes=notes)
+    user_id = current_user.id
+    notes = Notes.query.filter_by(user_id=user_id).all()
+    
+    # Group notes by selected_module_id
+    grouped_notes = {}
+    for note in notes:
+        module_id = note.selected_module_id  # Module ID from the note
+        if module_id not in grouped_notes:
+            grouped_notes[module_id] = []
+        grouped_notes[module_id].append(note)
+    
+    return render_template('allnotes.html',  grouped_notes=grouped_notes)
 
 # individual Note page
 @app.route('/note/<id>')

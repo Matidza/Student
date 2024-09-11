@@ -145,6 +145,7 @@ a {
     
 /* The <a> tag (back button) styles */
 .dropdown-item {
+    overflow-y: auto;
     display: flex;
     align-items: center;
     font-size: 1.0rem; /* Adjust font size */

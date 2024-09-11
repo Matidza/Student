@@ -45,39 +45,24 @@
 
 
         <div class="module-container">
-
-        {% for note in notes %}
-          {% if current_user.id == note.user_id%}
-          <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
-
+    {% for module_id, notes in grouped_notes.items() %}
+        <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
             <div class="header">
-              <h4>{{ note.VaalNotes.Module}}</h4><br>
-              <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
+                <h4>{{ notes[0].VaalNotes.Module }} Notes</h4>
+                <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
             </div>
-
-            <a class="dropdown-item" href="{{ url_for('note', id=note.id) }}"> 
-                <h6 >Title: {{ note.title }}</h6>
-                <i style="">created: {{ note.date_created }}</i>
-            </a>
             
-            {% endif %}
-            
-            <div class="dropdown-content" style="display: none;">
-                
-              <form method="POST"  action="/delete_notes/{{ note.id }}" onsubmit="return confirm('Delete Module?')">
-                <button type="submit" class="btn btn-danger btn-sm" style="font-size: 0.95rem;font-weight: 700;">Delete</button>
-              </form>
-              <br>
-              <button  class="btn btn-warning btn-sm" style="font-size: 0.95rem;font-weight: 700;">
-                <a href="{{ url_for('update_notes', id=note.id) }}">
-                    Update
+            {% for note in notes %}
+                <a class="dropdown-item" href="{{ url_for('note', id=note.id) }}"> 
+                    <h6>Title: {{ note.title }}</h6>
+                    <i>Created: {{ note.date_created }}</i>
                 </a>
-              </button>
-
-            </div>
-          </div>
-        {% endfor%}
+            {% endfor %}
+            
+            
         </div>
+    {% endfor %}
+</div>
         
 
     </div> 
@@ -95,6 +80,7 @@
             }
         }
     </script>
+  
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

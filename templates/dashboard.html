@@ -47,7 +47,7 @@
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" style="color: white" href="{{ url_for('allnotes') }}">
-                            notes +
+                            notes
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -138,39 +138,41 @@
                 {% for module in modules %}
                 {% if current_user.id == module.user_id %}
                     <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
-    <div class="header">
-        <!-- Module Name -->
-        <h4>{{ module.Vaal.Module }}</h4>
-        
-        <!-- Toggle Icon -->
-        <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
-    </div>
+                        <div class="header">
+                            <!-- Module Name -->
+                            <h4>{{ module.Vaal.Module }}</h4>
+                            
+                            <!-- Toggle Icon -->
+                            <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
+                        </div>
 
-    <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}">
-        <h6>
-            Lecturer:<br>
-            Assessments:<br>
-        </h6>
-    </a>
+                        <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}">
+                            <h6>
+                                Lecturer:<br>
+                                Assessments:<br>
+                            </h6>
+                        </a>
 
-    <!-- Dropdown Content (Initially Hidden) -->
-    <div class="dropdown-content hidden">
-        <form method="POST" action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
-            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-        </form>
-    </div>
-</div>
+                        <!-- Dropdown Content (Initially Hidden) -->
+                        <div class="dropdown-content hidden">
+                            <form method="POST" action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
 
                 {% endif %}
                 {% endfor %}
+                
             </div>
 
             <!-- Add Module Button -->
             <br>
-            
-                <a class="nav" href="{{ url_for('modules')}}">
+            <a class="nav" href="{{ url_for('modules')}}">
                     <button class="link navbar-expand-lg navbar-dark bg-primary bold border  border-9 rounded-lg  "  >+</button>
-                </a>           
+                </a> 
+            
+                           
         </div>    
    
     </div> 

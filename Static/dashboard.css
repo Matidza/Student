@@ -134,6 +134,7 @@ a {
     position: absolute;
     background-color: rgb(255, 252, 252);
     max-height: 270px;
+    
 }
 
 .contain__image {
@@ -235,6 +236,9 @@ a {
 
 
 
+
+
+
 /* Media Queries */
 @media (max-width: 491px) {
     /* Styles for small devices */
@@ -272,8 +276,9 @@ a {
     }
     
     .nav {
-        margin-top: 0;
-        margin-left: 10px;
+        position: relative;
+        margin-top: -420px;
+        margin-left: 80%;
     }
     .links-container {
         display: flex; /* Use flexbox to align children in a row */
@@ -334,8 +339,9 @@ a {
     }
     
     .nav {
-        margin-top: -700px;
-        margin-left: 500px;
+        position: relative;
+        margin-top: -230px;
+        margin-left: 90%;
     }
     .links-container {
         display: none; /* Hide the links container */
