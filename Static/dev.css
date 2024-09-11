@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 /*========= Variables=======*/
-:root {
     --header-height: 4.3rem;
 
     /* ======== Colors ========*/
@@ -107,20 +107,65 @@ ul {
 a {
     text-decoration: none;
 }
+/* General Styles */
+.module-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust minmax value to set column width */
+    gap: 15px; /* Space between grid items */
+}
 
+/* Ensure module-item fits well within grid cells */
+.module-item {
+    background-color: rgb(255, 252, 252);
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 
-/* Flex container for header */
+/* Other General Styles */
+.username {
+    margin-left: 30px;
+}
+
+.contain {
+    margin: 0 auto;
+    padding: 20px;
+    position: absolute;
+    background-color: rgb(255, 252, 252);
+    max-height: 270px;
+}
+
+.contain__image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.image {
+    width: 100px;
+    height: 120px;
+}
+
+.contain__info {
+    margin-left: 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--text-color);
+    
+}
+.contain__info h4 {
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 21%); /* Adjust the title color */
+    font-weight: 450; /* Semi-bold font weight */
+}
+
 .header {
     display: flex;
-    justify-content: space-between;  /* Align items to the left and right */
-    align-items: center;             /* Vertically align the items */
-    width: 100%;                     /* Make sure the header takes full width */
-    padding: 10px 0; 
-}
-.header h3 {
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 33%); /* Adjust the title color */
-    font-weight: 600; /* Semi-bold font weight */
+    justify-content: space-between; /* Space between module name and icon */
+    align-items: center; /* Center align items vertically */
 }
 .header h4 {
     margin: 0; /* Ensure no extra margin around the heading */
@@ -128,151 +173,109 @@ a {
     font-weight: 600; /* Semi-bold font weight */
 }
 .header i {
-    color: hsl(0, 0%, 16%); /* Adjust the title color */
-}
-.dropdown-item i{
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 64%); /* Adjust the title color */
-    font-weight: 400;
+    color: hsl(0, 0%, 18%); /* Adjust the title color */
+    cursor: pointer;
 }
 .dropdown-item h6{
     margin: 0; /* Ensure no extra margin around the heading */
     color: hsl(0, 0%, 23%); /* Adjust the title color */
     font-weight: 500;
 }
-
-
+.dropdown-item p{
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 23%); /* Adjust the title color */
+    font-weight: 500;
+    text-align: left;
+    margin-bottom: var(--mb-2-5);
+    text-wrap:wrap;
     
-/* The <a> tag (back button) styles */
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    font-size: 1.0rem; /* Adjust font size */
-}
-
-/* Module item container styling */
-.module-item {
-    cursor: pointer;
-    background-color: rgb(255, 252, 252);
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.module-item .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
+    color: #007bff;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 10;
+    top: 100%;
+    right: 0;
+    margin-top: 1px; /* 5px gap below the icon */
+    width: 90px; /* Adjust width as needed */
 }
 
-/* Button styles */
-.btn {
-    display: inline-block;
-    font-size: 0.875rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
+.open-dropdown {
+    color: #007bff; /* Example color change */
 }
 
-.btn-primary {
-    background-color: #007bff;
-    color: rgb(247, 247, 247);
+.link {
+    color: rgba(255, 255, 255, 0.86);
+    left: 0;
+    top: 0;
+    width: 59px;
+    height: 61px;
+    border-radius: 25px;
+    background: #105be8;
+    background-blend-mode: normal;
 }
 
-.btn-danger {
-    background-color: #dc3545;
-    color:rgb(247, 247, 247);
-}
-.h4 {
-    color: grey;
-    margin-left: 5px;
+.nav {
+    height: 61px;
+    max-width: 59px;
+    transform: scaleX(-1) rotate(180deg);
+    z-index: 1;
+    font: var(--body-font);
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: -700px;
+    margin-left: 500px;
+    text-align: center;
+    position: fixed;
+    display: center;
 }
 
 /* Media Queries */
-
-/* For small devices (max-width: 491px) */
 @media (max-width: 491px) {
-    .header {
-        flex-direction: row; /* Keep items in a row */
-        justify-content: space-between; /* Align items to the far left and right */
-        align-items: center; /* Center align items vertically */
-        padding: 5px 0; /* Reduce padding */
+    /* Styles for small devices */
+    .contain {
+        margin-left: 2%;
+        padding: 10px;
+        max-width: 430px;
     }
-
-    .header h3 {
-        font-size: 1.7rem; /* Adjust font size */
-    }
-    .header h4 {
-        font-size: 1.25rem;
-    }
-    .header i {
-        font-size: 1.3rem;
+    .contain__info h4 {
+    
+        font-size: 1.35rem; 
     }
     .dropdown-item h6{
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+    }.dropdown-item p{
+    
+        width:300px;
     }
-    .dropdown-item i{
-        font-size: 1.0rem;
-    }
+ 
 
-    .module-item {
-        padding: 0.75rem; /* Reduce padding */
-    }
-
-    .dropdown-content {
-        width: 100px; /* Adjust width for smaller screens */
-    }
 }
 
-/* For larger devices (min-width: 492px) */
 @media (min-width: 492px) {
-    .module-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width and fit */
-        gap: 1rem; /* Space between grid items */
-        padding: 0 1rem; /* Optional: padding inside the container */
+    /* Styles for larger devices */
+    .contain {
+        margin-left: 1%;
+        max-width: 450px;
     }
-
-    .module-item {
-        /* Ensure the module item takes full width in the grid cell */
-        width: 100%;
-        max-width: none; /* Remove any max-width if set */
-    }
-    .header {
-        flex-direction: row; /* Align items in a row */
-        align-items: center; /* Align items in the center */
-        padding: 10px 0; /* Default padding */
-    }
-
-    .header h4 {
-        font-size: 1.3rem; /* Default font size */
-    }
-
-    .dropdown-item i{
-        font-size: 1.0rem; /* Default font size */
-    }
+ 
     .dropdown-item h6{
         font-size: 1.2rem;
     }
-
-    .module-item {
-        padding: 1rem; /* Default padding */
+    .dropdown-item p{
+    
+    width:450px;
     }
-
-    .dropdown-content {
-        width: 120px; /* Adjust width for larger screens */
+    .contain__info h4 {
+    
+        font-size: 1.35rem; 
     }
+ 
 }
+

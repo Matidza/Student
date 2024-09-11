@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 /*========= Variables=======*/
 :root {
     --header-height: 4.3rem;
@@ -30,10 +30,7 @@
     --normal-font-size: .938rem;
     --small-font-size: .813rem;
     --smaller-font-size: .75rem;
-    
     /*== Font Weight ==*/
-    --font-smaller: 300;
-    --font-small: 400;
     --font-medium: 500;
     --font-semi-bold: 600;
     /* Margins Bottoms*/
@@ -92,9 +89,8 @@ html {
 .body {
     margin: 0 0 var(--header-height) 0;
     font-family: var(--body-font);
-    font-size: var(--h3-font-size);
+    font-size: var(--h2-font-size);
     background-color: rgb(247, 247, 247);
-    /*background-color: rgb(218, 16, 16);*/
     color: var(--text-color);
 }
 h1, h2, h3, h4 {
@@ -121,46 +117,52 @@ a {
         margin: 0 auto;
         padding: 20px;
         position: center;
-        margin-top: 45%;
+        margin-top: 2%;
         display:0;
         background-color: rgb(255, 252, 252);
         box-shadow: 5px 0 0 rgb(126, 126, 126);
-        
     }
     .password{
-        margin-left:25%
-    } 
+         margin-left:25%
+    }
+    .register{
+        margin-left: 10px;
+    }
+    
+   
 }
 
 
-/* ========= MEDIUM SCREENS ( Tablets ) ===========*/
+/* ========= MEDIUM SCREENS ===========*/
 @media screen and (min-width: 768px){
-    /*======Login Page*/
+    /*======Register Page=======*/
     .container{
         max-width: 90%;
         margin: 0 auto;
         padding: 20px;
         position: center;
-        margin-top: 15%;
+        margin-top: 2%;
         background-color: rgb(255, 252, 252);
         box-shadow: 5px 0 0 rgb(126, 126, 126);  
     }
     .password{
         margin-left:65%
     }
+    
+   
 
 }
 
 
-/* ============= LARGE DISPLAY ( Laptops ) =======*/
+/* ============= LARGE DISPLAY =======*/
 @media screen and (min-width: 998px){
-    /*======Login Page*/
+    /*======Register Page=======*/
     .container{
         max-width: 90%;
         margin: 0 auto;
         padding: 20px;
         position: center;
-        margin-top: 10%;
+        margin-top: 2%;
         background-color: rgb(255, 252, 252);
         box-shadow: 5px 5px 5px rgb(126, 126, 126);
         
@@ -170,4 +172,8 @@ a {
     .password{
         margin-left:65%
     }
+    .register{
+        margin-left: 10%;
+    }
+    
 }

@@ -120,6 +120,7 @@ a {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    position: relative;
 }
 
 /* Other General Styles */
@@ -154,6 +155,12 @@ a {
     flex-direction: column;
     justify-content: center;
     color: var(--text-color);
+    
+}
+.contain__info h4 {
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 21%); /* Adjust the title color */
+    font-weight: 450; /* Semi-bold font weight */
 }
 
 .header {
@@ -161,8 +168,27 @@ a {
     justify-content: space-between; /* Space between module name and icon */
     align-items: center; /* Center align items vertically */
 }
+.header h4 {
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 23%); /* Adjust the title color */
+    font-weight: 600; /* Semi-bold font weight */
+}
+.header i {
+    color: hsl(0, 0%, 18%); /* Adjust the title color */
+    
+}
+.hidden {
+    display: none;
+}
+
+.dropdown-item h6{
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 23%); /* Adjust the title color */
+    font-weight: 500;
+}
 
 .dropdown-content {
+    
     position: absolute;
     color: #007bff;
     background-color: white;
@@ -173,8 +199,8 @@ a {
     z-index: 10;
     top: 100%;
     right: 0;
-    margin-top: 1px; /* 5px gap below the icon */
-    width: 90px; /* Adjust width as needed */
+    margin-top: 5px; /* 5px gap below the icon */
+    width: max-content; /* Adjust width as needed */
 }
 
 .open-dropdown {
@@ -207,6 +233,8 @@ a {
     display: center;
 }
 
+
+
 /* Media Queries */
 @media (max-width: 491px) {
     /* Styles for small devices */
@@ -214,6 +242,25 @@ a {
         margin-left: 2%;
         padding: 10px;
         max-width: 430px;
+    }
+    .contain__info h4 {
+    
+        font-size: 1.35rem; 
+    }
+    .dropdown-item h6{
+        font-size: 1.1rem;
+    }
+    .header {
+        justify-content: space-between;
+    }
+
+    .header h4 {
+        font-size: 1.2rem; /* Adjust size if needed */
+    }
+
+    .header i {
+        font-size: 1.0rem; /* Adjust icon size if needed */
+        margin-left: 30px; /* Maintain space between h4 and i */
     }
     
     .username {
@@ -228,6 +275,32 @@ a {
         margin-top: 0;
         margin-left: 10px;
     }
+    .links-container {
+        display: flex; /* Use flexbox to align children in a row */
+        gap: 15px; /* Add a 5px gap between links */
+    }
+
+    .links-container a {
+       
+        text-decoration: none; /* Remove underline from links */
+        color: hsl(0, 0%, 18%); /* Set link color */
+        padding: 10px 15px; /* Add padding for better click area */
+        border: 1px solid hsl(0, 0%, 80%); /* Light border color */
+        border-radius: 50px; /* Rounded corners */
+        background-color: hsl(0, 0%, 95%); /* Optional: background color */
+        display: inline-block; /* Ensure links are treated as block elements */
+      
+        box-sizing: border-box; /* Include padding and border in element's total width and height */
+        transition: background-color 0.3s, border-color 0.3s; /* Smooth transitions */
+        padding-left: 5px; /* Add space from the left border */
+        padding-right: 5px; /* Smooth transitions */
+    }
+
+    .links-container a:hover {
+        background-color: hsl(0, 0%, 90%); /* Change background color on hover */
+        border-color: hsl(0, 0%, 60%); /* Darken border color on hover */
+    }
+    
 }
 
 @media (min-width: 492px) {
@@ -240,6 +313,21 @@ a {
     .username {
         margin-left: 30px;
     }
+    .dropdown-item h6{
+        font-size: 1.2rem;
+    }
+    .header {
+        justify-content: space-between;
+    }
+
+    .header h4 {
+        font-size: 1.5rem; /* Adjust size if needed */
+    }
+
+    .header i {
+        font-size: 1.1rem; /* Adjust icon size if needed */
+        margin-left: 30px; /* Maintain space between h4 and i */
+    }
     
     .module-container {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Two columns or more depending on screen width */
@@ -248,6 +336,9 @@ a {
     .nav {
         margin-top: -700px;
         margin-left: 500px;
+    }
+    .links-container {
+        display: none; /* Hide the links container */
     }
 }
 

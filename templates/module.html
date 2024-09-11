@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <link rel="stylesheet" href='{{ url_for('static', filename='module.css')}}'>
+  <link rel="stylesheet" href='./Static/module.css'>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -17,13 +18,13 @@
   <title>Module</title>
 </head>
 
-<body class='body'>
+<body class=''>
 
 
   <div class="container">
-      <a class="dropdown-item" href="{{ url_for('dashboard')}}"> 
+      <a class="dropdown" href="{{ url_for('dashboard')}}"> 
           <h2>
-              <i style="width:10px;height:10px;" class="uil uil-arrow-left"></i>
+              <i style="width:10px;height:10px; color:black;" class="uil uil-arrow-left"></i>
           </h2>
       </a>
 
@@ -31,63 +32,78 @@
         <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
           <!-- Module Name -->
           <div class="header">
-              <h5>{{ module.Vaal.Module }}</h5>
+              <h2>{{ module.Vaal.Module }}</h2>
               <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
           </div>
-
+          <br>
           <!-- Lecturer Info -->
             <div class="info-section" >
-                <h3 class="info-title">
+                <h4 class="info-title">
                   Lecturer
-                </h3>
+                </h4>
                 <div class="info-details">
                     <h6>Mr. Smith J.E</h6>
-                    <h6>Email: <a href="mailto:Smith@gmail.com">Smith@gmail.com</a></h6>
+                    <h6>Email: <a href="mailto:Smith@gmail.com">Test.Email@gmail.com</a></h6>
                     <h6>Building A8</h6>
-                    <h6>Office 210</h6>
+                    <h6>Office No:  210</h6>
+                    <p>For more infomation about your Faculty, visit:
+                        <a href="https://www.nwu.ac.za/">www.nwu.ac.za</a>
+                    </p>
                 </div>
             </div>
 
             <!-- Exam Info -->
             <div class="info-section">
                 <h4 class="info-title">
-                  Examination
-                  
+                  Assessments
                 </h4>
                 <div class="info-details">
+                    <h5>Exam</h5>
                     <h6>Date: {{ module.Vaal.Date }}</h6>
                     <h6>Start: {{ module.Vaal.Session }}</h6>
                     <h6>Venue: {{ module.Vaal.Venue }}</h6>
                     <h6>Students: {{ module.Vaal.Students }}</h6>
                 </div>
             </div>
-        
+            <!-- Announements Info 
+            
+                <div >
+                    <h6>
+                      <a href="https://efundi.nwu.ac.za/">efundi</a>
+                    </h6>
+                </div>-->
           <!-- Add Notes Button -->
           <div class="header-align-right">
+              
               <a href="{{ url_for('notesform') }}">
-                  <button type="submit" class="btn btn-primary">Notes+</button>
+                  <button type="submit" class="btn btn-primary" style="font-size: 0.95rem;font-weight: 700;"v>Notes +</button>
               </a>
           </div>
           <div class="module-container">
           {% for note in notes %}
             {% if current_user.id == note.user_id %}
+
             <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
               <div class="header">
                 <h4>{{ note.VaalNotes.Module }}</h4><br>
                 <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
               </div>
 
-              <a class="dropdown-item" href="#"> 
-                <h6>
-                  title: {{ note.title }}<br>
-                  <i>date: {{ note.date_created }}</i>
-                </h6>
+              <a class="dropdown-item" href="{{ url_for('note', id=note.id) }}">            
+                  <h6>Title: {{ note.title }}</h6>
+                  <i >date: {{ note.date_created }}</i>
               </a>
 
               <div class="dropdown-content" style="display: none;">
-                <form method="POST" action="" onsubmit="return confirm('Delete Module?')">
-                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                <form method="POST" action="/delete_notes/{{ note.id }}" onsubmit="return confirm('Delete Module?')">
+                  <button type="submit" class="btn btn-danger btn-sm" style="font-size: 0.95rem;font-weight: 700;">Delete</button>
                 </form>
+                <br>
+                <button  class="btn btn-warning btn-sm" style="font-size: 0.95rem;font-weight: 700;">
+                <a href="{{ url_for('update_notes', id=note.id) }}">
+                    Update
+                </a>
+              </button>
               </div>
             </div>
             {% endif %}

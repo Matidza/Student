@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+    <link rel="stylesheet" href='./Static/modules.css'>
     <link rel="stylesheet" href='{{ url_for('static', filename='modules.css')}}'>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,18 +15,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Modules</title>
   </head>
-<body class="body">
+<body class="">
  
     <div class="container p-3 mb-2 bg-light text-dark">
+
         <!-- Form Inline placed above the contain class -->
-        <form class="form-inline">
+        <form class="form-inline" method="POST" action="{{ url_for('search')}}">
             <a class="register" href="{{ url_for('dashboard')}}" >
                 <h2><i class="uil uil-arrow-left"></i></h2>
             </a>
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            {{ form.hidden_tag()}}
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="searched">
             <button class="btn btn-outline-primary" type="submit">Search</button>
         </form>
-
+        <h2>You searched for</h2>
+        <p>{{ modules }}</p>
         
         <!-- Contain class starts here -->
         <div class="contain border border-white p-3 mb-2 bg-white text-dark shadow p-3 mb-5 bg-white rounded">

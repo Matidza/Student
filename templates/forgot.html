@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+    <link rel="stylesheet" href='{{ url_for('static', filename='forgot.css')}}'>
+    <link rel="stylesheet" href='./Static/forgot.css'>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -14,17 +16,49 @@
 
     <title>Forgot Password</title>
   </head>
-  <body>
+  <body class="">
   
-<div class="container">
+    <div class="container">
 
-    <h1 style="display: block;text-align: center; 
-            color: var(--title-color);">
-            Forgot Password?
-    </h1>
-    <p>
-        Password Recovery will be here!
-    </p>
+      <h3 style="display: block;text-align: center; color: var(--title-color);">
+        Recover Password?
+      </h3>
+      <a class="dropdown-item" href="{{ url_for('login')}}"> 
+            <h2>
+                <i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i> 
+            </h2>
+        </a>
+      <form method="POST" action="/forgot" >  
+      </br> 
+            <!--Username-->
+            {{ form.hidden_tag()}}
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control")}}
+            
+            <br>
+ 
+            <!--Student Number-->
+            {{ form.student.label(class="form-label") }}
+            {{ form.student(class="form-control")}}
+            <br>
+
+            <!--Password-->
+            {{ form.password_hash.label(class="form-label") }}
+            {{ form.password_hash(class="form-control")}}
+            <br>
+            <!--Password-->
+            {{ form.password_hash2.label(class="form-label") }}
+            {{ form.password_hash2(class="form-control")}}
+            <br>
+            
+            <!--Register-->
+            {{form.submit(class="btn btn-primary shadow")}}
+        </form>
+            <br>
+        <div style="display: block;text-align: center">
+            <a>Login with password?</a>
+            <a href="{{url_for('login')}}">login</a>
+        </div>
 
     </div> 
     <script src="{{ url_for('static', filename='js/js.js')}}"></script>

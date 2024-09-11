@@ -117,32 +117,14 @@ a {
     width: 100%;                     /* Make sure the header takes full width */
     padding: 10px 0; 
 }
-.header h3 {
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 33%); /* Adjust the title color */
-    font-weight: 600; /* Semi-bold font weight */
-}
+
 .header h4 {
     margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 23%); /* Adjust the title color */
-    font-weight: 600; /* Semi-bold font weight */
-}
-.header i {
-    color: hsl(0, 0%, 16%); /* Adjust the title color */
-}
-.dropdown-item i{
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 64%); /* Adjust the title color */
-    font-weight: 400;
-}
-.dropdown-item h6{
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 23%); /* Adjust the title color */
-    font-weight: 500;
+    color: hsl(200, 5%, 11%); /* Adjust the title color */
+    font-weight: 550; /* Semi-bold font weight */
 }
 
 
-    
 /* The <a> tag (back button) styles */
 .dropdown-item {
     display: flex;
@@ -189,12 +171,12 @@ a {
 
 .btn-primary {
     background-color: #007bff;
-    color: rgb(247, 247, 247);
+    color: white;
 }
 
 .btn-danger {
     background-color: #dc3545;
-    color:rgb(247, 247, 247);
+    color: white;
 }
 .h4 {
     color: grey;
@@ -212,20 +194,12 @@ a {
         padding: 5px 0; /* Reduce padding */
     }
 
-    .header h3 {
-        font-size: 1.7rem; /* Adjust font size */
-    }
     .header h4 {
-        font-size: 1.25rem;
+        font-size: 1rem; /* Adjust font size */
     }
-    .header i {
-        font-size: 1.3rem;
-    }
-    .dropdown-item h6{
-        font-size: 1.2rem;
-    }
-    .dropdown-item i{
-        font-size: 1.0rem;
+
+    .dropdown-item {
+        font-size: 1rem; /* Adjust font size for smaller screens */
     }
 
     .module-item {
@@ -258,14 +232,11 @@ a {
     }
 
     .header h4 {
-        font-size: 1.3rem; /* Default font size */
+        font-size: 1.25rem; /* Default font size */
     }
 
-    .dropdown-item i{
-        font-size: 1.0rem; /* Default font size */
-    }
-    .dropdown-item h6{
-        font-size: 1.2rem;
+    .dropdown-item {
+        font-size: 1.25rem; /* Default font size */
     }
 
     .module-item {

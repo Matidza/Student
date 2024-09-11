@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href='{{ url_for('static', filename='dashboard.css')}}'>
+    <!--<link rel="stylesheet" href='./Static/dashboard.css'>-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
     
@@ -14,7 +15,7 @@
 
     <title>Dashboard</title>
   </head>
-  <body class="body">
+  <body class="">
     
     
     <div class="container">
@@ -33,14 +34,26 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent"style="color: white" >
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
+                        <a class="nav-link" style="color: white" href="{{ url_for('dashboard') }}">
+                            dashboard
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" style="color: white" href="{{ url_for('modules') }}">
-                            Modules+
+                            modules +
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" style="color: white" href="{{ url_for('allnotes') }}">
-                            Notes+
+                            notes +
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color: white" href="{{ url_for('dev') }}">
+                            dev
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -102,51 +115,52 @@
                 <!-- User Details Section (aligned with the image) -->
                 <div class="contain__info" >
 
-                    <h5>{{ current_user.title }} 
+                    <h4>{{ current_user.title }} 
                         {{ current_user.surname }} 
                         {{ current_user.initials }}
-                    </h5>
-                    <h5>{{ current_user.degree }}</h5>
-                    <h5>{{ current_user.student }}</h5>
-                    <h5>{{ current_user.campus }}</h5>
+                    </h4>
+                    <h4>{{ current_user.degree }}</h4>
+                    <h4>{{ current_user.student }}</h4>
+                    <h4>{{ current_user.campus }}</h4>
 
                 </div>
             </div>
             <br/>
 
             <!-- Modules Section (Separate from Student Card) -->
-            <a href="{{ url_for('dashboard') }}">Modules</a>
-            <a href="{{ url_for('allnotes') }}">
-                Notes
-            </a>
+            <div class="links-container">
+                <a href="{{ url_for('dashboard') }}">dash</a>
+                <a href="{{ url_for('allnotes') }}">notes</a>
+            </div>
+ 
                
             <div class="module-container">
                 {% for module in modules %}
                 {% if current_user.id == module.user_id %}
                     <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
-                        <div class="header">
-                            <!-- Module Name -->
-                            <h4>{{ module.Vaal.Module }}</h4>
-                            
-                            <!-- Toggle Icon -->
-                            <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
-                        </div>
+    <div class="header">
+        <!-- Module Name -->
+        <h4>{{ module.Vaal.Module }}</h4>
+        
+        <!-- Toggle Icon -->
+        <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
+    </div>
 
-                        <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}">
-                        <h6>
-                            Date: {{ module.Vaal.Date }}<br>
-                            Start: {{ module.Vaal.Session }}<br>
-                            Venue: {{ module.Vaal.Venue }}<br>
-                            Students: {{ module.Vaal.Students }}
-                        </h6>
-                    </a>
-                        <!-- Dropdown Content (Initially Hidden) -->
-                        <div class="dropdown-content" style="display: none;">
-                            <form method="POST"  action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </div>
-                    </div>
+    <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}">
+        <h6>
+            Lecturer:<br>
+            Assessments:<br>
+        </h6>
+    </a>
+
+    <!-- Dropdown Content (Initially Hidden) -->
+    <div class="dropdown-content hidden">
+        <form method="POST" action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+    </div>
+</div>
+
                 {% endif %}
                 {% endfor %}
             </div>
@@ -160,21 +174,21 @@
         </div>    
    
     </div> 
-     <script>
-        function toggleDropdown(icon) {
-            // Find the closest dropdown-content within the same module-item
-            var dropdownContent = icon.closest('.module-item').querySelector('.dropdown-content');
-            // Toggle the dropdown content's display style
-            if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
-                dropdownContent.style.display = 'block';
-                icon.classList.add('open-dropdown'); // Optional: Change icon style when dropdown is open
-            } else {
-                dropdownContent.style.display = 'none';
-                icon.classList.remove('open-dropdown'); // Optional: Revert icon style when dropdown is closed
-            }
-        }
-    </script>
-    <script src="{{ url_for('static', filename='js/js.js')}}"></script>
+        <script>
+function toggleDropdown(iconElement) {
+    // Find the closest `.module-item` to the icon clicked
+    var moduleItem = iconElement.closest('.module-item');
+    
+    // Find the `dropdown-content` inside the module
+    var dropdownContent = moduleItem.querySelector('.dropdown-content');
+    
+    // Toggle the `hidden` class
+    dropdownContent.classList.toggle('hidden');
+}
+</script>
+
+
+   
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

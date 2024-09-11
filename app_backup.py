@@ -3,7 +3,7 @@ from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_login import UserMixin, login_user,LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError, IntegerField
-from wtforms.validators import  Length, ValidationError, DataRequired, EqualTo
+from wtforms.validators import  Length, ValidationError, DataRequired, EqualTo, Email
 from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import ForeignKey
@@ -13,7 +13,6 @@ from flask_login import current_user
 from sqlalchemy import ForeignKeyConstraint
 from wtforms.widgets import TextArea
 
-import os
 
 
 """"
@@ -29,11 +28,11 @@ app = Flask(__name__)
 
 # MySQL CONNECTION
 # Creating App Instance
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/users"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:1969@localhost/users'
 
 app.config['SQLALCHEMY_TRACK_MIDIFICATIONS'] = False
 
-app.config['SECRET_KEY'] = "Thesecrectkeyisequalto1969Zwi!@#"
+app.config['SECRET_KEY'] = 'htnethnet'
 
 # Connects the DB to the app
 db = SQLAlchemy(app)
@@ -503,30 +502,6 @@ def modules():
     #    return redirect(url_for('dashboard'))
 
    # return render_template('modules.html', all_modules=all_modules)
-class SearchForm(FlaskForm):
-    search = StringField('Searched', validators=[DataRequired(), Length(
-        min=4, max=20)], render_kw={"Placeholder": ""})
-    submit = SubmitField("Search")
-
-@app.context_processor
-def base():
-    form = SearchForm()
-    return dict(form=form)
-
-# Search Modules
-@app.route('/search', methods=['GET', 'POST'])
-@login_required
-def search():
-
-    form = SearchForm()
-    modules = Vaal.query
-    if form.validate_on_submit():
-        # Get data
-
-        module.searched = form.searched.data
-        modules = Vaal.query.filter(Vaal.Module.like('%' + modules.searched + '%'))
-        modules = Vaal.order_by(Vaal.Module).all()
-        return render_template('modules.html', form=form, searched=module.searched, modules=modules)
 
 """"
 Module Display are on 
@@ -686,15 +661,14 @@ def update_notes(id):
         return render_template('update_notes.html', update_notes=update_notes)
 
 """
+
 Developer's Page
+
 """
 @app.route('/dev', methods=['GET', 'POST'])
 def dev():
     return render_template('dev.html')
 
-""""
-FOOTER PAGE RELATED
-"""
 
 if __name__ == "__main__":
     with app.app_context():

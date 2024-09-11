@@ -100,10 +100,10 @@ html {
 
 .info-title {
     font: var(--body-font);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.5rem;
     margin-bottom: var(--mb-0-5);
-    color: var(--title-color);
+    color: hsl(0, 0%, 33%);
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -125,6 +125,11 @@ html {
 .info-details p {
     margin: var(--mb-0-5) 0;
     color: var(--text-color);
+}
+.info-details h6 {
+    margin: 0;
+    color:  hsl(0, 0%, 23%);
+    font-weight: 500;
 }
 
 .info-details a {
@@ -164,17 +169,35 @@ html {
 
 .header h4 {
     margin: 0;
-    color: hsl(216, 8%, 15%);
-    font-weight: 350;
+    color:  hsl(0, 0%, 23%);
+    font-weight: 600;
 }
-
+.header h2 {
+    margin: 0;
+    color:  hsl(0, 0%, 21%);
+    font-weight: 600;
+}
+.header i {
+    color: hsl(0, 0%, 16%); /* Adjust the title color */
+}
+.dropdown-item h6{
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 23%); /* Adjust the title color */
+    font-weight: 500;
+}
+.dropdown-item i{
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 64%); /* Adjust the title color */
+    font-weight: 400;
+}
 .dropdown-item {
     display: flex;
     align-items: center;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
 }
 
 .module-item {
+    position: relative;
     cursor: pointer;
     background-color: rgb(255, 252, 252);
     margin-bottom: 1rem;
@@ -199,6 +222,10 @@ html {
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 10;
+    top: 100%;
+    right: 0;
+    margin-top: 5px; /* 5px gap below the icon */
+    width: 90px;
 }
 
 .btn {
@@ -238,8 +265,18 @@ html {
         align-items: flex-start; /* Align the content to the top left */ 
     }
     
+    
     .header h4 {
-        font-size: 1rem; /* Adjust font size */
+        font-size: 1.25rem;
+    }
+    .header i {
+        font-size: 1.3rem;
+    }
+    .dropdown-item i{
+        font-size: 1.0rem;
+    }
+    .dropdown-item h6{
+        font-size: 1.1rem;
     }
 
     .module-item {
@@ -269,6 +306,9 @@ html {
     .info-details {
         padding: 15px; /* Default padding */
     }
+    .info-details h6 {
+        font-size: 1.1rem;
+    }
 
     .header {
         flex-direction: row; /* Horizontal header */
@@ -277,8 +317,18 @@ html {
         
     }
 
+    
     .header h4 {
-        font-size: 1.25rem; /* Default font size */
+        font-size: 1.3rem;
+    }
+    .header i {
+        font-size: 1.25rem;
+    }
+    .dropdown-item i{
+        font-size: 1.0rem;
+    }
+    .dropdown-item h6{
+        font-size: 1.2rem;
     }
 
     .module-item {
@@ -287,7 +337,7 @@ html {
     }
 
     .dropdown-content {
-        width: 120px; /* Default width */
+        width: max-content; /* Default width */
     }
 
     .btn {
