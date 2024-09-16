@@ -114,12 +114,20 @@
                 <a href="{{ url_for('notification') }}">notification</a>
                 <a href="{{ url_for('calender') }}">calender</a>
             </div>
- 
-               
+            <br>
+            <div class="button-container">
+                <a href="{{ url_for('modules') }}">
+                    <button class="btn btn-primary">+</button>
+                </a>
+            </div>
+
+            
+                <br>
             <div class="module-container">
                 
                 {% for module in modules %}
                 {% if current_user.id == module.user_id %}
+               
                     <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
                         <div class="header">
                             <!-- Module Name -->
@@ -156,9 +164,7 @@
 
             <!-- Add Module Button -->
             <br>
-            <a class="nav" href="{{ url_for('modules')}}">
-                    <button class="link navbar-expand-lg navbar-dark bg-primary bold border  border-9 rounded-lg  "  >+</button>
-                </a> 
+             
             
                            
         </div>    

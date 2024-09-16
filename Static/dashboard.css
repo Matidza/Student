@@ -224,31 +224,7 @@ a {
     color: #007bff; /* Example color change */
 }
 
-.link {
-    color: rgba(255, 255, 255, 0.86);
-    left: 0;
-    top: 0;
-    width: 59px;
-    height: 61px;
-    border-radius: 25px;
-    background: #105be8;
-    background-blend-mode: normal;
-}
 
-.nav {
-    height: 61px;
-    max-width: 59px;
-    transform: scaleX(-1) rotate(180deg);
-    z-index: 1;
-    font: var(--body-font);
-    font-size: 30px;
-    font-weight: 700;
-    margin-top: -700px;
-    margin-left: 500px;
-    text-align: center;
-    position: fixed;
-    display: center;
-}
 .info-section {
     margin-bottom: var(--mb-1);
 }
@@ -307,6 +283,16 @@ a {
 .info-section.active .info-title::after {
     transform: rotate(180deg);
 }
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns content to the far right */
+    margin-top: 20px; /* Optional: add space above the button */
+}
+
+.button-container a {
+    text-align: right;
+}
+
 
 
 
@@ -333,9 +319,7 @@ a {
         margin-top: 25%;
         margin-left: 30%;
     }
-    .header {
-        justify-content: space-between;
-    }
+    
 /*
     .header h4 {
         font-size: 1.2rem;  Adjust size if needed 
@@ -375,22 +359,19 @@ a {
         grid-template-columns: 1fr; /* Single column layout on very small screens */
     }
     
-    .nav {
-        position: relative;
-        margin-top: -420px;
-        margin-left: 80%;
-    }
+    
     .links-container {
         display: flex; /* Use flexbox to align children in a row */
         gap: 15px; /* Add a 5px gap between links */
+        flex-wrap: wrap;
     }
 
     .links-container a {
        
         text-decoration: none; /* Remove underline from links */
         color: hsl(0, 0%, 18%); /* Set link color */
-        padding: 10px 15px; /* Add padding for better click area */
-        border: 1px solid hsl(0, 0%, 80%); /* Light border color */
+        padding: 5px; /* Add padding for better click area */
+        border: 2px solid rgb(55, 11, 248); /* Light border color */
         border-radius: 50px; /* Rounded corners */
         background-color: hsl(0, 0%, 95%); /* Optional: background color */
         display: inline-block; /* Ensure links are treated as block elements */
@@ -412,8 +393,13 @@ a {
     .info-details {
         padding: 10px; /* Adjust padding */
     }
+    .button-container {
+        padding-right: 10px; /* Optional: add extra padding for small screens */
+    }
+
     
 }
+
 
 @media (min-width: 492px) {
     /* Styles for larger devices */
@@ -474,11 +460,7 @@ a {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Two columns or more depending on screen width */
     }
     
-    .nav {
-        position: relative;
-        margin-top: -230px;
-        margin-left: 90%;
-    }
+    
     .links-container {
         display: none; /* Hide the links container */
     }

@@ -19,10 +19,7 @@ from flask_wtf.file import FileField
 import os
 
 
-""""
-APP CONFIGURATIONS
 
-"""
 app = Flask(__name__)
 
 # Rich Text Editor
@@ -35,9 +32,7 @@ app = Flask(__name__)
 
 # MySQL CONNECTION
 # Creating App Instance
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://Zwivhuya:1969Zwi%21%40%23@Zwivhuya.mysql.pythonanywhere-services.com:3306/Zwivhuya$Users'
-
-
+#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://Zwivhuya:1969Grace@Zwivhuya.mysql.pythonanywhere-services.com/Zwivhuya$Users"
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/users"
@@ -121,7 +116,34 @@ class Vaal(db.Model):
     Vaal = db.relationship('UserModules', backref='Vaal')
     VaalNotes= db.relationship('Notes', backref='VaalNotes')
 
+'''
+class Potch(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Module = db.Column(db.Text)
+    #Paper = db.Column(db.Integer)
+    Date = db.Column(db.Text)
+    Session  = db.Column(db.Text)
+    Duration = db.Column(db.Text)
+    Venue = db.Column(db.Text)
+    Students = db.Column(db.Text)
 
+    Potch = db.relationship('UserModules', backref='Potch')
+    PotchNotes= db.relationship('Notes', backref='PotchNotes')
+
+class Mahikeng(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    Module = db.Column(db.Text)
+    #Paper = db.Column(db.Integer)
+    Date = db.Column(db.Text)
+    Session  = db.Column(db.Text)
+    Duration = db.Column(db.Text)
+    Venue = db.Column(db.Text)
+    Students = db.Column(db.Text)
+
+    Mahikeng = db.relationship('UserModules', backref='Mahikeng')
+    MahikengNotes= db.relationship('Notes', backref='VaalNotes')
+
+'''
 
 
  
@@ -538,7 +560,6 @@ class UserModules(db.Model):
         return f'Modules {self.title}' 
 
 
-
 # Add Modules To User DashBoard
 @app.route('/modules', methods=['GET', 'POST'])
 @login_required
@@ -556,24 +577,34 @@ def modules():
     all_modules = Vaal.query.order_by(Vaal.Module)
     return render_template('modules.html', all_modules=all_modules)
 
+'''
+if request.method == 'POST':
+        module_id = request.form.get('module_id')
+        user_id = request.form.get('user_id')
 
-    #all_modules = Vaal.query.order_by(Vaal.Module) # I use Vaal.Module and not Vaal.id since Vaal.Module will be Alphabetic order
+        new_user_module = UserModules(module_id=module_id, user_id=user_id)
+        db.session.add(new_user_module)
+        db.session.commit()
+        flash('Module added successfully!')
+        return redirect(url_for('dashboard'))  # or wherever you want to redirect
+
+    # Determine the user's campus
+    user_campus = current_user.campus
     
-    #if request.method == 'POST':
-    #    selected_modules = request.form.getlist('Vaal.id')
+    # Query the appropriate table based on the campus
+    if user_campus == 'Vaal Campus':
+        all_modules = Vaal.query.order_by(Vaal.Module)
+    elif user_campus == 'Potchefstroom':
+        all_modules = Potch.query.order_by(Potch.Module)
+    elif user_campus == 'Mahikeng':
+        all_modules = Mahikeng.query.order_by(Mahikeng.Module)
+    else:
+        all_modules = []  # Handle case where campus is not recognized
 
-      #  for module_id in selected_modules:
-      #      # Check if the module is already added to the user's dashboard
-      #      existing_module = UserModules.query.filter_by(user_id=current_user.id, module_id=module_id).first()
-      #      if not existing_module:
-       #         user_module = UserModules(user_id=current_user.id, module_id=module_id)
-      #          db.session.add(user_module)
+    return render_template('modules.html', all_modules=all_modules)
 
-     #   db.session.commit()
-    #    flash('Modules added to your dashboard!', 'success')
-    #    return redirect(url_for('dashboard'))
 
-   # return render_template('modules.html', all_modules=all_modules)
+'''
 class SearchForm(FlaskForm):
     search = StringField('Searched', validators=[DataRequired(), Length(
         min=4, max=20)], render_kw={"Placeholder": ""})
