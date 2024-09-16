@@ -197,8 +197,10 @@ a {
     .header h4 {
         font-size: 1rem; /* Adjust font size */
     }
+    
 
     .dropdown-item {
+        margin-top: -50px;
         font-size: 1rem; /* Adjust font size for smaller screens */
     }
 
@@ -234,8 +236,10 @@ a {
     .header h4 {
         font-size: 1.25rem; /* Default font size */
     }
+   
 
     .dropdown-item {
+         margin-top: -90px;
         font-size: 1.25rem; /* Default font size */
     }
 

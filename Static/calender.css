@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+:root {@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 /*========= Variables=======*/
-:root {
     --header-height: 4.3rem;
 
     /* ======== Colors ========*/
@@ -73,10 +73,6 @@ body.dark-theme{
     --scroll-thumb-color:hsl(var(--hue-color), 12%, 36%);
 }
 
-/* ================= Button Dark/Light===================*/
-      
-
-/*========== BASE ===========*/
 * {
     box-sizing: border-box;
     padding: 0;
@@ -87,80 +83,129 @@ html {
     scroll-behavior: smooth;
 }
 
+/* General Styles */
 .body {
-    font-weight: 300;
-    margin: 0 0 var(--header-height) 0;
-    font-family: var(--body-font);
-    font-size: var(--h3-font-size);
+    font-family: 'Poppins', sans-serif;
     background-color: rgb(247, 247, 247);
+    color: hsl(216, 8%, 45%);
+}
+.module-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout for small screens */
+    gap: 1rem; /* Gap between grid items */
+}
+
+.info-section {
+    margin-bottom: var(--mb-1);
+}
+
+.info-title {
+    font: var(--body-font);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: var(--mb-0-5);
+    color: hsl(0, 0%, 33%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: var(--h3-font-size);
+}
+
+.info-details {
+    display: none;
+    background-color: var(--container-color);
+    padding: var(--mb-1);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-section.active .info-details {
+    display: block;
+}
+
+.info-details p {
+    margin: var(--mb-0-5) 0;
     color: var(--text-color);
-    margin: 0 0 var(--header-height) 0;
 }
-h1, h2, h3, h4 {
-    color: var(--title-color);
-    font-weight: var(--font-semi-bold);
-}
-
-ul {
-    list-style: none;
+.info-details h6 {
+    margin: 0;
+    color:  hsl(0, 0%, 23%);
+    font-weight: 500;
 }
 
-a {
+.info-details a {
+    color: var(--first-color);
     text-decoration: none;
 }
 
+.info-details a:hover {
+    text-decoration: underline;
+}
 
-/* Flex container for header */
+.info-title::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: var(--mb-0-5);
+    transition: transform 0.3s ease;
+}
+
+.info-section.active .info-title::after {
+    transform: rotate(180deg);
+}
+
+.header-align-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
 .header {
     display: flex;
-    justify-content: space-between;  /* Align items to the left and right */
-    align-items: center;             /* Vertically align the items */
-    width: 100%;                     /* Make sure the header takes full width */
-    padding: 10px 0; 
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
 }
 
 .header h4 {
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 33%); /* Adjust the title color */
-    font-weight: 600; /* Semi-bold font weight */
+    margin: 0;
+    color:  hsl(0, 0%, 23%);
+    font-weight: 600;
+}
+.header h2 {
+    margin: 0;
+    color:  hsl(0, 0%, 21%);
+    font-weight: 600;
 }
 .header i {
     color: hsl(0, 0%, 16%); /* Adjust the title color */
-}
-
-
-
-/* The <a> tag (back button) styles */
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    font-size: 1.0rem; /* Adjust font size */
-}
-.dropdown-item h4{
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 23%); /* Adjust the title color */
-    font-weight: 600;
 }
 .dropdown-item h6{
     margin: 0; /* Ensure no extra margin around the heading */
     color: hsl(0, 0%, 23%); /* Adjust the title color */
     font-weight: 500;
-    text-wrap:wrap; 
 }
 .dropdown-item i{
     margin: 0; /* Ensure no extra margin around the heading */
     color: hsl(0, 0%, 64%); /* Adjust the title color */
-    font-weight: 400;  
+    font-weight: 400;
+}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.15rem;
 }
 
-/* Module item container styling */
 .module-item {
+    position: relative;
     cursor: pointer;
     background-color: rgb(255, 252, 252);
     margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Ensure text inside is left-aligned */
 }
 
 .module-item .header {
@@ -178,9 +223,12 @@ a {
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 10;
+    top: 100%;
+    right: 0;
+    margin-top: 5px; /* 5px gap below the icon */
+    width: 90px;
 }
 
-/* Button styles */
 .btn {
     display: inline-block;
     font-size: 0.875rem;
@@ -199,81 +247,85 @@ a {
     background-color: #dc3545;
     color: white;
 }
-.h4 {
-    color: grey;
-    margin-left: 5px;
-}
 
 /* Media Queries */
 
-/* For small devices (max-width: 491px) */
+/* Styles for small devices (max-width: 491px) */
 @media (max-width: 491px) {
-    .header {
-        flex-direction: row; /* Keep items in a row */
-        justify-content: space-between; /* Align items to the far left and right */
-        align-items: center; /* Center align items vertically */
-        padding: 5px 0; /* Reduce padding */
+    .info-title {
+        font-size: 1.2rem; /* Adjust title size for small screens */
     }
-
+    
+    .info-details {
+        padding: 10px; /* Adjust padding */
+    }
+    
+    .header {
+       justify-content: space-between; /* Ensure alignment even on smaller screens */
+        padding: 0; /* Remove extra padding */
+        align-items: flex-start; /* Align the content to the top left */ 
+    }
+    
+    
     .header h4 {
-        font-size: 1.6rem; /* Adjust font size */
+        font-size: 1.25rem;
     }
     .header i {
-        font-size: 1.2rem; /* Adjust font size */
-    }
-
-    .dropdown-item i{
-        font-size: 1.0rem; /* Adjust font size for smaller screens */
-    }
-    .dropdown-item h4{
         font-size: 1.3rem;
+    }
+    .dropdown-item i{
+        font-size: 1.0rem;
     }
     .dropdown-item h6{
         font-size: 1.1rem;
-        
     }
 
     .module-item {
         padding: 0.75rem; /* Reduce padding */
+        margin-bottom: 0.75rem;
     }
 
     .dropdown-content {
-        width: 100px; /* Adjust width for smaller screens */
+        width: 100px; /* Adjust dropdown width */
+    }
+
+    .btn {
+        font-size: 0.75rem; /* Adjust button font size */
+        padding: 0.4rem 0.75rem; /* Adjust button padding */
     }
 }
 
-/* For larger devices (min-width: 492px) */
+/* Styles for larger devices (min-width: 492px) */
 @media (min-width: 492px) {
-    .module-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width and fit */
-        gap: 1rem; /* Space between grid items */
-        padding: 0 1rem; /* Optional: padding inside the container */
+     .module-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for larger screens */
+    }
+    .info-title {
+        font-size: 1.5rem; /* Default font size */
     }
 
-    .module-item {
-        /* Ensure the module item takes full width in the grid cell */
-        width: 100%;
-        max-width: none; /* Remove any max-width if set */
+    .info-details {
+        padding: 15px; /* Default padding */
     }
+    .info-details h6 {
+        font-size: 1.1rem;
+    }
+
     .header {
-        flex-direction: row; /* Align items in a row */
-        align-items: center; /* Align items in the center */
-        padding: 10px 0; /* Default padding */
+        flex-direction: row; /* Horizontal header */
+        align-items: center; /* Center items vertically */
+        padding: 10px 0; 
     }
-
+    
+    
     .header h4 {
-        font-size: 1.8rem; /* Adjust font size */
-    }
-    .header i {
-        font-size: 1.5rem; /* Adjust font size */
-    }
-
-    .dropdown-item h5{
         font-size: 1.3rem;
     }
+    .header i {
+        font-size: 1.25rem;
+    }
     .dropdown-item i{
-        font-size: 1..6rem; /* Adjust font size for smaller screens */
+        font-size: 1.0rem;
     }
     .dropdown-item h6{
         font-size: 1.2rem;
@@ -281,9 +333,15 @@ a {
 
     .module-item {
         padding: 1rem; /* Default padding */
+        margin-bottom: 1rem;
     }
 
     .dropdown-content {
-        width: 120px; /* Adjust width for larger screens */
+        width: max-content; /* Default width */
+    }
+
+    .btn {
+        font-size: 0.875rem; /* Default font size */
+        padding: 0.5rem 1rem; /* Default padding */
     }
 }

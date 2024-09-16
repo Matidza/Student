@@ -12,7 +12,11 @@
 
     <title>Login</title>
   </head>
+  
   <body class="">
+   {% extends "base.html" %}
+    {% block content %}
+       
     
     <div class="  container border rounded rounded-3 border-white  mb-3 shadow-sm p-3 mb-5" >
         {% for message in get_flashed_messages()%}
@@ -25,9 +29,9 @@
             
         {% endfor %}
         
-        <h1 class="login__title">
-              Login to Account
-        </h1>
+        <h2 class="login__title">
+              Login
+        </h2>
         <br><br>
         <form method="POST" action="/login">
             <!--Username-->
@@ -38,11 +42,13 @@
             {{ form.password_hash.label(class="form-label") }}
             {{ form.password_hash(class="form-control")}}
             <br>
-            {{form.submit(class="btn btn-primary shadow  ")}}
             
-            <a class="password"href="{{url_for('forgot')}}" >
-              Forgot Password?
-            </a>
+            <div class="form-actions">
+                {{form.submit(class="btn btn-primary shadow")}}
+                <a class="password" href="{{url_for('forgot')}}">
+                    Forgot Password?
+                </a>
+            </div>
         </form>
         <br/>
         <br>
@@ -56,11 +62,13 @@
             
         </div>
     </div>
-
+      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  {% endblock%}
   </body>
+ 
 </html>

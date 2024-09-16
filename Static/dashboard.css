@@ -133,6 +133,8 @@ a {
     padding: 20px;
     position: absolute;
     background-color: rgb(255, 252, 252);
+     background: linear-gradient(180deg, rgba(64,173,236,0.86) 0%, rgba(222,227,251,0.86) 68,54%);
+  background-blend-mode: normal;
     max-height: 270px;
     
 }
@@ -163,21 +165,29 @@ a {
     color: hsl(0, 0%, 21%); /* Adjust the title color */
     font-weight: 450; /* Semi-bold font weight */
 }
-
 .header {
     display: flex;
-    justify-content: space-between; /* Space between module name and icon */
-    align-items: center; /* Center align items vertically */
+    justify-content: space-between; /* Ensures space between left and right elements */
+    align-items: center; /* Vertically centers the items */
 }
+
 .header h4 {
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(0, 0%, 23%); /* Adjust the title color */
-    font-weight: 600; /* Semi-bold font weight */
+    margin-left: 5px; /* Small gap between graduation icon and text */
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 9px;
 }
-.header i {
-    color: hsl(0, 0%, 18%); /* Adjust the title color */
-    
+
+.header i:first-child {
+    margin-right: 0; /* Remove any gap between the icon and the text */
 }
+
+.header i:last-child {
+    margin-left: auto; /* Push the ellipsis icon to the far right */
+    font-size: 1.1rem; /* Adjust as needed for icon size */
+}
+
+
 .hidden {
     display: none;
 }
@@ -186,6 +196,12 @@ a {
     margin: 0; /* Ensure no extra margin around the heading */
     color: hsl(0, 0%, 23%); /* Adjust the title color */
     font-weight: 500;
+}
+.dropdown h6{
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 67%); /* Adjust the title color */
+    font-weight: 600;
+
 }
 
 .dropdown-content {
@@ -233,6 +249,64 @@ a {
     position: fixed;
     display: center;
 }
+.info-section {
+    margin-bottom: var(--mb-1);
+}
+
+.info-title {
+    font: var(--body-font);
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-bottom: var(--mb-0-5);
+    color: hsl(0, 0%, 40%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: var(--h3-font-size);
+}
+
+.info-details {
+    display: none;
+    background-color: var(--container-color);
+    padding: var(--mb-1);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-section.active .info-details {
+    display: block;
+}
+
+.info-details p {
+    margin: var(--mb-0-5) 0;
+    color: var(--text-color);
+}
+.info-details h6 {
+    margin: 0;
+    color:  hsl(0, 0%, 23%);
+    font-weight: 500;
+}
+
+.info-details a {
+    color: var(--first-color);
+    text-decoration: none;
+}
+
+.info-details a:hover {
+    text-decoration: underline;
+}
+
+.info-title::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: var(--mb-0-5);
+    transition: transform 0.3s ease;
+}
+
+.info-section.active .info-title::after {
+    transform: rotate(180deg);
+}
 
 
 
@@ -252,19 +326,45 @@ a {
         font-size: 1.35rem; 
     }
     .dropdown-item h6{
-        font-size: 1.1rem;
+        font-size: 1rem;
+    }
+    .dropdown h6{
+        font-size: 1.6rem;
+        margin-top: 25%;
+        margin-left: 30%;
     }
     .header {
         justify-content: space-between;
     }
-
+/*
     .header h4 {
-        font-size: 1.2rem; /* Adjust size if needed */
+        font-size: 1.2rem;  Adjust size if needed 
+    }*/
+
+    /*.header i {
+        font-size: 1.0rem;  Adjust icon size if needed 
+        margin-left: 30px;  Maintain space between h4 and i 
+    }*/
+    .header {
+        display: flex;
+        justify-content: space-between; /* Space between elements */
+        align-items: center; /* Vertically center the items */
     }
 
-    .header i {
-        font-size: 1.0rem; /* Adjust icon size if needed */
-        margin-left: 30px; /* Maintain space between h4 and i */
+    .header i:first-child {
+        font-size: 1rem; /* Adjust icon size for small screens */
+        margin-right: 0; /* Remove space between icon and module name */
+    }
+
+    .header h4 {
+        font-size: 1.2rem; /* Adjust font size for smaller screens */
+        margin-left: 10px; /* Minimal space between icon and text */
+        font-weight: 600;
+    }
+
+    .header i:last-child {
+        font-size: 1rem; /* Adjust ellipsis icon size for smaller screens */
+        margin-left: auto; /* Ensure the icon stays on the far right */
     }
     
     .username {
@@ -305,6 +405,13 @@ a {
         background-color: hsl(0, 0%, 90%); /* Change background color on hover */
         border-color: hsl(0, 0%, 60%); /* Darken border color on hover */
     }
+    .info-title {
+        font-size: 1.2rem; /* Adjust title size for small screens */
+    }
+    
+    .info-details {
+        padding: 10px; /* Adjust padding */
+    }
     
 }
 
@@ -321,19 +428,48 @@ a {
     .dropdown-item h6{
         font-size: 1.2rem;
     }
+    .dropdown h6{
+        font-size: 1.6rem;
+        margin-top: 25%;
+        margin-left: 300px;
+        display: none;
+    }
     .header {
         justify-content: space-between;
     }
 
-    .header h4 {
-        font-size: 1.5rem; /* Adjust size if needed */
+    /*.header h4 {
+        font-size: 1.5rem;  Adjust size if needed 
+    }*/
+
+    /*.header i {
+        font-size: 1.1rem;  Adjust icon size if needed 
+        margin-left: 30px;  Maintain space between h4 and i 
+    }
+    */
+
+    .header {
+        display: flex;
+        justify-content: space-between; /* Space between elements */
+        align-items: center; /* Vertically center the items */
     }
 
-    .header i {
-        font-size: 1.1rem; /* Adjust icon size if needed */
-        margin-left: 30px; /* Maintain space between h4 and i */
+    .header i:first-child {
+        font-size: 1.5rem; /* Larger icon size for larger screens */
+        margin-right: 0; /* Ensure no gap between the icon and module name */
     }
-    
+
+    .header h4 {
+        font-size: 1.5rem; /* Larger font size for bigger screens */
+        margin-left: 10px; /* Keep a minimal gap between icon and text */
+        font-weight: 600;
+        
+    }
+
+    .header i:last-child {
+        font-size: 1.2rem; /* Slightly larger ellipsis icon for larger screens */
+        margin-left: auto; /* Ensure the icon stays on the far right */
+    }
     .module-container {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Two columns or more depending on screen width */
     }
@@ -345,6 +481,16 @@ a {
     }
     .links-container {
         display: none; /* Hide the links container */
+    }
+    .info-title {
+        font-size: 1.5rem; /* Default font size */
+    }
+
+    .info-details {
+        padding: 15px; /* Default padding */
+    }
+    .info-details h6 {
+        font-size: 1.1rem;
     }
 }
 

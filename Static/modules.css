@@ -111,14 +111,7 @@ a {
        
 
 /* Default styles for small screens (max-width: 491px) */
-.container {
-    display: flex;
-    justify-content: center; /* Horizontally center the container */
-    align-items: center;     /* Vertically center the container */
-    flex-direction: column;  /* Stack the items vertically */
-    min-height: 100vh;       /* Make sure it takes the full height of the viewport */
-    margin: 0 auto;          /* Ensure the container is centered horizontally */
-}
+
 
 .contain {
     margin: 0;
@@ -154,12 +147,12 @@ a {
 }
 
 .form-control {
-    max-width: 150px;
-    margin-left: 45px;
+    max-width: 100px;
+    margin-left: -145px;
 }
 
 .btn {
-    margin-left: 15px;
+    margin-left: 0;
 }
 
 .h4 {
@@ -213,7 +206,7 @@ a {
 /* Styles for larger screens (min-width: 492px) */
 @media (min-width: 492px) {
     .contain {
-        max-width: 100%;
+        max-width: 750px;
         max-height: 750px;
         padding: 30px;
         border-radius: 10px;
@@ -221,7 +214,7 @@ a {
     }
 
     .clickable-div {
-        margin-left: 40px;
+        margin-left: 70px;
         width: 450px;
         font-size: 1rem; /* Increase font size for larger screens */
         margin-top: 15px;
@@ -263,6 +256,9 @@ a {
         padding: 10px 20px; /* Larger padding for the button */
         font-size: 1.1rem; /* Slightly larger font size */
     }
+    /*h2 i{
+        display: none;
+    }*/
     
 }
 
@@ -270,6 +266,8 @@ a {
 @media (max-width: 491px) {
     .contain {
         max-width: 100%;
+        max-height: 100%;
+        overflow-y: auto;
         padding: 15px;
         border-radius: 5px;
         border: 1px solid white;
@@ -277,6 +275,7 @@ a {
 
     .clickable-div {
         margin-left: 10px;
+        overflow-y: auto;
         width: 320px;
         font-size: 0.85rem; /* Smaller font size for small screens */
         margin-top: 5px;

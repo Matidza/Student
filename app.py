@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, url_for, redirect, flash, request
 from flask_login import UserMixin, login_user,LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, ValidationError, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, ValidationError, IntegerField, FileField
 from wtforms.validators import  Length, ValidationError, DataRequired, EqualTo
 from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,7 +12,10 @@ from datetime import datetime
 from flask_login import current_user
 from sqlalchemy import ForeignKeyConstraint
 from wtforms.widgets import TextArea
-
+#from flask_ckeditor import CKEditor
+from werkzeug.utils import secure_filename
+import uuid as uuid
+from flask_wtf.file import FileField
 import os
 
 
@@ -21,6 +24,9 @@ APP CONFIGURATIONS
 
 """
 app = Flask(__name__)
+
+# Rich Text Editor
+#ckeditor = CKEditor(app)
 
 # Postgre SQL Connection
 
@@ -40,7 +46,10 @@ app.config['SQLALCHEMY_TRACK_MIDIFICATIONS'] = False
 
 app.config['SECRET_KEY'] = "Thesecrectkeyisequalto1969Zwi!@#"
 
-# Connects the DB to the app
+UPLOAD_FOLDER = 'Static/profiles/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Connect DB to app
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
@@ -79,6 +88,8 @@ class Users(db.Model, UserMixin):
     campus = db.Column(db.String(50), nullable=False)
     #email = db.Column(db.String(100), nullable=False)
     password_hash = db.Column(db.String(80), nullable=False)
+    profile = db.Column(db.String(), nullable=True)
+
     UsersNotes= db.relationship('Notes', backref='UsersNotes', cascade='all, delete-orphan')
     Users= db.relationship('UserModules', backref='Users', cascade='all, delete-orphan')#, passive_deletes=True
     
@@ -100,11 +111,13 @@ class Users(db.Model, UserMixin):
 class Vaal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Module = db.Column(db.Text)
+    #Paper = db.Column(db.Integer)
     Date = db.Column(db.Text)
     Session  = db.Column(db.Text)
     Duration = db.Column(db.Text)
     Venue = db.Column(db.Text)
     Students = db.Column(db.Text)
+
     Vaal = db.relationship('UserModules', backref='Vaal')
     VaalNotes= db.relationship('Notes', backref='VaalNotes')
 
@@ -140,63 +153,6 @@ def home():
 HOME RELATED
 
 """
-# Registration Form
-class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(
-        min=4, max=20)], render_kw={"Placeholder": ""})
-     
-    password_hash = PasswordField('Password', validators=[DataRequired(), 
-        EqualTo('password_hash2', message='Passwords Must Match !'), Length(
-        min=4, max=20)], render_kw={"Placeholder": ""})
-    
-    password_hash2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(
-        min=4, max=20)], render_kw={"Placeholder": ""})
-    
-    student = StringField('Student Number', validators=[DataRequired(), Length(
-        min=4, max=8)], render_kw={"Placeholder": "eg. 12345678"})
-    
-    title = StringField('Title', validators=[DataRequired(), Length(
-        min=2, max=20)], render_kw={"Placeholder": "eg. Mr/Mrs"})
-
-    surname= StringField('Surname',validators=[DataRequired(), Length(
-      min=4, max=50)], render_kw={"Placeholder": ""})
-
-    initials= StringField('Initial',validators=[DataRequired(), Length(
-       min=1, max=8)], render_kw={"Placeholder": ""})
-
-    degree= StringField('Degree',validators=[DataRequired(), Length(
-       min=4, max=30)], render_kw={"Placeholder": "eg. B.Com Risk Managemet"})
-
-    name= StringField('Name',validators=[DataRequired(), Length(
-       min=4, max=20)], render_kw={"Placeholder": ""})
-
-    campus= StringField('Camups',validators=[DataRequired(), Length(
-       min=1, max=50)], render_kw={"Placeholder": "eg. Vaal Campus"})
-    
-    #email= EmailField('Email',validators=[DataRequired(), Length(
-       #min=1, max=100)], render_kw={"Placeholder": "eg. Email@gmail.com"})
-    
-    submit = SubmitField("Submit")
-
-    def validate_username(self, username):
-        # Later you can make the student number a validator
-        existing_user_username = Users.query.filter_by(
-                username=username.data ).first()
-        
-        if existing_user_username:
-            raise ValidationError(
-                "That Username already exits!!! Please choose a different one.")
-        # later on validate using student number
-   
-    def validate_username(self, student):
-        existing_user_student = Users.query.filter_by(
-            student=student.data).first()
-        
-        if existing_user_student:
-            raise ValidationError('student number already exits.')
- 
-
-
 
 """"
 LOGIN RELATED
@@ -288,10 +244,45 @@ def page_nt_found(e):
 FORGOT PASSWORD RELATED
 
 """
+#Forgot password form
+class ForgotForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(
+        min=4, max=20)], render_kw={"Placeholder": ""})
+    
+    student = StringField('Student Number', validators=[DataRequired(), Length(
+        max=8)], render_kw={"Placeholder": "eg. 12345678"})
+    
+
+    password_hash = PasswordField('New Password', validators=[DataRequired(), 
+        EqualTo('password_hash2', message='Passwords Must Match !'), Length(
+        min=4, max=20)], render_kw={"Placeholder": ""})
+    
+    password_hash2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(
+        min=4, max=20)], render_kw={"Placeholder": ""})
+    
+    submit = SubmitField("Submit")
+    
+
 # User Password Recovery
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
-    form = RegisterForm()
+    form = ForgotForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        student = form.student.data
+        new_password = form.password_hash.data
+        user = Users.query.filter_by(username=form.username.data,
+                    student=form.student.data).first()
+        if user:
+            hashed_password = bcrypt.generate_password_hash(new_password)
+            user.password_hash = hashed_password
+            db.session.commit()
+            flash('Password Updated Successfully!')
+            return redirect(url_for('login'))
+        else:
+            flash('Invalid username or student number!')
+            return redirect(url_for('forgot'))
+ 
     return render_template('forgot.html', form=form)
 
 
@@ -341,6 +332,8 @@ class RegisterForm(FlaskForm):
     
     #email= EmailField('Email',validators=[DataRequired(), Length(
        #min=1, max=100)], render_kw={"Placeholder": "eg. Email@gmail.com"})
+
+    profile = FileField('Profile Picture')
     
     submit = SubmitField("Submit")
 
@@ -416,7 +409,7 @@ def dashboard():
 @login_required
 def delete(id):
 
-    current_user = Users.query.get_or_404(id)    
+    current_user = Users.query.get_or_404(id) 
     try:
         db.session.delete(current_user)
         db.session.commit()
@@ -441,22 +434,86 @@ def update(id):
         current_user.initials = request.form['initials']
         current_user.degree = request.form['degree']
         current_user.campus = request.form['campus']
-        #current_user.student = request.form['student']
-        #current_user.password_hash = request.form['password_hash']
+        #current_user.profile = request.files['profile']
+
+        # grab image name
+        #pic_filename = secure_filename(current_user.profile.filename)
+        # set UUID
+
+        #pic_name = str(uuid.uuid1()) + "_" + pic_filename
+
+        #current_user.profile = pic_name
         try:
-            # Validate on submit Username and Student number on update before updaing
+            
             db.session.commit()
-            flash('Account Updated Successfully !')
+            flash('Account Updated Successfully!')
             return redirect(url_for('dashboard'))
         except Exception as e:
-            flash('Updating Account was Not Successful !')
+            flash("Account Wasn't Updated!")
             return redirect('/dashboard')
     else:
 
         return render_template('update.html', form=form, current_user=current_user)
 
 
+# Update User Profile Pic
+@app.route('/upload/<id>', methods=['GET', 'POST'])
+@login_required
+def upload(id):
+    form = RegisterForm()
+    current_user = Users.query.get_or_404(id)
+    if request.method == 'POST':
+       
+        if request.files['profile']:
+            current_user.profile = request.files['profile']
 
+            # grab image name
+            pic_filename = secure_filename(current_user.profile.filename)
+            
+            pic_name = str(uuid.uuid1()) + "_" + pic_filename
+            #save the image
+            saver = request.files['profile']
+            
+            
+            
+            # Change to string
+            current_user.profile = pic_name
+            try: 
+                db.session.commit()
+                saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                flash('Profile picture Uploaded')
+                return redirect(url_for('dashboard'))
+            except :
+                flash("Profile picture Not")
+                return redirect('/upload')
+        else:
+            db.session.commit()
+            flash('Profile picture Uploaded')
+            return redirect(url_for('dashboard'))
+    else:
+
+        return render_template('upload.html', form=form, current_user=current_user)
+
+
+# Update User Account
+@app.route('/nopro/<id>', methods=['GET', 'POST'])
+@login_required
+def nopro(id):
+    
+    nopro = Users.query.get_or_404(id)
+    if request.method == 'POST':
+        
+        nopro.profile = ""
+        try:  
+            db.session.commit()
+            flash('Profile Picture Removed')
+            return redirect(url_for('dashboard'))
+        except :
+            flash("Profile Picture Not Removed")
+            return redirect('/dashboard')
+    else:
+
+        return render_template('dashboard.html', nopro=nopro)
 
 
 
@@ -476,14 +533,21 @@ class UserModules(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     #user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #__table_args__ = (ForeignKeyConstraint(['user_id'], ['(link unavailable)'], ondelete='CASCADE'),)
-    
+
+    def __repr__(self):
+        return f'Modules {self.title}' 
+
+
+
 # Add Modules To User DashBoard
 @app.route('/modules', methods=['GET', 'POST'])
 @login_required
 def modules():
+    
     if request.method == 'POST':
         module_id = request.form.get('module_id')
         user_id = request.form.get('user_id')
+
         new_user_module = UserModules(module_id=module_id, user_id=user_id)
         db.session.add(new_user_module)
         db.session.commit()
@@ -491,6 +555,8 @@ def modules():
         return redirect(url_for('dashboard'))  # or wherever you want to redirect
     all_modules = Vaal.query.order_by(Vaal.Module)
     return render_template('modules.html', all_modules=all_modules)
+
+
     #all_modules = Vaal.query.order_by(Vaal.Module) # I use Vaal.Module and not Vaal.id since Vaal.Module will be Alphabetic order
     
     #if request.method == 'POST':
@@ -591,9 +657,15 @@ class Notes(db.Model):
     title = db.Column(db.String(200), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     selected_module_id = db.Column(db.Integer, db.ForeignKey('vaal.id'),  nullable=False)
-    
+    #completed = db.Column(db.Integer, default=0)
+    #file = db.Column(db.String(250))
+    # relationships
     content = db.Column(db.Text, nullable=False)
+    file = db.Column(db.String(), nullable=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'Notes {self.title}'
     
 
 
@@ -616,24 +688,58 @@ class NotesForm(FlaskForm):
 @app.route('/notesform', methods=['GET', 'POST'])
 @login_required
 def notesform():
-
+    # request form for entry
     if request.method == 'POST':
         title = request.form.get('title')
         user_id = request.form.get('user_id')
         selected_module_id = request.form.get('selected_module_id')
         content = request.form.get('content')
-        
+        #file = request.files.get('file')
+
         notes = Notes(title=title, selected_module_id=selected_module_id, 
-                user_id=user_id, content=content)#, slug=slug
-        db.session.add(notes)
-        db.session.commit()
-        flash('Notes Added !')
-        return redirect(url_for('allnotes'))  # or wherever you want to redirect
-    
+                user_id=user_id, content=content, )#, slug=slug file=file
+        # Add to Notes DB Table
+        
+        try: 
+              
+            db.session.add(notes)
+            db.session.commit()
+            flash('Notes Added !')
+            return redirect(url_for('allnotes'))  # or wherever you want to redirect
+        except:
+            flash('Notes Not Added !')
+            return redirect(url_for('notesform'))
+
     notes = UserModules.query.order_by(UserModules.id)
     return render_template('notesform.html', notes=notes)
+'''
+ if request.files['profile']:
+            current_user.profile = request.files['profile']
 
-
+            # grab image name
+            pic_filename = secure_filename(current_user.profile.filename)
+            
+            pic_name = str(uuid.uuid1()) + "_" + pic_filename
+            #save the image
+            saver = request.files['profile']
+            
+            
+            
+            # Change to string
+            current_user.profile = pic_name
+            try: 
+                db.session.commit()
+                saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                flash('Profile picture Uploaded')
+                return redirect(url_for('dashboard'))
+            except :
+                flash("Profile picture Not")
+                return redirect('/upload')
+        else:
+            db.session.commit()
+            flash('Profile picture Uploaded')
+            return redirect(url_for('dashboard')
+'''
 
 @app.route('/allnotes', methods=['GET', 'POST'])
 @login_required
@@ -676,7 +782,7 @@ def delete_notes(id):
             return redirect(url_for('allnotes'))
         except Exception as e:
             flash('Module Not Deleted !')
-            return f"ERROR:{e}"
+            return redirect(url_for('note'))
     else:
         flash('Notes Not Deleted!')
         return redirect(url_for('allnotes'))
@@ -712,6 +818,41 @@ def dev():
 """"
 FOOTER PAGE RELATED
 """
+
+
+
+
+
+
+
+
+
+
+
+
+""""
+CALENDER
+"""
+@app.route('/calender', methods=['GET', 'POST'])
+@login_required
+def calender():
+    return render_template('calender.html')
+
+
+
+
+
+
+""""
+NOTIFICATION
+"""
+@app.route('/notification', methods=['GET', 'POST'])
+@login_required
+def notification():
+    return render_template('notification.html')
+
+
+
 
 if __name__ == "__main__":
     with app.app_context():

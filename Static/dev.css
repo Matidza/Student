@@ -120,6 +120,7 @@ a {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    
 }
 
 /* Other General Styles */
@@ -185,7 +186,7 @@ a {
     margin: 0; /* Ensure no extra margin around the heading */
     color: hsl(0, 0%, 23%); /* Adjust the title color */
     font-weight: 500;
-    text-align: left;
+    
     margin-bottom: var(--mb-2-5);
     text-wrap:wrap;
     
@@ -252,9 +253,8 @@ a {
         font-size: 1.1rem;
     }.dropdown-item p{
     
-        width:300px;
+        text-wrap: wrap;
     }
- 
 
 }
 
@@ -269,8 +269,8 @@ a {
         font-size: 1.2rem;
     }
     .dropdown-item p{
+        text-wrap: wrap;
     
-    width:450px;
     }
     .contain__info h4 {
     

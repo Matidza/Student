@@ -105,21 +105,6 @@ ul {
 a {
     text-decoration: none;
 }
-.header {
-    display: flex;
-    justify-content: flex-start;  /* This aligns the items left and right */
-    align-items: center;             /* This ensures vertical alignment */
-
-}
-
-.header h2 {
-     margin: 0; /* Ensure there's no extra margin */
-    font-size: 1.5rem; /* Adjust font size as needed */                       /* Remove margin for better centering */
-}
-
-.header a {
-    margin-right: 10px;                  /* Prevents the back arrow from shrinking */
-}
 
        
 

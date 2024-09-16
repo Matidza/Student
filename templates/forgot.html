@@ -20,14 +20,15 @@
   
     <div class="container">
 
-      <h3 style="display: block;text-align: center; color: var(--title-color);">
-        Recover Password?
-      </h3>
-      <a class="dropdown-item" href="{{ url_for('login')}}"> 
-            <h2>
-                <i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i> 
-            </h2>
-        </a>
+      <div class="header-align-right">
+          <h2>
+            <i style="width:10px;height:10px;"  class="uil uil-arrow-left" onclick="goBack()"></i> 
+          </h2>
+            
+          <h3>Recover Password</h3>    
+      </div>
+
+      
       <form method="POST" action="/forgot" >  
       </br> 
             <!--Username-->
@@ -61,6 +62,11 @@
         </div>
 
     </div> 
+    <script>
+    function goBack() {
+    window.history.back();
+}
+  </script>
     <script src="{{ url_for('static', filename='js/js.js')}}"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
