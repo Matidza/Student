@@ -1,0 +1,346 @@
+
+:root {@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+/*========= Variables=======*/
+    --header-height: 4.3rem;
+
+    /* ======== Colors ========*/
+    /* change favourite color */
+    --hue-color: 216; /* purple 250 - Green 142 - blue 230 - Pink 340 -light blue 216*/
+    /*HSL color mode*/
+    --first-color: hsl(var(--hue-color), 69%, 61%);
+    --first-color-second: hsl(var(--hue-color), 69%, 61%);
+    --first-color-alt: hsl(var(--hue-color), 57%, 53%);
+    --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
+    --title-color:hsl(var(--hue-color), 8%, 15%);
+    --text-color: hsl(var(--hue-color), 8%, 45%);
+    --text-color-light: hsl(var(--hue-color), 8%, 65%);
+    --input-color:hsl(var(--hue-color), 70%, 96%);
+    --body-color:hsl(var(--hue-color), 60%, 99%);
+    --container-color:#ffffff;
+    --scroll-bar-color:hsl(var(--hue-color), 12%, 90%);
+    --scroll-thumb-color:hsl(var(--hue-color), 12%, 80%);
+            
+
+    --body-font:'Poppins', sans-serif;
+    /*== Font Size ==*/    
+    --big-font-size: 2rem;
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1.125rem;
+    --normal-font-size: .938rem;
+    --small-font-size: .813rem;
+    --smaller-font-size: .75rem;
+    /*== Font Weight ==*/
+    --font-small:400;
+    --font-medium: 500;
+    --font-semi-bold: 600;
+    /* Margins Bottoms*/
+    --mb-0-25: .25rem;
+    --mb-0-5: .5rem;
+    --mb-0-75: .75rem;
+    --mb-1: 1rem;
+    --mb-1-5: 1.5rem;
+    --mb-2: 2rem;
+    --mb-2-5: 2.5rem;
+    --mb-3: 3rem;
+    /*== Z index ==*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    --z-model: 1000;
+}
+/*======== Font for large Devices===========*/
+@media screen and (min-width: 968px) {
+    :root {
+    --big-font-size: 3rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+    --smaller-font-size: .813rem;
+    }
+}
+/* ================= Variable  Dark theme===================*/
+
+body.dark-theme{
+    --first-color-second: hsl(var(--hue-color), 30%, 8%);
+    --title-color:hsl(var(--hue-color), 8%, 95%);
+    --text-color: hsl(var(--hue-color), 8%, 75%);
+    --input-color:hsl(var(--hue-color), 29%, 16%);
+    --body-color:hsl(var(--hue-color), 28%, 12%);
+    --container-color: hls(var(--hue-color), 29%, 16%);
+    --scroll-bar-color:hsl(var(--hue-color), 12%, 48%);
+    --scroll-thumb-color:hsl(var(--hue-color), 12%, 36%);
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;        
+}
+
+html {
+    scroll-behavior: smooth;
+}
+/* General Styles */
+.body {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(247, 247, 247);
+    color: hsl(216, 8%, 45%);
+}
+.module-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout for small screens */
+    gap: 1rem; /* Gap between grid items */
+}
+
+.info-section {
+    margin-bottom: var(--mb-1);
+}
+
+.info-title {
+    font: var(--body-font);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: var(--mb-0-5);
+    color: hsl(0, 0%, 33%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: var(--h3-font-size);
+}
+
+.info-details {
+    display: none;
+    background-color: var(--container-color);
+    padding: var(--mb-1);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-section.active .info-details {
+    display: block;
+}
+
+.info-details p {
+    margin: var(--mb-0-5) 0;
+    color: var(--text-color);
+}
+.info-details h6 {
+    margin: 0;
+    color:  hsl(0, 0%, 23%);
+    font-weight: 500;
+}
+
+.info-details a {
+    color: var(--first-color);
+    text-decoration: none;
+}
+
+.info-details a:hover {
+    text-decoration: underline;
+}
+
+.info-title::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: var(--mb-0-5);
+    transition: transform 0.3s ease;
+}
+
+.info-section.active .info-title::after {
+    transform: rotate(180deg);
+}
+
+.header-align-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+}
+
+.header h4 {
+    margin: 0;
+    color:  hsl(0, 0%, 23%);
+    font-weight: 600;
+}
+.header h2 {
+    margin: 0;
+    color:  hsl(0, 0%, 21%);
+    font-weight: 600;
+}
+.header i {
+    color: hsl(0, 0%, 16%); /* Adjust the title color */
+}
+.dropdown-item h6{
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 23%); /* Adjust the title color */
+    font-weight: 500;
+}
+.dropdown-item i{
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(0, 0%, 64%); /* Adjust the title color */
+    font-weight: 400;
+}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.15rem;
+}
+
+.module-item {
+    position: relative;
+    cursor: pointer;
+    background-color: rgb(255, 252, 252);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Ensure text inside is left-aligned */
+}
+
+.module-item .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    top: 100%;
+    right: 0;
+    margin-top: 5px; /* 5px gap below the icon */
+    width: 90px;
+}
+
+.btn {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Media Queries */
+
+/* Styles for small devices (max-width: 491px) */
+@media (max-width: 491px) {
+    .info-title {
+        font-size: 1.2rem; /* Adjust title size for small screens */
+    }
+    
+    .info-details {
+        padding: 10px; /* Adjust padding */
+    }
+    
+    .header {
+       justify-content: space-between; /* Ensure alignment even on smaller screens */
+        padding: 0; /* Remove extra padding */
+        align-items: flex-start; /* Align the content to the top left */ 
+    }
+    
+    
+    .header h4 {
+        font-size: 1.25rem;
+    }
+    .header i {
+        font-size: 1.3rem;
+    }
+    .dropdown-item i{
+        font-size: 1.0rem;
+    }
+    .dropdown-item h6{
+        font-size: 1.1rem;
+    }
+
+    .module-item {
+        padding: 0.75rem; /* Reduce padding */
+        margin-bottom: 0.75rem;
+    }
+
+    .dropdown-content {
+        width: 100px; /* Adjust dropdown width */
+    }
+
+    .btn {
+        font-size: 0.75rem; /* Adjust button font size */
+        padding: 0.4rem 0.75rem; /* Adjust button padding */
+    }
+}
+
+/* Styles for larger devices (min-width: 492px) */
+@media (min-width: 492px) {
+     .module-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for larger screens */
+    }
+    .info-title {
+        font-size: 1.5rem; /* Default font size */
+    }
+
+    .info-details {
+        padding: 15px; /* Default padding */
+    }
+    .info-details h6 {
+        font-size: 1.1rem;
+    }
+
+    .header {
+        flex-direction: row; /* Horizontal header */
+        align-items: center; /* Center items vertically */
+        padding: 10px 0; 
+    }
+    
+    
+    .header h4 {
+        font-size: 1.3rem;
+    }
+    .header i {
+        font-size: 1.25rem;
+    }
+    .dropdown-item i{
+        font-size: 1.0rem;
+    }
+    .dropdown-item h6{
+        font-size: 1.2rem;
+    }
+
+    .module-item {
+        padding: 1rem; /* Default padding */
+        margin-bottom: 1rem;
+    }
+
+    .dropdown-content {
+        width: max-content; /* Default width */
+    }
+
+    .btn {
+        font-size: 0.875rem; /* Default font size */
+        padding: 0.5rem 1rem; /* Default padding */
+    }
+}
