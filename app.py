@@ -37,7 +37,7 @@ app = Flask(__name__)
 # MySQL CONNECTION
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 #app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/users"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # Profile pic
@@ -104,7 +104,8 @@ class Users(db.Model, UserMixin):
     
     def __repr__(self):
         return 'Name %r' % self.id  
-
+with app.app_context():
+         db.create_all()
 # Module Table
 class Vaal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -939,7 +940,6 @@ def notification():
 
 
 if __name__ == "__main__":
-    with app.app_context():
-         db.create_all()
+    
     app.run(debug=False)
 
