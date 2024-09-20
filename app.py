@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, url_for, redirect, flash, request
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user,LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError, IntegerField, FileField
@@ -17,34 +17,35 @@ from wtforms.widgets import TextArea
 from werkzeug.utils import secure_filename
 import uuid as uuid
 from flask_wtf.file import FileField
+ 
 import os
 
 
-
+UPLOAD_DOC = 'Static/Notes/'
+ALLOWED_EXTENTIONS = {'txt', 'pdf', 'png', 'jpeg', 'jpg', 'gif'}
 app = Flask(__name__)
 
 # Rich Text Editor
 #ckeditor = CKEditor(app)
 
-# Postgre SQL Connection
+
 
 # SQLite Connection
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
-# MySQL CONNECTION
 # Creating App Instance
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://Zwivhuya:1969Grace@Zwivhuya.mysql.pythonanywhere-services.com/Zwivhuya$Users"
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/users"
+# MySQL CONNECTION
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://avnadmin:AVNS_Ke1NkONw7zbTIBGis_0@mysql-1a7dd7e6-matidza46-4129.c.aivencloud.com:12695/Users"
 
-app.config['SQLALCHEMY_TRACK_MIDIFICATIONS'] = False
-
-app.config['SECRET_KEY'] = "Thesecrectkey"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/users"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = "Thesecrectkey is"
 
 # Profile pic
 UPLOAD_FOLDER = 'Static/Profiles/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-UPLOAD_DOC = 'Static/Notes/'
+
 app.config['UPLOAD_DOC'] = UPLOAD_DOC
 
 # Connect DB to app
@@ -775,6 +776,9 @@ def notesform():
     return render_template('notesform.html', notes=notes)
 '''
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENTIONS
+
 # Add Notes to Modele
 @app.route('/notesform', methods=['GET', 'POST'])
 @login_required
@@ -785,25 +789,17 @@ def notesform():
         user_id = request.form.get('user_id')
         selected_module_id = request.form.get('selected_module_id')
         content = request.form.get('content')
-        file = request.files['file']
-        if file:
-            file = request.files.get('file')
+        
+        file = request.files.get('file')
 
-           
+        if file and allowed_file(file.filename):           
             # grab image name
-            pic_filename = secure_filename(file.filename)
-            
-            pic_name = str(uuid.uuid1()) + "_" + pic_filename
-            #save the image
-            saver = request.files['file'] 
-            # Change to string
-            file = pic_name
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_DOC'],filename))
 
             notes = Notes(title=title, selected_module_id=selected_module_id, 
-                user_id=user_id, content=content, pic_name=pic_name)
-            try: 
-
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                user_id=user_id, content=content, filename=filename)
+            try:                 
                 db.session.add(notes)
                 db.session.commit()
                 flash('Notes Added !')
@@ -947,3 +943,4 @@ if __name__ == "__main__":
     with app.app_context():
          db.create_all()
     app.run(debug=False)
+
