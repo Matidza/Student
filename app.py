@@ -21,8 +21,6 @@ from flask_wtf.file import FileField
 import os
 
 
-UPLOAD_DOC = 'Static/Notes/'
-ALLOWED_EXTENTIONS = {'txt', 'pdf', 'png', 'jpeg', 'jpg', 'gif'}
 app = Flask(__name__)
 
 # Rich Text Editor
@@ -44,6 +42,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
 #app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
+UPLOAD_DOC = 'Static/Notes/'
+ALLOWED_EXTENTIONS = {'txt', 'pdf', 'png', 'jpeg', 'jpg', 'gif'}
 # Profile pic
 UPLOAD_FOLDER = 'Static/Profiles/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
