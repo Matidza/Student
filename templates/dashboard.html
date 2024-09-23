@@ -530,7 +530,7 @@ a {
                     <!-- Profile Image -->
                     <a href="{{ url_for('upload', id=current_user.id)}}" style="cursor:pointer;">
                         {% if current_user.profile %}
-                        <img class="image" src="{{ url_for('static', filename='Profiles/' + current_user.profile)}}">
+                        <img class="image" src="{{ url_for('static', filename='profiles/' + current_user.profile)}}">
                         {% else %}
                         <img class="image" src="{{ url_for('static', filename='Default Pro.png')}}" >
                         {% endif%}
