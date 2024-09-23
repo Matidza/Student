@@ -28,19 +28,21 @@ app = Flask(__name__)
 # Rich Text Editor
 #ckeditor = CKEditor(app)
 
-
-
 # SQLite Connection
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Users.db'
 
 # Creating App Instance
 # MySQL CONNECTION
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://avnadmin:AVNS_Ke1NkONw7zbTIBGis_0@mysql-1a7dd7e6-matidza46-4129.c.aivencloud.com:12695/Users'
-# os.getenv('DATABASE_URI')
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/users"
+#app.config['SECRET_KEY'] = os.getenv('DATABASE_URI')
+#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://StudentCard:1969zwivhuya@StudentCard.mysql.pythonanywhere-services.com/StudentCard$Users"
+
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
 app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
-#os.getenv('SECRET_KEY')
+#app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # Profile pic
 UPLOAD_FOLDER = 'Static/Profiles/'
@@ -106,8 +108,7 @@ class Users(db.Model, UserMixin):
     
     def __repr__(self):
         return 'Name %r' % self.id  
-with app.app_context():
-         db.create_all()
+
 # Module Table
 class Vaal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -942,6 +943,7 @@ def notification():
 
 
 if __name__ == "__main__":
-    
+    with app.app_context():
+         db.create_all()
     app.run(debug=False)
 
