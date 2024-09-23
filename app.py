@@ -109,6 +109,8 @@ class Users(db.Model, UserMixin):
     def __repr__(self):
         return 'Name %r' % self.id  
 
+
+
 # Module Table
 class Vaal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -940,10 +942,7 @@ def notification():
     return render_template('notification.html')
 
 
-
-
 if __name__ == "__main__":
     with app.app_context():
-         db.create_'app:()
-    app.run()
-
+        db.create_all()  # Corrected method to create all tables
+    app.run('app:app', host='0.0.0.0', port=8000)
