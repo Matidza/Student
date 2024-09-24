@@ -20,8 +20,9 @@ from flask_wtf.file import FileField
  
 import os
 
+app = Flask(__name__, static_url_path='/static', static_folder='static')
 
-app = Flask(__name__)
+#app = Flask(__name__)
 app.config['DEBUG'] = False
 # Rich Text Editor
 #ckeditor = CKEditor(app)
@@ -71,6 +72,9 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return app.send_static_file(filename)
 
 
 """"
