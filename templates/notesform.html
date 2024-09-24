@@ -9,7 +9,259 @@
     <link rel="stylesheet" href='./Static/notesform.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+    <style>
+      :root {
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        /*========= Variables=======*/
+        --header-height: 4.3rem;
+
+        /* ======== Colors ========*/
+        --hue-color: 216;
+        --first-color: hsl(var(--hue-color), 69%, 61%);
+        --first-color-second: hsl(var(--hue-color), 69%, 61%);
+        --first-color-alt: hsl(var(--hue-color), 57%, 53%);
+        --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
+        --title-color: hsl(var(--hue-color), 8%, 15%);
+        --text-color: hsl(var(--hue-color), 8%, 45%);
+        --text-color-light: hsl(var(--hue-color), 8%, 65%);
+        --input-color: hsl(var(--hue-color), 70%, 96%);
+        --body-color: hsl(var(--hue-color), 60%, 99%);
+        --container-color: #ffffff;
+        --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
+        --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
+        --body-font: 'Poppins', sans-serif;
+
+        /*== Font Size ==*/    
+        --big-font-size: 2rem;
+        --h1-font-size: 1.5rem;
+        --h2-font-size: 1.25rem;
+        --h3-font-size: 1.125rem;
+        --normal-font-size: .938rem;
+        --small-font-size: .813rem;
+        --smaller-font-size: .75rem;
+
+        /*== Font Weight ==*/
+        --font-small: 400;
+        --font-medium: 500;
+        --font-semi-bold: 600;
+
+        /* Margins Bottoms*/
+        --mb-0-25: .25rem;
+        --mb-0-5: .5rem;
+        --mb-0-75: .75rem;
+        --mb-1: 1rem;
+        --mb-1-5: 1.5rem;
+        --mb-2: 2rem;
+        --mb-2-5: 2.5rem;
+        --mb-3: 3rem;
+
+        /*== Z index ==*/
+        --z-tooltip: 10;
+        --z-fixed: 100;
+        --z-model: 1000;
+      }
+
+      /*======== Font for large Devices===========*/
+      @media screen and (min-width: 968px) {
+        :root {
+          --big-font-size: 3rem;
+          --h1-font-size: 2.25rem;
+          --h2-font-size: 1.5rem;
+          --h3-font-size: 1.25rem;
+          --normal-font-size: 1rem;
+          --small-font-size: .875rem;
+          --smaller-font-size: .813rem;
+        }
+      }
+
+      /* ================= Variable  Dark theme===================*/
+      body.dark-theme {
+        --first-color-second: hsl(var(--hue-color), 30%, 8%);
+        --title-color: hsl(var(--hue-color), 8%, 95%);
+        --text-color: hsl(var(--hue-color), 8%, 75%);
+        --input-color: hsl(var(--hue-color), 29%, 16%);
+        --body-color: hsl(var(--hue-color), 28%, 12%);
+        --container-color: hsl(var(--hue-color), 29%, 16%);
+        --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
+        --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
+      }
+
+      /* Base and General Styles */
+      * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;        
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.body {
+    margin: 0 0 var(--header-height) 0;
+    font-family: var(--body-font);
+    font-size: var(--h2-font-size);
+    background-color: rgb(247, 247, 247);
+    color: var(--text-color);
+    margin: 0 0 var(--header-height) 0;
+}
+h1, h2, h3, h4 {
+    color: var(--title-color);
+    font-weight: var(--font-semi-bold);
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* Flex container for header */
+.header {
+    display: flex;
+    justify-content: space-between;  /* Align items to the left and right */
+    align-items: center;             /* Vertically align the items */
+    width: 100%;                     /* Make sure the header takes full width */
+    padding: 10px 0; 
+}
+
+.header h4 {
+    margin: 0; /* Ensure no extra margin around the heading */
+    color: hsl(200, 5%, 11%); /* Adjust the title color */
+    font-weight: 550; /* Semi-bold font weight */
+}
+
+
+/* The <a> tag (back button) styles */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.0rem; /* Adjust font size */
+}
+
+/* Module item container styling */
+.module-item {
+    cursor: pointer;
+    background-color: rgb(255, 252, 252);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.module-item .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+.h4 {
+    color: grey;
+    margin-left: 5px;
+}
+
+/* Media Queries */
+
+/* For small devices (max-width: 491px) */
+@media (max-width: 491px) {
+    .header {
+        flex-direction: row; /* Keep items in a row */
+        justify-content: space-between; /* Align items to the far left and right */
+        align-items: center; /* Center align items vertically */
+        padding: 5px 0; /* Reduce padding */
+    }
+
+    .header h4 {
+        font-size: 1rem; /* Adjust font size */
+    }
     
+
+    .dropdown-item {
+        margin-top: -50px;
+        font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+
+    .module-item {
+        padding: 0.75rem; /* Reduce padding */
+    }
+
+    .dropdown-content {
+        width: 100px; /* Adjust width for smaller screens */
+    }
+}
+
+/* For larger devices (min-width: 492px) */
+@media (min-width: 492px) {
+    .module-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width and fit */
+        gap: 1rem; /* Space between grid items */
+        padding: 0 1rem; /* Optional: padding inside the container */
+    }
+
+    .module-item {
+        /* Ensure the module item takes full width in the grid cell */
+        width: 100%;
+        max-width: none; /* Remove any max-width if set */
+    }
+    .header {
+        flex-direction: row; /* Align items in a row */
+        align-items: center; /* Align items in the center */
+        padding: 10px 0; /* Default padding */
+    }
+
+    .header h4 {
+        font-size: 1.25rem; /* Default font size */
+    }
+   
+
+    .dropdown-item {
+         margin-top: -90px;
+        font-size: 1.25rem; /* Default font size */
+    }
+
+    .module-item {
+        padding: 1rem; /* Default padding */
+    }
+
+    .dropdown-content {
+        width: 120px; /* Adjust width for larger screens */
+    }
+}
+    </style> 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 

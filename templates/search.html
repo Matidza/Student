@@ -8,6 +8,178 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
     <link rel="stylesheet" href='{{ url_for('static', filename='modules.css')}}'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <style>
+      :root {
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        /*========= Variables=======*/
+        --header-height: 4.3rem;
+
+        /* ======== Colors ========*/
+        --hue-color: 216;
+        --first-color: hsl(var(--hue-color), 69%, 61%);
+        --first-color-second: hsl(var(--hue-color), 69%, 61%);
+        --first-color-alt: hsl(var(--hue-color), 57%, 53%);
+        --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
+        --title-color: hsl(var(--hue-color), 8%, 15%);
+        --text-color: hsl(var(--hue-color), 8%, 45%);
+        --text-color-light: hsl(var(--hue-color), 8%, 65%);
+        --input-color: hsl(var(--hue-color), 70%, 96%);
+        --body-color: hsl(var(--hue-color), 60%, 99%);
+        --container-color: #ffffff;
+        --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
+        --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
+        --body-font: 'Poppins', sans-serif;
+
+        /*== Font Size ==*/    
+        --big-font-size: 2rem;
+        --h1-font-size: 1.5rem;
+        --h2-font-size: 1.25rem;
+        --h3-font-size: 1.125rem;
+        --normal-font-size: .938rem;
+        --small-font-size: .813rem;
+        --smaller-font-size: .75rem;
+
+        /*== Font Weight ==*/
+        --font-small: 400;
+        --font-medium: 500;
+        --font-semi-bold: 600;
+
+        /* Margins Bottoms*/
+        --mb-0-25: .25rem;
+        --mb-0-5: .5rem;
+        --mb-0-75: .75rem;
+        --mb-1: 1rem;
+        --mb-1-5: 1.5rem;
+        --mb-2: 2rem;
+        --mb-2-5: 2.5rem;
+        --mb-3: 3rem;
+
+        /*== Z index ==*/
+        --z-tooltip: 10;
+        --z-fixed: 100;
+        --z-model: 1000;
+      }
+
+      /*======== Font for large Devices===========*/
+      @media screen and (min-width: 968px) {
+        :root {
+          --big-font-size: 3rem;
+          --h1-font-size: 2.25rem;
+          --h2-font-size: 1.5rem;
+          --h3-font-size: 1.25rem;
+          --normal-font-size: 1rem;
+          --small-font-size: .875rem;
+          --smaller-font-size: .813rem;
+        }
+      }
+
+      /* ================= Variable  Dark theme===================*/
+      body.dark-theme {
+        --first-color-second: hsl(var(--hue-color), 30%, 8%);
+        --title-color: hsl(var(--hue-color), 8%, 95%);
+        --text-color: hsl(var(--hue-color), 8%, 75%);
+        --input-color: hsl(var(--hue-color), 29%, 16%);
+        --body-color: hsl(var(--hue-color), 28%, 12%);
+        --container-color: hsl(var(--hue-color), 29%, 16%);
+        --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
+        --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
+      }
+
+      /* Base and General Styles */
+      * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(247, 247, 247);
+    color: var(--text-color);
+}
+
+/* Responsiveness and layout */
+
+.scrollable-div {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid var(--scroll-bar-color);
+    border-radius: 8px;
+    background-color: var(--container-color);
+}
+
+/* Style for each clickable module */
+.clickable-div {
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1px;
+    padding: 10px;
+    border-bottom: 1px solid var(--scroll-bar-color);
+}
+
+/* Form styles */
+.form-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgb(255, 252, 252);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-inline .form-control {
+    flex: 1;
+    margin: 0 10px;
+    padding: 8px;
+}
+
+.form-inline .btn {
+    padding: 8px 16px;
+}
+
+/* Media queries */
+@media (max-width: 491px) {
+    .clickable-div h4 {
+        margin-left: 5px;
+        width: 450px;
+        font-size: 1.2rem;
+    }
+    .clickable-div i{
+        margin-left: 5px;
+        width: 450px;
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 492px) {
+    
+    .clickable-div h4 {
+        margin-left: 5px;
+        width: 450px;
+        font-size: 1.5rem;
+    }
+    .clickable-div i{
+        margin-left: 5px;
+        width: 450px;
+        font-size: 1.2rem;
+    }
+    .scrollable-div {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid var(--scroll-bar-color);
+    border-radius: 8px;
+    background-color: var(--container-color);
+}
+}
+
+    </style>
     <title>Modules</title>
 </head>
 <body class="">
