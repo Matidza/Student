@@ -118,7 +118,7 @@ a {
 }
 
 .header a {
-    margin-right: 10px;
+    margin-left: 10px;
     margin: 0; /* Ensure no extra margin around the heading */
     color: hsl(0, 0%, 21%); /* Adjust the title color */
     font-weight: 600;                /* Prevents the back arrow from shrinking */
