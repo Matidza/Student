@@ -31,9 +31,9 @@ app = Flask(__name__)
 
 # Creating App Instance
 # MySQL CONNECTION
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://avnadmin:AVNS_Ke1NkONw7zbTIBGis_0@mysql-1a7dd7e6-matidza46-4129.c.aivencloud.com:12695/Users'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://avnadmin:AVNS_Ke1NkONw7zbTIBGis_0@mysql-1a7dd7e6-matidza46-4129.c.aivencloud.com:12695/Users'
 #app.config['SECRET_KEY'] = os.getenv('DATABASE_URI')
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
 #app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://StudentCard:1969zwivhuya@StudentCard.mysql.pythonanywhere-services.com/StudentCard$Users"
 
 
@@ -942,7 +942,7 @@ def notification():
     return render_template('notification.html')
 
 
-#if __name__ == "__main__":
-    #with app.app_context():
-        #db.create_all()  # Corrected method to create all tables
-    #uvicorn.run('app:app', host='0.0.0.0', port=8000)
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()  # Corrected method to create all tables
+    app.run( host='0.0.0.0', port=8000)
