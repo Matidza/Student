@@ -241,6 +241,7 @@ a {
     }
     .dropdown-item h6{
         font-size: 1.1rem;
+        text-wrap:wrap;
         
     }
 
@@ -288,6 +289,7 @@ a {
     }
     .dropdown-item h6{
         font-size: 1.2rem;
+        text-wrap:wrap;
     }
 
     .module-item {
@@ -329,7 +331,7 @@ a {
                 <h4>{{ note.VaalNotes.Module }}</h4>
                 <i style="">created: {{ note.date_created.strftime("%d-%m-%Y") }}</i>
                 <br><br>
-                <h6>{{ note.content }}</h6>
+                <h6 style="text-wrap:wrap;">{{ note.content }}</h6>
               </div>  
             </div>
           <!-- Dropdown Content (Initially Hidden) -->
