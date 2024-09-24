@@ -1,17 +1,15 @@
 <!doctype html>
 <html lang="en">
   <head>
-    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="stylesheet" href='{{ url_for('static', filename='dashboard.css')}}'>
-    <link rel="stylesheet" href='./Static/dashboard.css'>-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script>
-    :root {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style>
+      :root {
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
         /*========= Variables=======*/
         --header-height: 4.3rem;
@@ -60,23 +58,23 @@
         --z-tooltip: 10;
         --z-fixed: 100;
         --z-model: 1000;
-    }
+      }
 
-    /*======== Font for large Devices===========*/
-    @media screen and (min-width: 968px) {
+      /*======== Font for large Devices===========*/
+      @media screen and (min-width: 968px) {
         :root {
-            --big-font-size: 3rem;
-            --h1-font-size: 2.25rem;
-            --h2-font-size: 1.5rem;
-            --h3-font-size: 1.25rem;
-            --normal-font-size: 1rem;
-            --small-font-size: .875rem;
-            --smaller-font-size: .813rem;
+          --big-font-size: 3rem;
+          --h1-font-size: 2.25rem;
+          --h2-font-size: 1.5rem;
+          --h3-font-size: 1.25rem;
+          --normal-font-size: 1rem;
+          --small-font-size: .875rem;
+          --smaller-font-size: .813rem;
         }
-    }
+      }
 
-    /* ================= Variable  Dark theme===================*/
-    body.dark-theme {
+      /* ================= Variable  Dark theme===================*/
+      body.dark-theme {
         --first-color-second: hsl(var(--hue-color), 30%, 8%);
         --title-color: hsl(var(--hue-color), 8%, 95%);
         --text-color: hsl(var(--hue-color), 8%, 75%);
@@ -85,120 +83,120 @@
         --container-color: hsl(var(--hue-color), 29%, 16%);
         --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
         --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
-    }
+      }
 
-    /* Base and General Styles */
-    * {
+      /* Base and General Styles */
+      * {
         box-sizing: border-box;
         padding: 0;
         margin: 0;
-    }
+      }
 
-    html {
+      html {
         scroll-behavior: smooth;
-    }
+      }
 
-    .body {
+      .body {
         margin: 0 0 var(--header-height) 0;
         font-family: var(--body-font);
         font-size: var(--h2-font-size);
         background-color: rgb(247, 247, 247);
         color: var(--text-color);
-    }
+      }
 
-    h1, h2, h3, h4 {
+      h1, h2, h3, h4 {
         color: var(--title-color);
         font-weight: var(--font-semi-bold);
-    }
+      }
 
-    ul {
+      ul {
         list-style: none;
-    }
+      }
 
-    a {
+      a {
         text-decoration: none;
-    }
+      }
 
-    /* Module Layout */
-    .module-container {
+      /* Module Layout */
+      .module-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 15px;
-    }
+      }
 
-    .module-item {
+      .module-item {
         background-color: rgb(255, 252, 252);
         padding: 15px;
         border: 1px solid #ddd;
         border-radius: 4px;
         position: relative;
-    }
+      }
 
-    /* More general styles */
+      /* More general styles */
 
-    .contain {
+      .contain {
         margin: 0 auto;
         padding: 20px;
         position: absolute;
-        background: linear-gradient(180deg, rgba(64,173,236,0.86) 0%, rgba(222,227,251,0.86) 68,54%);
+        background: linear-gradient(180deg, rgba(64,173,236,0.86) 0%, rgba(222,227,251,0.86) 68%,54%);
         background-blend-mode: normal;
         max-height: 270px;
-    }
+      }
 
-    .contain__image {
+      .contain__image {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-right: 20px;
-    }
+      }
 
-    .image {
+      .image {
         width: 100px;
         height: 120px;
-    }
+      }
 
-    .contain__info {
+      .contain__info {
         margin-left: 8px;
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: center;
         color: var(--text-color);
-    }
+      }
 
-    .contain__info h4 {
+      .contain__info h4 {
         margin: 0;
         color: hsl(0, 0%, 21%);
         font-weight: 450;
-    }
+      }
 
-    .header {
+      .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
+      }
 
-    .header h4 {
+      .header h4 {
         margin-left: 5px;
         font-size: 1.5rem;
         font-weight: 600;
         margin-top: 9px;
-    }
+      }
 
-    .header i:first-child {
+      .header i:first-child {
         margin-right: 0;
-    }
+      }
 
-    .header i:last-child {
+      .header i:last-child {
         margin-left: auto;
         font-size: 1.1rem;
-    }
+      }
 
-    .hidden {
+      .hidden {
         display: none;
-    }
+      }
 
-    .dropdown-content {
+      .dropdown-content {
         position: absolute;
         color: #007bff;
         background-color: white;
@@ -211,248 +209,126 @@
         right: 0;
         margin-top: 5px;
         width: max-content;
-    }
+      }
 
-    .info-title::after {
+      .info-title::after {
         content: '\f078';
         font-family: 'Font Awesome 5 Free';
         font-weight: 900;
         margin-left: var(--mb-0-5);
         transition: transform 0.3s ease;
-    }
+      }
 
-    .info-section.active .info-title::after {
+      .info-section.active .info-title::after {
         transform: rotate(180deg);
-    }
+      }
 
-    /* Media Queries */
-    @media (max-width: 491px) {
+      /* Media Queries */
+      @media (max-width: 491px) {
         .contain {
-            margin-left: 2%;
-            padding: 10px;
-            max-width: 430px;
+          margin-left: 2%;
+          padding: 10px;
+          max-width: 430px;
         }
 
         .contain__info h4 {
-            font-size: 1.35rem;
+          font-size: 1.35rem;
         }
 
         .header i:last-child {
-            font-size: 1rem;
+          font-size: 1rem;
         }
 
         .module-container {
-            grid-template-columns: 1fr;
+          grid-template-columns: 1fr;
         }
 
         .links-container {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+          display: flex;
+          gap: 15px;
+          flex-wrap: wrap;
         }
 
         .links-container a {
-            padding: 5px;
-            border: 1.5px solid rgb(27, 105, 252);
-            border-radius: 50px;
-            background-color: hsl(0, 0%, 95%);
-            display: inline-block;
-            transition: background-color 0.3s, border-color 0.3s;
-            padding-left: 5px;
-            padding-right: 5px;
+          padding: 5px;
+          border: 1.5px solid rgb(27, 105, 252);
+          border-radius: 50px;
+          background-color: hsl(0, 0%, 95%);
+          transition: 0.3s ease;
         }
 
         .links-container a:hover {
-            background-color: hsl(0, 0%, 90%);
-            border-color: hsl(0, 0%, 60%);
-        }
-    }
-
-    @media (min-width: 492px) {
-        .contain {
-            margin-left: 1%;
-            max-width: 450px;
+          background-color: rgb(27, 105, 252);
+          color: white;
         }
 
-        .header i:first-child {
-            font-size: 1.5rem;
+        .dropdown-content {
+          position: absolute;
+          width: 100%;
+          left: 0;
         }
+      }
 
-        .header h4 {
-            font-size: 1.5rem;
+      @media (min-width: 492px) {
+        .links-container a {
+          display: none;
         }
-
-        .header i:last-child {
-            font-size: 1.2rem;
-        }
-    }
-</script>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    
-    <title>Dashboard</title>
+      }
+    </style>
+    <title>Your App</title>
   </head>
-  <body class="">
-    
-    {% extends "base.html" %}
-        {% block content%}
-    <div class="container">
-    
-        <br>
-        <!-- Body content goes here-->
-        {% for message in get_flashed_messages()%}
+  <body class="body">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Features</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
 
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+    <div class="module-container">
+      <div class="module-item">
+        <div class="header">
+          <h4>Module Title</h4>
+          <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
+        </div>
+        <div class="contain hidden">
+          <div class="contain__image">
+            <img src="module_image.jpg" class="image" alt="Module Image">
+          </div>
+          <div class="contain__info">
+            <h4>Module Information</h4>
+          </div>
+        </div>
+        <div class="dropdown-content hidden">
+          <a href="#">Edit</a>
+          <a href="#">Delete</a>
+        </div>
+      </div>
+      <!-- More Module Items -->
+    </div>
 
-            
-        {% endfor %}
-        
-        <div class="card__modules">
-            <!--===== Student card  =======--> 
-            <div class="username">
-                <h5 href="#" >
-                    {{ current_user.name|title|striptags }}'s  Card
-                </h5>
-            </div>
-        
-            <div class="contain mb-3 shadow-sm p-3 mb-5 rounded border-white" style="overflow: hidden; display: flex; align-items: flex-start; position: relative;">
-                <!-- Profile Image and NWU/Student labels -->
-                <div class="contain__image"> <!-- Increased margin-right to 20px for spacing -->
-                    <!-- Profile Image -->
-                    <a href="{{ url_for('upload', id=current_user.id)}}" style="cursor:pointer;">
-                        {% if current_user.profile %}
-                        <img class="image" src="{{ url_for('static', filename='Profiles/' + current_user.profile)}}">
-                        {% else %}
-                        <img class="image" src="{{ url_for('static', filename='Default Pro.png')}}" >
-                        {% endif%}
-                    </a>
-                    
-
-                    <!-- NWU and Student labels (below image) -->
-                    <h2 style="margin-top: 10px;">NWU</h2>
-                    <h5 style="color: grey;">Student</h5>
-                </div>
-                
-                <!-- User Details Section (aligned with the image) -->
-                <div class="contain__info" >
-
-                    <h4>{{ current_user.title|title }} 
-                        {{ current_user.surname|title|striptags  }} 
-                        {{ current_user.initials|upper|striptags  }}
-                    </h4>
-                    <h4>{{ current_user.degree|title|striptags  }}</h4>
-                    <h4>{{ current_user.student|striptags  }}</h4>
-                    <h4>{{ current_user.campus|title|striptags  }}</h4>
-
-                </div>
-            </div>
-            
-           
-
-            
-
-            <!-- Modules Section (Separate from Student Card) -->
-            <div class="links-container">
-                <a href="{{ url_for('dashboard') }}">dashboard</a>
-                <a href="{{ url_for('allnotes') }}">notes</a>
-                <a href="{{ url_for('notification') }}">notification</a>
-                <a href="{{ url_for('calender') }}">calender</a>
-            </div>
-            <br>
-            <div class="button-container">
-                <a href="{{ url_for('modules') }}">
-                    <button class="btn btn-primary">Add Modules</button>
-                </a>
-            </div>
-
-            
-                <br>
-            <div class="module-container">
-                
-                {% for module in modules %}
-                {% if current_user.id == module.user_id %}
-               
-                    <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
-                        <div class="header">
-                            <!-- Module Name -->
-                            <i class="uil uil-graduation-cap"></i>
-                            <h4>{{ module.Vaal.Module }}</h4>
-                            
-                            <!-- Toggle Icon -->
-                            <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
-                        </div>
-
-                        <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}">
-                            <h6>
-                                Lecturer:<br>
-                                Assessments:<br>
-                            </h6>
-                        </a>
-
-                        <!-- Dropdown Content (Initially Hidden) -->
-                        <div class="dropdown-content hidden">
-                            <form method="POST" action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-
-                {% endif %}
-                {% else %}
-                    
-                        <h6>Add Modules<br></h6>
-                    
-                {% endfor %}
-                
-            </div>
-
-            <!-- Add Module Button -->
-            <br>                 
-        </div>    
-   
-    </div> 
-    
     <script>
-        function toggleDropdown(iconElement) {
-            // Find the closest `.module-item` to the icon clicked
-            var moduleItem = iconElement.closest('.module-item');
-            
-            // Find the `dropdown-content` inside the module
-            var dropdownContent = moduleItem.querySelector('.dropdown-content');
-            
-            // Toggle the `hidden` class
-            dropdownContent.classList.toggle('hidden');
-    }
+      function toggleDropdown(element) {
+        const dropdown = element.closest('.module-item').querySelector('.dropdown-content');
+        const contain = element.closest('.module-item').querySelector('.contain');
+        dropdown.classList.toggle('hidden');
+        contain.classList.toggle('hidden');
+      }
     </script>
-    <script>
-          document.addEventListener('DOMContentLoaded', () => {
-              const infoTitles = document.querySelectorAll('.info-title');
-
-              infoTitles.forEach(title => {
-                  title.addEventListener('click', () => {
-                      const infoSection = title.parentElement;
-                      // Toggle the active class to show/hide the details
-                      infoSection.classList.toggle('active');
-                  });
-              });
-          });
-      </script>
-
-
-   
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    {% endblock%}
-    
-</body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849yqD7iDqDQwH5I/8OW1hJ3j95I7XyD4G8C1TymA+Q/gtXTGvH8YgDZRi4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.0/dist/umd/popper.min.js" integrity="sha384-pgP4ZwV1tSPx76g8BQt8UV1qZCTH4v18VYg0KD6AlDRdwt4H2gNNS8fFDoq1UeY3" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-DyZvUBfFVdV2hj7vc3I1st1pRAXK1OsVV9IzM5FlS8w+a0QZEO1aLPe1pEAvF0H4" crossorigin="anonymous"></script>
+  </body>
 </html>
-
