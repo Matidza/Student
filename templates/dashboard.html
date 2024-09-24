@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href='{{ url_for('static', filename='dashboard.css')}}'>
+    <link rel="stylesheet" href='./Static/dashboard.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Dashboard</title>
+  </head>
+  <body class="">
+    
+    {% extends "base.html" %}
+        {% block content%}
+    <div class="container">
+    
+        <br>
+        <!-- Body content goes here-->
+        {% for message in get_flashed_messages()%}
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            
+        {% endfor %}
+        
+        <div class="card__modules">
+            <!--===== Student card  =======--> 
+            <div class="username">
+                <h5 href="#" >
+                    {{ current_user.name|title|striptags }}'s  Card
+                </h5>
+            </div>
+        
+            <div class="contain mb-3 shadow-sm p-3 mb-5 rounded border-white" style="overflow: hidden; display: flex; align-items: flex-start; position: relative;">
+                <!-- Profile Image and NWU/Student labels -->
+                <div class="contain__image"> <!-- Increased margin-right to 20px for spacing -->
+                    <!-- Profile Image -->
+                    <a href="{{ url_for('upload', id=current_user.id)}}" style="cursor:pointer;">
+                        {% if current_user.profile %}
+                        <img class="image" src="{{ url_for('static', filename='Profiles/' + current_user.profile)}}">
+                        {% else %}
+                        <img class="image" src="{{ url_for('static', filename='Default Pro.png')}}" >
+                        {% endif%}
+                    </a>
+                    
+
+                    <!-- NWU and Student labels (below image) -->
+                    <h2 style="margin-top: 10px;">NWU</h2>
+                    <h5 style="color: grey;">Student</h5>
+                </div>
+                
+                <!-- User Details Section (aligned with the image) -->
+                <div class="contain__info" >
+
+                    <h4>{{ current_user.title|title }} 
+                        {{ current_user.surname|title|striptags  }} 
+                        {{ current_user.initials|upper|striptags  }}
+                    </h4>
+                    <h4>{{ current_user.degree|title|striptags  }}</h4>
+                    <h4>{{ current_user.student|striptags  }}</h4>
+                    <h4>{{ current_user.campus|title|striptags  }}</h4>
+
+                </div>
+            </div>
+            
+           
+
+            
+
+            <!-- Modules Section (Separate from Student Card) -->
+            <div class="links-container">
+                <a href="{{ url_for('dashboard') }}">dashboard</a>
+                <a href="{{ url_for('allnotes') }}">notes</a>
+                <a href="{{ url_for('notification') }}">notification</a>
+                <a href="{{ url_for('calender') }}">calender</a>
+            </div>
+            <br>
+            <div class="button-container">
+                <a href="{{ url_for('modules') }}">
+                    <button class="btn btn-primary">+</button>
+                </a>
+            </div>
+
+            
+                <br>
+            <div class="module-container">
+                
+                {% for module in modules %}
+                {% if current_user.id == module.user_id %}
+               
+                    <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
+                        <div class="header">
+                            <!-- Module Name -->
+                            <i class="uil uil-graduation-cap"></i>
+                            <h4>{{ module.Vaal.Module }}</h4>
+                            
+                            <!-- Toggle Icon -->
+                            <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
+                        </div>
+
+                        <a class="dropdown-item" href="{{ url_for('module', id=module.id)}}">
+                            <h6>
+                                Lecturer:<br>
+                                Assessments:<br>
+                            </h6>
+                        </a>
+
+                        <!-- Dropdown Content (Initially Hidden) -->
+                        <div class="dropdown-content hidden">
+                            <form method="POST" action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+
+                {% endif %}
+                {% else %}
+                    
+                        <h6>Add Modules<br></h6>
+                    
+                {% endfor %}
+                
+            </div>
+
+            <!-- Add Module Button -->
+            <br>                 
+        </div>    
+   
+    </div> 
+    
+    <script>
+        function toggleDropdown(iconElement) {
+            // Find the closest `.module-item` to the icon clicked
+            var moduleItem = iconElement.closest('.module-item');
+            
+            // Find the `dropdown-content` inside the module
+            var dropdownContent = moduleItem.querySelector('.dropdown-content');
+            
+            // Toggle the `hidden` class
+            dropdownContent.classList.toggle('hidden');
+    }
+    </script>
+    <script>
+          document.addEventListener('DOMContentLoaded', () => {
+              const infoTitles = document.querySelectorAll('.info-title');
+
+              infoTitles.forEach(title => {
+                  title.addEventListener('click', () => {
+                      const infoSection = title.parentElement;
+                      // Toggle the active class to show/hide the details
+                      infoSection.classList.toggle('active');
+                  });
+              });
+          });
+      </script>
+
+
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    {% endblock%}
+    
+</body>
+</html>
+
