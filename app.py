@@ -22,7 +22,7 @@ import os
 
 
 app = Flask(__name__)
-
+app.config['DEBUG'] = False
 # Rich Text Editor
 #ckeditor = CKEditor(app)
 
