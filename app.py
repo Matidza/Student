@@ -17,30 +17,33 @@ from wtforms.widgets import TextArea
 from werkzeug.utils import secure_filename
 import uuid as uuid
 from flask_wtf.file import FileField
- 
+from dotenv import load_dotenv
 import os
 
 
 app = Flask(__name__)
-app.config['DEBUG'] = False
+
 # Rich Text Editor
 #ckeditor = CKEditor(app)
+
+#load_dotenv()
 
 # SQLite Connection
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Users.db'
 
-# Creating App Instance
-# MySQL CONNECTION
+
+
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://avnadmin:AVNS_Ke1NkONw7zbTIBGis_0@mysql-1a7dd7e6-matidza46-4129.c.aivencloud.com:12695/Users'
-#app.config['SECRET_KEY'] = os.getenv('DATABASE_URI')
+
 #app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://StudentCard:1969zwivhuya@StudentCard.mysql.pythonanywhere-services.com/StudentCard$Users"
-
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
-#app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+#app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+
+
+
 
 UPLOAD_DOC = 'Static/Notes/'
 ALLOWED_EXTENTIONS = {'txt', 'pdf', 'png', 'jpeg', 'jpg', 'gif'}
@@ -168,10 +171,7 @@ HOME RELATED
 """
 # ROUTING WEB PAGES
 # Route Homepgae
-@app.route("/") # this routes to home page
-def home():
-    name = "Student Card"
-    return render_template("home.html", name=name)
+
 
 
 
@@ -206,7 +206,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 # User Login
-@app.route('/login', methods=["GET","POST"])
+@app.route('/', methods=["GET","POST"])
 def login():
     form = LoginForm()
     
@@ -220,10 +220,10 @@ def login():
                 return redirect(url_for('dashboard'))
             else:
                 flash("Password Invalid! Try Again!")
-                return redirect(url_for('login'))
+                return redirect('/')
         else:
             flash("Username Invalid! Try Again!")
-            return redirect(url_for('login'))
+            return redirect('/')
     else:
         return render_template('login.html', form=form)
 
@@ -233,7 +233,7 @@ def login():
 def logout():
     logout_user()
     flash('You Have Been Logged Out! ')
-    return redirect(url_for('login'))
+    return redirect('/')
 
 
 
@@ -309,7 +309,7 @@ def forgot():
             user.password_hash = hashed_password
             db.session.commit()
             flash('Password Updated Successfully!')
-            return redirect(url_for('login'))
+            return redirect('/')
         else:
             flash('Invalid username or student number!')
             return redirect(url_for('forgot'))
@@ -403,7 +403,7 @@ def register():
             db.session.commit()
             # return a message 
             flash('Form was submited successfully!')
-            return redirect(url_for('login'))
+            return redirect('/')
         except Exception as e:
             flash("Username/student number already exists! Please try again!")
             return redirect(url_for('register'))
@@ -445,7 +445,7 @@ def delete(id):
         db.session.delete(current_user)
         db.session.commit()
         flash('Account Deleted Successfully !')
-        return redirect('/login')
+        return redirect('/')
     except:
         flash('Accont Deletion Not Successful !')
         return render_template('dashboard.html')
