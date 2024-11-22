@@ -180,13 +180,13 @@ a {
 
 
     </style>
-    <title>Register</title>
+   <title>StudentCard</title>  
   </head>
   <body class="">
       {% extends "base.html" %}
     {% block content%}
 
-    <div class="  container border rounded rounded-3 border-white  mb-3 shadow-sm p-3 mb-5" >
+    <div class="  container border rounded rounded-3 border-white  mb-3 shadow-lg p-3 mb-5" >
     
         {% for message in get_flashed_messages()%}
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -198,14 +198,11 @@ a {
             
         {% endfor %}
            
-          <div class="header">
             <a class="dropdown-item" href="#" onclick="goBack()"> 
                 <h2><i class="uil uil-arrow-left" style="width:25px;height:25px;"></i></h2>
             </a>
-            <h2>Create Account</h2>
-        </div>
-
-  
+            <h3>Create Account</h3>    
+        
       <form method="POST" action="#" enctype="multipart/form-data">    
       </br>
             <!--Username-->
@@ -241,32 +238,32 @@ a {
 
             <!--Campus-->
            {{ form.campus.label(class="form-label") }}
-           <div class="header">
+           <div class="">
                     <input
                     id="campus-0"
                     name="campus"
                     required
                     type="radio"
                     value="Vaal Campus"
-                    >
+                    >&nbsp;
                     <label for="campus-0">Vaal</label>
-               
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input
                     id="campus-1"
                     name="campus"
                     required
                     type="radio"
                     value="Potchefstroom Campus"
-                    >
+                    >&nbsp;
                     <label for="campus-1">Potchefstroom</label>
-                
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input
                     id="campus-2"
                     name="campus"
                     required
                     type="radio"
                     value="Mahikeng Campus"
-                    >
+                    >&nbsp;
                     <label for="campus-2">Mahikeng</label>
                 
             
