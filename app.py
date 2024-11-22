@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 import os
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # Rich Text Editor
 #ckeditor = CKEditor(app)
@@ -48,7 +48,7 @@ app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
 UPLOAD_DOC = 'Static/Notes/'
 ALLOWED_EXTENTIONS = {'txt', 'pdf', 'png', 'jpeg', 'jpg', 'gif'}
 # Profile pic
-UPLOAD_FOLDER = 'Static/Profiles/'
+UPLOAD_FOLDER = 'Static/Images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 

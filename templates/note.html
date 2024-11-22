@@ -308,7 +308,7 @@ a {
     </style>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <title>Note</title>
+<title>StudentCard</title>  
 </head>
 
 <body class=''>
@@ -333,11 +333,12 @@ a {
           <br>
             <div class="dropdown-item"> 
                 <div>          
-                    <h4>{{ note.VaalNotes.Module }}</h4>
+                    <h5>{{ note.VaalNotes.Module }}</h5>
                     <i>created: {{ note.date_created.strftime("%d-%m-%Y") }}</i>
                     <br><br>
-                    <h6 style="display: inline; /* Make the h6 behave like inline text */
-    margin: 0;      ">{{ note.content }}</h6> <!-- Keep h6 but apply a class -->
+                    <h6 style="display: inline; margin: 0;text-wrap: wrap;">
+                        {{ note.content }}
+                    </h6> <!-- Keep h6 but apply a class -->
                 </div>  
             </div>
 

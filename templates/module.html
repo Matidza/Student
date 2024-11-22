@@ -493,7 +493,7 @@ body {
 
 
     </style>
-    <title>Module</title>
+   <title>StudentCard</title>  
   </head>
 
   <body>
@@ -562,7 +562,7 @@ body {
           {% if current_user.is_authenticated %}
           {% for note in notes %}
             {% if module.module_id == note.selected_module_id %}
-            <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
+            <div class="module-item mb-3 shadow-lg p-3 mb-5 bg-white rounded border-grey">
               <div class="notes-header">
                 <i class="uil uil-notes"></i>
                 <!--<h4>Note</h4>-->

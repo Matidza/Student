@@ -5,182 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href='{{ url_for('static', filename='login.css')}}'>
-    <link rel="stylesheet" href='./Static/login.css'>
+    <!----><link rel="stylesheet" href='./static/login.css'>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-     <style>
-      :root {
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-        /*========= Variables=======*/
-        --header-height: 4.3rem;
-
-        /* ======== Colors ========*/
-        --hue-color: 216;
-        --first-color: hsl(var(--hue-color), 69%, 61%);
-        --first-color-second: hsl(var(--hue-color), 69%, 61%);
-        --first-color-alt: hsl(var(--hue-color), 57%, 53%);
-        --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
-        --title-color: hsl(var(--hue-color), 8%, 15%);
-        --text-color: hsl(var(--hue-color), 8%, 45%);
-        --text-color-light: hsl(var(--hue-color), 8%, 65%);
-        --input-color: hsl(var(--hue-color), 70%, 96%);
-        --body-color: hsl(var(--hue-color), 60%, 99%);
-        --container-color: #ffffff;
-        --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
-        --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
-        --body-font: 'Poppins', sans-serif;
-
-        /*== Font Size ==*/    
-        --big-font-size: 2rem;
-        --h1-font-size: 1.5rem;
-        --h2-font-size: 1.25rem;
-        --h3-font-size: 1.125rem;
-        --normal-font-size: .938rem;
-        --small-font-size: .813rem;
-        --smaller-font-size: .75rem;
-
-        /*== Font Weight ==*/
-        --font-small: 400;
-        --font-medium: 500;
-        --font-semi-bold: 600;
-
-        /* Margins Bottoms*/
-        --mb-0-25: .25rem;
-        --mb-0-5: .5rem;
-        --mb-0-75: .75rem;
-        --mb-1: 1rem;
-        --mb-1-5: 1.5rem;
-        --mb-2: 2rem;
-        --mb-2-5: 2.5rem;
-        --mb-3: 3rem;
-
-        /*== Z index ==*/
-        --z-tooltip: 10;
-        --z-fixed: 100;
-        --z-model: 1000;
-      }
-
-      /*======== Font for large Devices===========*/
-      @media screen and (min-width: 968px) {
-        :root {
-          --big-font-size: 3rem;
-          --h1-font-size: 2.25rem;
-          --h2-font-size: 1.5rem;
-          --h3-font-size: 1.25rem;
-          --normal-font-size: 1rem;
-          --small-font-size: .875rem;
-          --smaller-font-size: .813rem;
-        }
-      }
-
-      /* ================= Variable  Dark theme===================*/
-      body.dark-theme {
-        --first-color-second: hsl(var(--hue-color), 30%, 8%);
-        --title-color: hsl(var(--hue-color), 8%, 95%);
-        --text-color: hsl(var(--hue-color), 8%, 75%);
-        --input-color: hsl(var(--hue-color), 29%, 16%);
-        --body-color: hsl(var(--hue-color), 28%, 12%);
-        --container-color: hsl(var(--hue-color), 29%, 16%);
-        --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
-        --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
-      }
-
-      /* Base and General Styles */
-      /*========== BASE ===========*/
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;        
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-.body {
-    margin: 0 0 var(--header-height) 0;
-    font-family: var(--body-font);
-    font-size: var(--h3-font-size);
-    background-color: rgb(247, 247, 247);
-    /*background-color: rgb(218, 16, 16);*/
-    color: var(--text-color);
-}
-h1, h2, h3, h4 {
-    color: var(--title-color);
-    font-weight: var(--font-semi-bold);
-}
-
-ul {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-}
-.form-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Optional: to vertically align the button and link */
-}
-
-.password {
-    margin-left: auto; /* Ensure it stays on the far right */
-}
-   
-
-/* ========= SMALL SCREENS ===========*/
-@media screen and (min-width: 491px){
     
-    /*======Login Page*/
-    .container{
-        max-width: 90%;
-        margin: 0 auto;
-        padding: 20px;
-        position: center;
-        margin-top: 20%;
-        display:0;
-        background-color: rgb(255, 252, 252);
-        box-shadow: 1px 0 0 rgb(253, 250, 250);
-        
-    }
-    
-   
-    .login__title{
-        margin-top: -70px;
-    }
-}
-
-
-/* ========= MEDIUM SCREENS ( Tablets ) ===========*/
-@media screen and (min-width: 492px){
-    /*======Login Page*/
-    .container{
-        max-width: 90%;
-        margin: 0 auto;
-        padding: 20px;
-        position: center;
-        
-        background-color: rgb(255, 252, 252);
-        box-shadow: 1px 0 0 rgb(255, 255, 255);  
-    }
-    
-    .login__title{
-        margin-top: 10px;
-    }
-
-}
-
-    </style>
-    <title>Login</title>
+    <title>StudentCard</title>
   </head>
   
-  <body class="">
+  <body class=".">
    {% extends "base.html" %}
     {% block content %}
        
     
-    <div class="  container border rounded rounded-3 border-white  mb-3 shadow-sm p-3 mb-5" >
+    <div class="  container border rounded rounded-3 border-white  mb-3 shadow-lg p-3 mb-5" >
         {% for message in get_flashed_messages()%}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ message }}
@@ -194,7 +32,7 @@ a {
         <h2 class="login__title">
               Login
         </h2>
-        <br><br>
+        <br>
         <form method="POST" action="/">
             <!--Username-->
             {{ form.hidden_tag()}}
@@ -230,7 +68,8 @@ a {
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  {% endblock%}
+  
   </body>
  
 </html>
+{% endblock%}
