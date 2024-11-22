@@ -243,7 +243,11 @@ a {
     .dropdown-item h6{
         font-size: 1.1rem;
         display: inline; /* Make the h6 behave like inline text */
-    margin: 0;      
+    margin: 0;     
+     width: 200px;
+    border: 1px solid #ccc;
+    word-wrap: break-word; /* Old name, still widely supported */
+    word-break: break-word; 
         
         
     }
@@ -293,7 +297,11 @@ a {
     .dropdown-item h6{
         font-size: 1.2rem;
         display: inline; /* Make the h6 behave like inline text */
-    margin: 0;      
+        margin: 0;
+         width: 200px;
+    border: 1px solid #ccc;
+    word-wrap: break-word; /* Old name, still widely supported */
+    word-break: break-word;     
         
     }
 
@@ -336,7 +344,7 @@ a {
                     <h5>{{ note.VaalNotes.Module }}</h5>
                     <i>created: {{ note.date_created.strftime("%d-%m-%Y") }}</i>
                     <br><br>
-                    <h6 style="display: inline; margin: 0;text-wrap: wrap;">
+                    <h6 style="display: inline; margin: 0; text-wrap: ;">
                         {{ note.content }}
                     </h6> <!-- Keep h6 but apply a class -->
                 </div>  
