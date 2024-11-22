@@ -17,6 +17,7 @@ from wtforms.widgets import TextArea
 #from flask_ckeditor import CKEditor
 from werkzeug.utils import secure_filename
 import uuid as uuid
+from test import SECRET_KEY, DATABASE_URI
 from flask_wtf.file import FileField
 from dotenv import load_dotenv
 import os
