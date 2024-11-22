@@ -29,12 +29,6 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 #load_dotenv()
 
-# SQLite Connection
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Users.db'
-
-
-# Production
-
 # Development
 #app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
 #app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
