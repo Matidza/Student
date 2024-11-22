@@ -31,11 +31,10 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 #load_dotenv()
 
 # Development
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
-#app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
 
 # Production
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+#app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = SECRET_KEY
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
