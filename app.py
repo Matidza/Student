@@ -33,7 +33,7 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 # Development
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
 
-# Production
+# Production  
 #app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SECRET_KEY'] = SECRET_KEY
 
