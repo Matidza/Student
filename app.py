@@ -8,6 +8,7 @@ from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+from test import SECRET_KEY, DATABASE_URI
 from datetime import datetime
 #from flask_migrate import Migrate
 from flask_login import current_user
@@ -32,16 +33,17 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Users.db'
 
 
+# Production
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://avnadmin:AVNS_Ke1NkONw7zbTIBGis_0@mysql-1a7dd7e6-matidza46-4129.c.aivencloud.com:12695/Users'
-
+# Development
 #app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
+#app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
+
+# Production
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+app.config['SECRET_KEY'] = SECRET_KEY
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
-#app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-
 
 
 
