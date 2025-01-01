@@ -1,366 +1,576 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8">
+
+<head>
+
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href='{{ url_for('static', filename='notesform.css')}}'>
-    <link rel="stylesheet" href='./Static/notesform.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
-    <style>
-      :root {
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-        /*========= Variables=======*/
-        --header-height: 4.3rem;
+    <title>Student Card</title> 
 
-        /* ======== Colors ========*/
-        --hue-color: 216;
-        --first-color: hsl(var(--hue-color), 69%, 61%);
-        --first-color-second: hsl(var(--hue-color), 69%, 61%);
-        --first-color-alt: hsl(var(--hue-color), 57%, 53%);
-        --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
-        --title-color: hsl(var(--hue-color), 8%, 15%);
-        --text-color: hsl(var(--hue-color), 8%, 45%);
-        --text-color-light: hsl(var(--hue-color), 8%, 65%);
-        --input-color: hsl(var(--hue-color), 70%, 96%);
-        --body-color: hsl(var(--hue-color), 60%, 99%);
-        --container-color: #ffffff;
-        --scroll-bar-color: hsl(var(--hue-color), 12%, 90%);
-        --scroll-thumb-color: hsl(var(--hue-color), 12%, 80%);
-        --body-font: 'Poppins', sans-serif;
+    <!-- Custom fonts for this template-->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-        /*== Font Size ==*/    
-        --big-font-size: 2rem;
-        --h1-font-size: 1.5rem;
-        --h2-font-size: 1.25rem;
-        --h3-font-size: 1.125rem;
-        --normal-font-size: .938rem;
-        --small-font-size: .813rem;
-        --smaller-font-size: .75rem;
+    <!-- Custom styles for this template-->
+    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
 
-        /*== Font Weight ==*/
-        --font-small: 400;
-        --font-medium: 500;
-        --font-semi-bold: 600;
+</head>
 
-        /* Margins Bottoms*/
-        --mb-0-25: .25rem;
-        --mb-0-5: .5rem;
-        --mb-0-75: .75rem;
-        --mb-1: 1rem;
-        --mb-1-5: 1.5rem;
-        --mb-2: 2rem;
-        --mb-2-5: 2.5rem;
-        --mb-3: 3rem;
+<body id="page-top" class="custom-bg-primary" style="background-color:  rgb(221, 221, 221);">
 
-        /*== Z index ==*/
-        --z-tooltip: 10;
-        --z-fixed: 100;
-        --z-model: 1000;
-      }
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-      /*======== Font for large Devices===========*/
-      @media screen and (min-width: 968px) {
-        :root {
-          --big-font-size: 3rem;
-          --h1-font-size: 2.25rem;
-          --h2-font-size: 1.5rem;
-          --h3-font-size: 1.25rem;
-          --normal-font-size: 1rem;
-          --small-font-size: .875rem;
-          --smaller-font-size: .813rem;
-        }
-      }
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      /* ================= Variable  Dark theme===================*/
-      body.dark-theme {
-        --first-color-second: hsl(var(--hue-color), 30%, 8%);
-        --title-color: hsl(var(--hue-color), 8%, 95%);
-        --text-color: hsl(var(--hue-color), 8%, 75%);
-        --input-color: hsl(var(--hue-color), 29%, 16%);
-        --body-color: hsl(var(--hue-color), 28%, 12%);
-        --container-color: hsl(var(--hue-color), 29%, 16%);
-        --scroll-bar-color: hsl(var(--hue-color), 12%, 48%);
-        --scroll-thumb-color: hsl(var(--hue-color), 12%, 36%);
-      }
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-2">Student Card</div>
+            </a>
+            {% if current_user.is_authenticated %}
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
 
-      /* Base and General Styles */
-      * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;        
-}
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('dashboard') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
 
-html {
-    scroll-behavior: smooth;
-}
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
-.body {
-    margin: 0 0 var(--header-height) 0;
-    font-family: var(--body-font);
-    font-size: var(--h2-font-size);
-    background-color: rgb(247, 247, 247);
-    color: var(--text-color);
-    margin: 0 0 var(--header-height) 0;
-}
-h1, h2, h3, h4 {
-    color: var(--title-color);
-    font-weight: var(--font-semi-bold);
-}
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url_for('modules') }}" >
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Modules</span>
+                </a>
+                
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url_for('allnotes') }}" >
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Notes</span>
+                </a>
+                
+            </li>
 
-ul {
-    list-style: none;
-}
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url_for('calender') }}" >
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url_for('notification') }}" >
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Notification</span>
+                </a>
+            </li>
 
-a {
-    text-decoration: none;
-}
-
-
-/* Flex container for header */
-.header {
-    display: flex;
-    justify-content: space-between;  /* Align items to the left and right */
-    align-items: center;             /* Vertically align the items */
-    width: 100%;                     /* Make sure the header takes full width */
-    padding: 10px 0; 
-}
-
-.header h4 {
-    margin: 0; /* Ensure no extra margin around the heading */
-    color: hsl(200, 5%, 11%); /* Adjust the title color */
-    font-weight: 550; /* Semi-bold font weight */
-}
-
-
-/* The <a> tag (back button) styles */
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    font-size: 1.0rem; /* Adjust font size */
-}
-
-/* Module item container styling */
-.module-item {
-    cursor: pointer;
-    background-color: rgb(255, 252, 252);
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.module-item .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-}
-
-/* Button styles */
-.btn {
-    display: inline-block;
-    font-size: 0.875rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: white;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    color: white;
-}
-.h4 {
-    color: grey;
-    margin-left: 5px;
-}
-
-/* Media Queries */
-
-/* For small devices (max-width: 491px) */
-@media (max-width: 491px) {
-    .header {
-        flex-direction: row; /* Keep items in a row */
-        justify-content: space-between; /* Align items to the far left and right */
-        align-items: center; /* Center align items vertically */
-        padding: 5px 0; /* Reduce padding */
-    }
-
-    .header h4 {
-        font-size: 1rem; /* Adjust font size */
-    }
-    
-
-    .dropdown-item {
-        margin-top: -50px;
-        font-size: 1rem; /* Adjust font size for smaller screens */
-    }
-
-    .module-item {
-        padding: 0.75rem; /* Reduce padding */
-    }
-
-    .dropdown-content {
-        width: 100px; /* Adjust width for smaller screens */
-    }
-}
-
-/* For larger devices (min-width: 492px) */
-@media (min-width: 492px) {
-    .module-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust column width and fit */
-        gap: 1rem; /* Space between grid items */
-        padding: 0 1rem; /* Optional: padding inside the container */
-    }
-
-    .module-item {
-        /* Ensure the module item takes full width in the grid cell */
-        width: 100%;
-        max-width: none; /* Remove any max-width if set */
-    }
-    .header {
-        flex-direction: row; /* Align items in a row */
-        align-items: center; /* Align items in the center */
-        padding: 10px 0; /* Default padding */
-    }
-
-    .header h4 {
-        font-size: 1.25rem; /* Default font size */
-    }
-   
-
-    .dropdown-item {
-         margin-top: -90px;
-        font-size: 1.25rem; /* Default font size */
-    }
-
-    .module-item {
-        padding: 1rem; /* Default padding */
-    }
-
-    .dropdown-content {
-        width: 120px; /* Adjust width for larger screens */
-    }
-}
-    </style> 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-   <title>StudentCard</title>  
-  </head>
-  <body class="" style="font-family: 'Poppins', sans-serif;
-    background-color: rgb(239, 239, 239);
-    color: hsl(216, 8%, 45%); /* text color */">
-
-     {% extends "base.html" %}
-      {% block content%}
-
-    
-    <div class="container">
-      {% if current_user.is_authenticated %}
-      <div class="mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white" style="margin-top: 10%;">
-        <a class="dropdown-item" href="{{ url_for('allnotes')}}" onclick="goBack()">
-           
-          <h2>
-            <i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i> 
-          </h2>
-         
-        </a>
-        
-        <form method="POST" enctype="multipart/form-data" action="#">
-          <div class="form-group">
-             {{ form.hidden_tag()}}
-            <label for="title" style="color:grey;"><h6>Title</h6></label>
-            <input type="text" class="form-control"name="title" id="title" aria-describedby="emailHelp">
-          </div>
-          <input  type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
-          
-          <label for="selected_module_id" style="color:grey;">
-            <h6>Select Module: </h6>
-          </label>
-          <br>
-          <select id="selected_module_id" name="selected_module_id" class="form-control form-control-lg">
-              {% for note in notes %}
-
-                {% if current_user.id == note.user_id%}
-                  <option value="{{ note.module_id }}">{{ note.Vaal.Module }}</option>
-                {% endif %}
-
-              {% endfor %}
-          </select>
-
-          <br>
-          
-          <br>
-
-          <div class="form-group">
-            <!-- Text Area-->
-            <label for="content" style="color:grey;"><h6>Notes</h6></label>
-            <textarea type="text" name="content" class="form-control" id="content" rows="5"></textarea>
+            <!-- Nav Item - Utilities Collapse Menu -->
             
-          </div>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                USER
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Profile</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header"></h6>
+                        <a class="collapse-item" href="{{ url_for('update', id=current_user.id)}}">Update Account</a>
+                        <a class="collapse-item" href="{{ url_for('logout') }}">Logout</a>
+                        <a class="collapse-item" href="{{ url_for('forgot') }}">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Danger!!</h6>
+                        <a class="collapse-item" href="">Delete Account</a>
+                        
+                    </div>
+                </div>
+            </li>
+            <!-- Nav Item - Pages Collapse Menu 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Profile</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="register.html">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
+            </li>-->
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Grades</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Timetable</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message 
+            <div class="sidebar-card d-none d-lg-flex">
+                <img class="sidebar-card-illustration mb-2" src="static/img/undraw_rocket.svg" alt="...">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+            </div>-->
+            {% else %}
+             {% endif %}
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    
+                    <form method="POST" action="{{ url_for('search') }}"
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            {{ form.hidden_tag() }}
+                            <input type="search" class="form-control bg-light border-0 small" placeholder="Search for module..."
+                                aria-label="Search" aria-describedby="basic-addon2"name="searched">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        $290.29 has been deposited into your account!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        Spending Alert: We've noticed unusually high spending for your account.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="static/img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            problem I've been having.</div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="static/img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                            would you like them sent to you?</div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="static/img/undraw_profile_3.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!</div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ current_user.name|title|striptags }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{{ url_for('static', filename='images/' + current_user.profile)}}">
+                            </a>
+                            {% if current_user.is_authenticated %}
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ url_for('update', id=current_user.id)}}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Update Profile
+                                </a>
+                                <a class="dropdown-item" href="{{ url_for('forgot')}}">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Update Password
+                                </a>
+                                <a class="dropdown-item" href="{{ url_for('delete', id=current_user.id)}}">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Delete Account
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ url_for('logout')}}" >
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                            {% endif %}
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="container">
+                      {% if current_user.is_authenticated %}
+                      <div class="mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white" style="margin-top: 10%;">
+                        <a class="dropdown-item" href="{{ url_for('allnotes')}}" onclick="goBack()">
+                          
+                          <h2>
+                            <i style="width:10px;height:10px;"  class="uil uil-arrow-left"></i> 
+                          </h2>
+                        
+                        </a>
+                        
+                        <form method="POST" enctype="multipart/form-data" action="#">
+                          <div class="form-group">
+                            {{ form.hidden_tag()}}
+                            <label for="title" style="color:grey;"><h6>Title</h6></label>
+                            <input type="text" class="form-control"name="title" id="title" aria-describedby="emailHelp">
+                          </div>
+                          <input  type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+                          
+                          <label for="selected_module_id" style="color:grey;">
+                            <h6>Select Module: </h6>
+                          </label>
+                          <br>
+                          <select id="selected_module_id" name="selected_module_id" class="form-control form-control-lg">
+                              {% for note in notes %}
+
+                                {% if current_user.id == note.user_id%}
+                                  <option value="{{ note.module_id }}">{{ note.Vaal.Module }}</option>
+                                {% endif %}
+
+                              {% endfor %}
+                          </select>
+
+                          <br>
+                          
+                          <br>
+
+                          <div class="form-group">
+                            <!-- Text Area-->
+                            <label for="content" style="color:grey;"><h6>Notes</h6></label>
+                            <textarea type="text" name="content" class="form-control" id="content" rows="5"></textarea>
+                            
+                          </div>
 
 
-          <label for="file" style="color:grey;"><h6>Attach file</h6></label>
-          <input type="file" class="form-control" name="file"  >
-          <br>
+                          <label for="file" style="color:grey;"><h6>Attach file</h6></label>
+                          <input type="file" class="form-control" name="file"  >
+                          <br>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
-               
-        </form>
-        <br>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                              
+                        </form>
+                        <br>
 
-      </div> 
-      {% else %}
-       <h2>
-        Login To Add Notes
-       </h2>
-       {% endif %}
-  </div>
-  
-   {% endblock%}
-  <script>
-    function toggleDropdown(icon) {
-            // Find the closest dropdown-content within the same module-item
-            var dropdownContent = icon.closest('.module-item').querySelector('.dropdown-content');
-            // Toggle the dropdown content's display style
-            if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
-                dropdownContent.style.display = 'block';
-                icon.classList.add('open-dropdown'); // Optional: Change icon style when dropdown is open
-            } else {
-                dropdownContent.style.display = 'none';
-                icon.classList.remove('open-dropdown'); // Optional: Revert icon style when dropdown is closed
+                      </div> 
+                      {% else %}
+                      <h2>
+                        Login To Add Notes
+                      </h2>
+                      {% endif %}
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="submit" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    
+    
+     <script>
+        function toggleDropdown(iconElement) {
+            // Find the closest `.module-item` to the icon clicked
+            var moduleItem = iconElement.closest('.module-item');
+            
+            // Find the `dropdown-content` inside the module
+            var dropdownContent = moduleItem.querySelector('.dropdown-content');
+            
+            // Toggle the `hidden` class
+            dropdownContent.classList.toggle('hidden');
+    }
+    </script>
+    <script>
+          document.addEventListener('DOMContentLoaded', () => {
+              const infoTitles = document.querySelectorAll('.info-title');
+
+              infoTitles.forEach(title => {
+                  title.addEventListener('click', () => {
+                      const infoSection = title.parentElement;
+                      // Toggle the active class to show/hide the details
+                      infoSection.classList.toggle('active');
+                  });
+              });
+          });
+      </script>
+      <script>
+            // Toggle the visibility of the dropdown content
+            function toggleDropdown(icon) {
+                const dropdownContent = icon.closest('.module-item').querySelector('.dropdown-content');
+                if (dropdownContent.style.display === 'none' || dropdownContent.style.display === '') {
+                    dropdownContent.style.display = 'block';
+                } else {
+                    dropdownContent.style.display = 'none';
+                }
             }
-    }
-  </script>
-  <script>
-    function goBack() {
-    window.history.back();
-    }
-  </script>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+        </script>
+        <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/js/sb-admin-2.min.js"></script>
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/static/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="static/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="static/js/demo/chart-area-demo.js"></script>
+    <script src="static/js/demo/chart-pie-demo.js"></script>
+        <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/js/sb-admin-2.min.js"></script>
+      
+
+</body>
+
 </html>
+
+
+

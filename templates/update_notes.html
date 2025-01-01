@@ -1,3 +1,55 @@
+<div class="container">
+    <div class="mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white" style="margin-top: 10%;">
+        <a class="dropdown-item" href="#" onclick="goBack()"> 
+            <h2>
+                <i style="width:10px;height:10px;" class="uil uil-arrow-left"></i>
+            </h2>
+            <br>
+        </a>
+
+        <form method="POST" action="/update_notes/{{ update_notes.id }}" enctype="multipart/form-data">
+            <!-- CSRF token -->
+            {{ form.hidden_tag() }}
+
+            <!-- Title Input -->
+            <div class="form-group">
+                <label for="title" style="color:grey;"><h6>Title</h6></label>
+                <input type="text" class="form-control" name="title" id="title" value="{{ update_notes.title }}" required>
+            </div>
+            <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+
+            <br>
+            
+            <!-- Module Selection -->
+            <label for="selected_module_id" style="color:grey;"><h6>Select Module:</h6></label>
+            <br>
+            <select id="selected_module_id" name="selected_module_id" class="form-control form-control-lg">
+                <option value="{{ update_notes.selected_module_id }}">{{ update_notes.VaalNotes.Module }}</option>
+                <!-- You can add other modules here dynamically if needed -->
+            </select>
+            <br><br>
+
+            <!-- Content Textarea -->
+            <div class="form-group">
+                <label for="content" style="color:grey;"><h6>Notes</h6></label>
+                <textarea name="content" class="form-control" rows="4" required>{{ update_notes.content }}</textarea>
+            </div>
+
+            <!-- File Input -->
+            <label for="file" style="color:grey;"><h6>Attach File</h6></label>
+            <input type="file" class="form-control" name="file" id="file">
+            <br>
+
+            <!-- Update Button -->
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        <br>
+    </div> 
+</div>
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
