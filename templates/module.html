@@ -1,3 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Account</title>
+    <!-- Add your CSS links here -->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+.modal-backdrop {
+    z-index: 1049; /* Backdrop should be below the modal */
+}
+
+.modal {
+    z-index: 1050; /* Ensure modal is above other elements */
+}
+</style>
+<style>
+    
+
+.modal-content {
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.module-container {
+    margin: 20px;
+}
+
+.module-item .header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+</style>
+</head>
+
+<body id="page-top">
+
+<div class="container">
+      <a class="dropdown" href="#"> 
+          <h2>
+              <i class="uil uil-arrow-left" onclick="goBack()"></i>
+          </h2>
+      </a>
+
+      {% if current_user.id == module.user_id %}
+      <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
+        <!-- Module Name -->
+        <div class="header">
+            <h2>{{ module.Vaal.Module }}</h2>
+            <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this, 'module')"></i>
+        </div>
+        <!-- Module Dropdown Content -->
+        <div class="dropdown-content module-dropdown-content" style="display: none;">
+          <form method="POST" action="/deletemod/{{ module.id }}" onsubmit="return confirm('Delete Module?')">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </div>
+        <br>
+        <!-- Lecturer Info -->
+        <div class="info-section">
+            <h4 class="info-title">Lecturer</h4>
+            <div class="info-details">
+                <h6>Mr. Smith J.E</h6>
+                <h6>Email: <a href="mailto:Smith@gmail.com">Test.Email@gmail.com</a></h6>
+                <h6>Building A8</h6>
+                <h6>Office No: 210</h6>
+                <p>For more information about your Faculty, visit:
+                    <a href="https://www.nwu.ac.za/">www.nwu.ac.za</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Exam Info -->
+        <div class="info-section">
+            <h4 class="info-title">Assessments</h4>
+            <div class="info-details">
+                <h5>Exam</h5>
+                <h6>Date: {{ module.Vaal.Date }}</h6>
+                <h6>Start: {{ module.Vaal.Session }}</h6>
+                <h6>Venue: {{ module.Vaal.Venue }}</h6>
+                <h6>Students: {{ module.Vaal.Students }}</h6>
+            </div>
+        </div>
+      </div>
+        <!-- Add Notes Button -->
+        <br/>
+        <div class="header-align-right">
+          {% if current_user.is_authenticated %}
+              <h3>Notes</h3>
+          {% endif %}
+          <a href="{{ url_for('notesform') }}">
+              <button type="submit" class="btn btn-primary" style="font-size: 0.95rem; font-weight: 700;">Notes +</button>
+          </a>
+        </div>
+        <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="noteModalLabel">Notes</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Display Notes -->
+                        {% for note in notes %}
+                        {% if current_user.id == note.user_id %}
+                        <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-white">
+                            <!-- Note Header -->
+                            <div class="header">
+                                <h4>Title: {{ note.title }}</h4>
+                                <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this)"></i>
+                            </div>
+                            <br>
+                            <!-- Note Details -->
+                            <div class="dropdown-item">
+                                <div>
+                                    <h5>{{ note.VaalNotes.Module }}</h5>
+                                    <i>created: {{ note.date_created.strftime("%d-%m-%Y") }}</i>
+                                    <br><br>
+                                    <h6 style="display: inline-block; width: 100px; border: 1px solid black; white-space: normal;">
+                                        {{ note.content }}
+                                    </h6>
+                                </div>
+                            </div>
+
+                            <!-- Dropdown Content -->
+                            <div class="dropdown-content" style="display: none;">
+                                <form method="POST" action="/delete_notes/{{ note.id }}" onsubmit="return confirm('Delete Note?')">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        style="font-size: 0.95rem;font-weight: 700;">Delete</button>
+                                </form>
+                                <br>
+                                <button class="btn btn-secondary btn-sm"
+                                    style="font-size: 0.95rem;font-weight: 700; color:white;">
+                                    <a href="{{ url_for('update_notes', id=note.id) }}"
+                                        style="font-size: 0.95rem;font-weight: 700; color:white;">Update</a>
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        <!-- Form for Adding/Updating Notes -->
+                        <form method="POST" action="/update_notes/0">
+                            {{ form.hidden_tag() }}
+                            <div class="form-group">
+                                <label for="title" style="color:grey;">
+                                    <h6>Title</h6>
+                                </label>
+                                <input type="text" class="form-control" name="title" id="title" value="">
+                            </div>
+                            <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+                            <br>
+                            <label for="selected_module_id" style="color:grey;">
+                                <h6>Select Module:</h6>
+                            </label>
+                            <br>
+                            <select id="selected_module_id" name="selected_module_id" class="form-control form-control-lg">
+                                <option value=""></option>
+                            </select>
+                            <br>
+                            <div class="form-group">
+                                <label for="content" style="color:grey;">
+                                    <h6>Notes</h6>
+                                </label>
+                                <textarea name="content" class="form-control" rows="4"></textarea>
+                            </div>
+                            <label for="file" style="color:grey;">
+                                <h6>Attach File</h6>
+                            </label>
+                            <input type="file" class="form-control" name="file" id="file">
+                            <br>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+           
+                <!-- Module Container -->
+                <div class="module-container">
+                {% if current_user.is_authenticated %}
+                {% for note in notes %}
+                    {% if module.module_id == note.selected_module_id %}
+                    <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-grey">
+                    <div class="notes-header">
+                        <i class="uil uil-notes"></i>
+                        <br>
+                        <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this, 'note')"></i>
+                    </div>
+                    <div class="dropdown-content note-dropdown-content" style="display: none;">
+                        <form method="POST" action="/delete_notes/{{ note.id }}" onsubmit="return confirm('Delete Note?')">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#noteModal" 
+                        onclick="openNoteModal('{{ note.title }}', '{{ note.date_created.strftime('%d-%m-%Y') }}', '/delete_notes/{{ note.id }}')">
+                        <ul style="list-style-type: disc; margin: 0; padding-left: 20px;">
+                            <li>
+                                <h6>Title: {{ note.title }}</h6>
+                            </li>
+                            <i>created: {{ note.date_created.strftime("%d-%m-%Y") }}</i>
+                        </ul>
+                    </a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                </div>
+                    
+                    {% endif %}
+                    </div>
+   
+
+
+        <!-- Footer -->
+        <br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+        <br><br>
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2021</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript files -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="static/js/sb-admin-2.min.js"></script>
+     <script>
+  function toggleDropdown(iconElement, type) {
+    // Find the closest `.module-item` or `.notes-header` to the icon clicked
+    var container;
+    if (type === 'module') {
+      container = iconElement.closest('.module-item');
+    } else if (type === 'note') {
+      container = iconElement.closest('.notes-header').parentElement;
+    }
+    
+    // Find the `dropdown-content` inside the container
+    var dropdownContent = container.querySelector(`.dropdown-content.${type}-dropdown-content`);
+    
+    // Toggle the display property to show/hide the dropdown
+    if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
+        dropdownContent.style.display = "block";
+    } else {
+        dropdownContent.style.display = "none";
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+      const infoTitles = document.querySelectorAll('.info-title');
+
+      infoTitles.forEach(title => {
+          title.addEventListener('click', () => {
+              const infoSection = title.parentElement;
+              // Toggle the active class to show/hide the details
+              infoSection.classList.toggle('active');
+          });
+      });
+  });
+
+  function goBack() {
+    window.history.back();
+  }
+
+  function openNoteModal(title, date, deleteUrl) {
+    // Set the modal content
+    document.getElementById('noteTitle').textContent = 'Title: ' + title;
+    document.getElementById('noteDate').textContent = date;
+    document.getElementById('deleteNoteForm').action = deleteUrl;
+  }
+</script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -496,7 +835,7 @@ body {
    <title>StudentCard</title>  
   </head>
 
-  <body>
+  <body  style="background-color:  rgb(223, 223, 223);">
     {% extends "base.html" %}
     {% block content %}
     
@@ -557,75 +896,144 @@ body {
               <button type="submit" class="btn btn-primary" style="font-size: 0.95rem; font-weight: 700;">Notes +</button>
           </a>
         </div>
-
-        <div class="module-container">
-          {% if current_user.is_authenticated %}
-          {% for note in notes %}
-            {% if module.module_id == note.selected_module_id %}
-            <div class="module-item mb-3 shadow-lg p-3 mb-5 bg-white rounded border-grey">
-              <div class="notes-header">
-                <i class="uil uil-notes"></i>
-                <!--<h4>Note</h4>-->
-                <br>
-                <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this, 'note')"></i>
-              </div>
-              <!-- Note Dropdown Content -->
-              <div class="dropdown-content note-dropdown-content" style="display: none;">
-                <!-- Content specific to notes goes here -->
-                <form method="POST" action="/delete_notes/{{ note.id }}" onsubmit="return confirm('Delete Note?')">
-                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-              </div>
-
-              <a class="dropdown-item" href="{{ url_for('note', id=note.id) }}">            
-                  <h6>Title: {{ note.title }}</h6>
-                  <i>created: {{ note.date_created.strftime("%d-%m-%Y") }}</i>
-              </a>
+        <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="noteModalLabel">Update Note</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            {% endif %}
-          {% endfor %}
-          {% endif %}
+            <div class="modal-body">
+                <form method="POST" action="/update_notes/{{ update_notes.id }}">
+                    <div class="form-group">
+                        {{ form.hidden_tag() }}
+                        <label for="title" style="color:grey;">
+                            <h6>Title</h6>
+                        </label>
+                        <input type="text" class="form-control" name="title" id="title" value="{{ update_notes.title }}">
+                    </div>
+                    <input type="hidden" id="user_id" name="user_id" value="{{ current_user.id }}">
+                    <br>
+                    <label for="selected_module_id" style="color:grey;">
+                        <h6>Select Module:</h6>
+                    </label>
+                    <br>
+                    <select id="selected_module_id" name="selected_module_id" class="form-control form-control-lg">
+                        <option value="{{ update_notes.module_id }}">{{ update_notes.VaalNotes.Module }}</option>
+                    </select>
+                    <br>
+                    <div class="form-group">
+                        <label for="content" style="color:grey;">
+                            <h6>Notes</h6>
+                        </label>
+                        <textarea name="content" class="form-control" rows="4">{{ update_notes.content }}</textarea>
+                    </div>
+                    <label for="file" style="color:grey;">
+                        <h6>Attach File</h6>
+                    </label>
+                    <input type="file" class="form-control" name="file" id="file">
+                    <br>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
+    </div>
+</div>
+
+       
+
+<!-- Module Container -->
+<div class="module-container">
+  {% if current_user.is_authenticated %}
+  {% for note in notes %}
+    {% if module.module_id == note.selected_module_id %}
+    <div class="module-item mb-3 shadow-sm p-3 mb-5 bg-white rounded border-grey">
+      <div class="notes-header">
+        <i class="uil uil-notes"></i>
+        <br>
+        <i class="uil uil-ellipsis-v" onclick="toggleDropdown(this, 'note')"></i>
+      </div>
+      <div class="dropdown-content note-dropdown-content" style="display: none;">
+        <form method="POST" action="/delete_notes/{{ note.id }}" onsubmit="return confirm('Delete Note?')">
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </div>
+      <a class="dropdown-item" href="javascript:void(0);" onclick="openNoteModal({{ note.id }})">
+    <ul style="list-style-type: disc; margin: 0; padding-left: 20px;">
+        <li>
+            <h6>Title: {{ note.title }}</h6>
+        </li>
+        <i>Created: {{ note.date_created.strftime("%d-%m-%Y") }}</i>
+    </ul>
+</a>
+
+    </div>
+    {% endif %}
+  {% endfor %}
+  {% endif %}
+</div>
       
       {% endif %}
     </div>
-
     <script>
-      function toggleDropdown(iconElement, type) {
-        // Find the closest `.module-item` or `.notes-header` to the icon clicked
-        var container;
-        if (type === 'module') {
-          container = iconElement.closest('.module-item');
-        } else if (type === 'note') {
-          container = iconElement.closest('.notes-header').parentElement;
-        }
-        
-        // Find the `dropdown-content` inside the container
-        var dropdownContent = container.querySelector(`.dropdown-content.${type}-dropdown-content`);
-        
-        // Toggle the display property to show/hide the dropdown
-        if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
-            dropdownContent.style.display = "block";
-        } else {
-            dropdownContent.style.display = "none";
-        }
-      }
+        // Open the modal with specific note details
+function openNoteModal(noteId) {
+    // Fetch the note details using noteId (can be done dynamically via API in real implementation)
+    const note = getNoteById(noteId); // Replace with real data fetching logic if applicable
 
-      document.addEventListener('DOMContentLoaded', () => {
-          const infoTitles = document.querySelectorAll('.info-title');
+    // Populate modal with note details
+    document.getElementById('noteDetails').innerHTML = `
+        <h4>Note Details</h4>
+        <p><strong>Title:</strong> ${note.title}</p>
+        <p><strong>Content:</strong> ${note.content}</p>
+        <p><strong>Created:</strong> ${note.date_created}</p>
+    `;
 
-          infoTitles.forEach(title => {
-              title.addEventListener('click', () => {
-                  const infoSection = title.parentElement;
-                  // Toggle the active class to show/hide the details
-                  infoSection.classList.toggle('active');
-              });
-          });
-      });
+    // Set the form action for updating
+    const updateForm = document.getElementById('updateForm');
+    updateForm.action = `/update_notes/${note.id}`;
+    document.getElementById('updateTitle').value = note.title;
+    document.getElementById('updateContent').value = note.content;
 
-      function goBack() {
-        window.history.back();
-      }
+    // Populate module dropdown
+    const moduleSelect = document.getElementById('updateSelectedModuleId');
+    moduleSelect.innerHTML = `
+        <option value="${note.module_id}" selected>${note.module_name}</option>
+    `;
+
+    // Show modal
+    document.getElementById('noteModal').style.display = 'block';
+}
+
+// Close the modal
+function closeNoteModal() {
+    document.getElementById('noteModal').style.display = 'none';
+}
+
+// Simulated function to get note by ID (replace with actual data fetching, e.g., API or database)
+function getNoteById(noteId) {
+    // Replace with actual data fetching. Example:
+    return {
+        id: noteId,
+        title: `Sample Note ${noteId}`,
+        content: `This is the content of note ${noteId}.`,
+        date_created: '01-01-2025',
+        module_id: 1,
+        module_name: 'Sample Module',
+    };
+}
+
+// Attach event listener to close modal when clicking outside the content
+window.addEventListener('click', function (event) {
+    const modal = document.getElementById('noteModal');
+    if (event.target === modal) {
+        closeNoteModal();
+    }
+});
+
     </script>
 
     <!-- Optional JavaScript -->

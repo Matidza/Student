@@ -1,0 +1,194 @@
+To integrate Google Calendar API into your Flask application, follow these steps:
+
+### Step 1: Install Required Packages
+Install the Google API client library and its dependencies:
+
+```bash
+pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib
+```
+
+### Step 2: Enable Google Calendar API
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing project.
+3. Enable the **Google Calendar API** for your project.
+4. Configure the OAuth consent screen.
+5. Create credentials of type **OAuth 2.0 Client ID** for a web application.
+6. Download the `credentials.json` file and save it in your project directory.
+
+### Step 3: Update Your Flask App Code
+
+Below is the updated code for the `/calendar` route to integrate Google Calendar API:
+
+```python
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_login import login_required, current_user
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import Flow
+from googleapiclient.discovery import build
+import os
+import datetime
+
+app = Flask(__name__)
+
+# Google OAuth 2.0 configuration
+CLIENT_SECRETS_FILE = "credentials.json"
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+# Setup a user-specific token directory
+TOKEN_DIRECTORY = "tokens"
+if not os.path.exists(TOKEN_DIRECTORY):
+    os.makedirs(TOKEN_DIRECTORY)
+
+@app.route('/authorize')
+def authorize():
+    """
+    Redirects the user to Google's OAuth 2.0 server to initiate the authorization process.
+    """
+    flow = Flow.from_client_secrets_file(
+        CLIENT_SECRETS_FILE,
+        scopes=SCOPES,
+        redirect_uri=url_for('oauth2callback', _external=True)
+    )
+    authorization_url, state = flow.authorization_url(
+        access_type='offline',
+        include_granted_scopes='true'
+    )
+    session['state'] = state
+    return redirect(authorization_url)
+
+@app.route('/oauth2callback')
+def oauth2callback():
+    """
+    Handles the OAuth 2.0 server response and stores the user's credentials.
+    """
+    state = session['state']
+    flow = Flow.from_client_secrets_file(
+        CLIENT_SECRETS_FILE,
+        scopes=SCOPES,
+        state=state,
+        redirect_uri=url_for('oauth2callback', _external=True)
+    )
+    flow.fetch_token(authorization_response=request.url)
+
+    credentials = flow.credentials
+    user_token_file = os.path.join(TOKEN_DIRECTORY, f"{current_user.id}_token.json")
+    with open(user_token_file, 'w') as token:
+        token.write(credentials.to_json())
+    
+    flash("Authorization successful! You can now manage your Google Calendar.", "success")
+    return redirect(url_for('calendar'))
+
+@app.route('/calendar', methods=['GET', 'POST'])
+@login_required
+def calendar():
+    """
+    Displays the user's Google Calendar events and allows them to add, delete, or update events.
+    """
+    user_token_file = os.path.join(TOKEN_DIRECTORY, f"{current_user.id}_token.json")
+
+    if not os.path.exists(user_token_file):
+        flash("You need to authorize access to your Google Calendar.", "warning")
+        return redirect(url_for('authorize'))
+
+    credentials = Credentials.from_authorized_user_file(user_token_file, SCOPES)
+    service = build('calendar', 'v3', credentials=credentials)
+
+    if request.method == 'POST':
+        # Add an event
+        if 'add_event' in request.form:
+            event = {
+                'summary': request.form['title'],
+                'start': {
+                    'dateTime': request.form['start_datetime'],
+                    'timeZone': 'UTC',
+                },
+                'end': {
+                    'dateTime': request.form['end_datetime'],
+                    'timeZone': 'UTC',
+                }
+            }
+            service.events().insert(calendarId='primary', body=event).execute()
+            flash("Event added successfully!", "success")
+        
+        # Update an event
+        elif 'update_event' in request.form:
+            event_id = request.form['event_id']
+            event = service.events().get(calendarId='primary', eventId=event_id).execute()
+            event['summary'] = request.form['title']
+            event['start']['dateTime'] = request.form['start_datetime']
+            event['end']['dateTime'] = request.form['end_datetime']
+            service.events().update(calendarId='primary', eventId=event_id, body=event).execute()
+            flash("Event updated successfully!", "success")
+        
+        # Delete an event
+        elif 'delete_event' in request.form:
+            event_id = request.form['event_id']
+            service.events().delete(calendarId='primary', eventId=event_id).execute()
+            flash("Event deleted successfully!", "success")
+    
+    # Retrieve the user's events
+    now = datetime.datetime.utcnow().isoformat() + 'Z'
+    events_result = service.events().list(calendarId='primary', timeMin=now,
+                                          maxResults=10, singleEvents=True,
+                                          orderBy='startTime').execute()
+    events = events_result.get('items', [])
+
+    return render_template('calendar.html', events=events)
+```
+
+### Step 4: Update `calendar.html`
+
+Here is a sample template structure:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Calendar Integration</title>
+</head>
+<body>
+    <h1>Your Google Calendar</h1>
+    
+    {% if events %}
+        <ul>
+            {% for event in events %}
+                <li>
+                    <strong>{{ event['summary'] }}</strong> - 
+                    {{ event['start']['dateTime'] }} to {{ event['end']['dateTime'] }}
+                    <form method="POST">
+                        <input type="hidden" name="event_id" value="{{ event['id'] }}">
+                        <button type="submit" name="delete_event">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No upcoming events found.</p>
+    {% endif %}
+    
+    <h2>Add Event</h2>
+    <form method="POST">
+        <label>Title:</label><input type="text" name="title" required><br>
+        <label>Start:</label><input type="datetime-local" name="start_datetime" required><br>
+        <label>End:</label><input type="datetime-local" name="end_datetime" required><br>
+        <button type="submit" name="add_event">Add Event</button>
+    </form>
+</body>
+</html>
+```
+
+### Explanation
+
+1. **Authorization**:
+   - Users are redirected to Google's OAuth 2.0 server to grant access to their calendar.
+   - Their credentials are securely stored in `tokens/{user_id}_token.json`.
+
+2. **Event Management**:
+   - **Add**: Users can add new events by filling in a form.
+   - **Update**: Users can update existing events (sample functionality shown for title and time).
+   - **Delete**: Users can delete events by event ID.
+
+3. **Event Display**:
+   - Events are fetched using the Google Calendar API and displayed to the user.
+
+This implementation ensures that each user has separate tokens and can securely manage their own Google Calendar.

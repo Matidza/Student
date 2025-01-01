@@ -1,241 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
+
+<head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href='{{ url_for('static', filename='login.css')}}'>
-    <!----><link rel="stylesheet" href='./static/login.css'>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="description" content="">
+    <meta name="author" content="">
     
-    <title>StudentCard</title>
+    <title>Student Card</title>
 
-    <style>
-      
-:root {@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
-/*========= Variables=======*/
-    --header-height: 4.3rem;
+    <!-- Custom fonts for this template-->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-    /* ======== Colors ========*/
-    /* change favourite color */
-    --hue-color: 216; /* purple 250 - Green 142 - blue 230 - Pink 340 -light blue 216*/
-    /*HSL color mode*/
-    --first-color: hsl(var(--hue-color), 69%, 61%);
-    --first-color-second: hsl(var(--hue-color), 69%, 61%);
-    --first-color-alt: hsl(var(--hue-color), 57%, 53%);
-    --first-color-lighter: hsl(var(--hue-color), 92%, 85%);
-    --title-color:hsl(var(--hue-color), 8%, 15%);
-    --text-color: hsl(var(--hue-color), 8%, 45%);
-    --text-color-light: hsl(var(--hue-color), 8%, 65%);
-    --input-color:hsl(var(--hue-color), 70%, 96%);
-    --body-color:hsl(var(--hue-color), 60%, 99%);
-    --container-color:#ffffff;
-    --scroll-bar-color:hsl(var(--hue-color), 12%, 90%);
-    --scroll-thumb-color:hsl(var(--hue-color), 12%, 80%);
-            
+    <!-- Custom styles for this template-->
+    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
 
-    --body-font:'Poppins', sans-serif;
-    /*== Font Size ==*/    
-    --big-font-size: 2rem;
-    --h1-font-size: 1.5rem;
-    --h2-font-size: 1.25rem;
-    --h3-font-size: 1.125rem;
-    --normal-font-size: .938rem;
-    --small-font-size: .813rem;
-    --smaller-font-size: .75rem;
-    
-    /*== Font Weight ==*/
-    --font-smaller: 300;
-    --font-small: 400;
-    --font-medium: 500;
-    --font-semi-bold: 600;
-    /* Margins Bottoms*/
-    --mb-0-25: .25rem;
-    --mb-0-5: .5rem;
-    --mb-0-75: .75rem;
-    --mb-1: 1rem;
-    --mb-1-5: 1.5rem;
-    --mb-2: 2rem;
-    --mb-2-5: 2.5rem;
-    --mb-3: 3rem;
-    /*== Z index ==*/
-    --z-tooltip: 10;
-    --z-fixed: 100;
-    --z-model: 1000;
-}
-/*======== Font for large Devices===========*/
-@media screen and (min-width: 968px) {
-    :root {
-    --big-font-size: 3rem;
-    --h1-font-size: 2.25rem;
-    --h2-font-size: 1.5rem;
-    --h3-font-size: 1.25rem;
-    --normal-font-size: 1rem;
-    --small-font-size: .875rem;
-    --smaller-font-size: .813rem;
-    }
-}
-/* ================= Variable  Dark theme===================*/
+<body class="custom-bg" style="background-color:  rgb(221, 221, 221);">
+    <br><br><br><br><br><br><br><br>
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <!-- Left Side: Video -->
+                            <div class="col-lg-6 d-none d-lg-block" style="position: relative; overflow: hidden;">
+                                <video autoplay muted loop class="w-100 h-100" style="object-fit: cover;">
+                                    <source src="static/videos/test.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
 
-body.dark-theme{
-    --first-color-second: hsl(var(--hue-color), 30%, 8%);
-    --title-color:hsl(var(--hue-color), 8%, 95%);
-    --text-color: hsl(var(--hue-color), 8%, 75%);
-    --input-color:hsl(var(--hue-color), 29%, 16%);
-    --body-color:hsl(var(--hue-color), 28%, 12%);
-    --container-color: hls(var(--hue-color), 29%, 16%);
-    --scroll-bar-color:hsl(var(--hue-color), 12%, 48%);
-    --scroll-thumb-color:hsl(var(--hue-color), 12%, 36%);
-}
+                                <!-- Overlay layer with blur and transparency -->
+                                <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px);"></div>
+                            </div>
 
-/* ================= Button Dark/Light===================*/
-      
-
-/*========== BASE ===========*/
-* {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;        
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0 0 var(--header-height) 0;
-    font-family: var(--body-font);
-    font-size: var(--h3-font-size);
-    background-color: rgb(247, 247, 247);
-    /*background-color: rgb(218, 16, 16);*/
-    color: var(--text-color);
-}
-h1, h2, h3, h4 {
-    color: var(--title-color);
-    font-weight: var(--font-semi-bold);
-}
-
-ul {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-}
-.form-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Optional: to vertically align the button and link */
-}
-
-.password {
-    margin-left: auto; /* Ensure it stays on the far right */
-}
-   
-
-/* ========= SMALL SCREENS ===========*/
-@media screen and (min-width: 491px){
-    
-    /*======Login Page*/
-    .container{
-        max-width: 90%;
-        margin: 0 auto;
-        padding: 20px;
-        position: center;
-        margin-top: 25%;
-        display:0;
-        background-color: rgb(255, 252, 252);
-        box-shadow: 1px 0 0 rgb(253, 250, 250);
-        
-    }
-    
-   
-    .login__title{
-        margin-top: -70px;
-    }
-}
-
-
-/* ========= MEDIUM SCREENS ( Tablets ) ===========*/
-@media screen and (min-width: 492px){
-    /*======Login Page*/
-    .container{
-        max-width: 90%;
-        margin: 0 auto;
-        padding: 20px;
-        position: center;
-        margin-top: 5%;
-        background-color: rgb(255, 252, 252);
-        box-shadow: 1px 0 0 rgb(255, 255, 255);  
-    }
-    
-    .login__title{
-        margin-top: 10px;
-    }
-
-}
-    </style>
-  </head>
-  
-  <body class="">
-   {% extends "base.html" %}
-    {% block content %}
-       
-    
-    <div class="  container border rounded rounded-3 border-white  mb-3 shadow-lg p-3 mb-5" >
-        {% for message in get_flashed_messages()%}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                            <!-- Right Side: Login Form -->
+                            <div class="col-lg-6">
+                                <div class="login-content p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    </div>
+                                    <form method="POST" action="/">
+                                        <!-- Username -->
+                                        {{ form.hidden_tag() }}
+                                        {{ form.username.label(class="form-label") }}
+                                        {{ form.username(class="form-control") }}
+                                        <br>
+                                        {{ form.password_hash.label(class="form-label") }}
+                                        {{ form.password_hash(class="form-control") }}
+                                        <br>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Remember Me</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Login
+                                        </button>
+                                        <hr>
+                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="{{url_for('forgot')}}">Forgot Password?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="{{url_for('register')}}">Create an Account!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-        {% endfor %}
-        
-        <h2 class="login__title">
-              Login
-        </h2>
-        <br>
-        <form method="POST" action="/">
-            <!--Username-->
-            {{ form.hidden_tag()}}
-            {{ form.username.label(class="form-label") }}
-            {{ form.username(class="form-control")}}
-            <br>
-            {{ form.password_hash.label(class="form-label") }}
-            {{ form.password_hash(class="form-control")}}
-            <br>
-            
-            <div class="form-actions">
-                {{form.submit(class="btn btn-primary shadow")}}
-                <a class="password" href="{{url_for('forgot')}}">
-                    Forgot Password?
-                </a>
-            </div>
-        </form>
-        <br/>
-        <br>
-
-        <div style="text-align: center">
-
-           <a >Dont have an account?</a>
-           <a href="{{url_for('register')}}" >
-            Create Account!
-          </a>     
-            
         </div>
     </div>
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  
-  </body>
- 
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/js/sb-admin-2.min.js"></script>
+</body>
+
 </html>
-{% endblock%}

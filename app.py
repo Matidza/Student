@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, flash, request
+from flask import Flask, render_template, url_for, redirect, flash, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user,LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-from test import SECRET_KEY, DATABASE_URI
+
 from datetime import datetime
 #from flask_migrate import Migrate
 from flask_login import current_user
@@ -17,7 +17,7 @@ from wtforms.widgets import TextArea
 #from flask_ckeditor import CKEditor
 from werkzeug.utils import secure_filename
 import uuid as uuid
-from test import SECRET_KEY, DATABASE_URI
+
 from flask_wtf.file import FileField
 from dotenv import load_dotenv
 import os
@@ -31,21 +31,19 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 #load_dotenv()
 
 # Development
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:1969@localhost/Users"
-#app.config['SECRET_KEY'] = 'Thesecrectkeyisequalto1969Zwi!@#'
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATA')
+#app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-# Production
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
-app.config['SECRET_KEY'] = SECRET_KEY
+# Production  
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-
-
-UPLOAD_DOC = 'Static/Notes/'
+UPLOAD_DOC = 'static/notes/'
 ALLOWED_EXTENTIONS = {'txt', 'pdf', 'png', 'jpeg', 'jpg', 'gif'}
 # Profile pic
-UPLOAD_FOLDER = 'Static/Images/'
+UPLOAD_FOLDER = 'static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -311,7 +309,7 @@ def forgot():
             flash('Invalid username or student number!')
             return redirect(url_for('forgot'))
  
-    return render_template('forgot.html', form=form)
+    return render_template('forgot-password.html', form=form)
 
 
 
@@ -424,13 +422,14 @@ def register():
 DASHBOARD RELATED
 
 """
+
 # User DashBoard to display uer modules
 @app.route('/dashboard', methods=["GET","POST"])
 @login_required
 def dashboard():
-    
-    modules = UserModules.query.filter_by(user_id=UserModules.user_id).all()
+    modules = UserModules.query.filter_by(user_id=current_user.id).all()
     return render_template('dashboard.html', modules=modules)
+
 
 # Delete User Account
 @app.route('/delete/<id>', methods=['GET', 'POST'])
@@ -453,8 +452,10 @@ def delete(id):
 @login_required
 def update(id):
     form = RegisterForm()
-    current_user = Users.query.get_or_404(id)
+    current_user = Users.query.get_or_404(id)  # Fetch the user by ID or 404 if not found
+    
     if request.method == 'POST':
+        # Update user fields with the form data
         current_user.username = request.form['username']
         current_user.title = request.form['title']
         current_user.surname = request.form['surname']
@@ -462,17 +463,17 @@ def update(id):
         current_user.initials = request.form['initials']
         current_user.degree = request.form['degree']
         current_user.campus = request.form['campus']
-
+        
         try:
-            
+            # Commit the changes to the database
             db.session.commit()
             flash('Account Updated Successfully!')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard'))  # Redirect to dashboard after success
         except Exception as e:
             flash("Account Wasn't Updated!")
-            return redirect('/dashboard')
+            return redirect(url_for('dashboard'))  # Redirect to dashboard in case of failure
     else:
-
+        # Render the update form for GET request
         return render_template('update.html', form=form, current_user=current_user)
 
 
@@ -849,10 +850,29 @@ def allnotes():
 @app.route('/note/<id>')
 @login_required
 def note(id):
+    note = Notes.query.get_or_404(id)
+    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({
+            'id': note.id,
+            'user_id': note.user_id,
+            'title': note.title,
+            'content': note.content,
+            'module': note.VaalNotes.Module,
+            'date_created': note.date_created.strftime("%d-%m-%Y")
+        })
+    
+    return render_template('note.html', note=note)
+
+
+'''  
+@app.route('/note/<id>')
+@login_required
+def note(id):
     
     note = Notes.query.get_or_404(id)
     return render_template('note.html', note=note)
-
+ '''
 # Delete Notes to Modele
 @app.route('/delete_notes/<id>', methods=['GET', 'POST'])
 @login_required
@@ -879,6 +899,29 @@ def delete_notes(id):
 @app.route('/update_notes/<id>', methods=['GET', 'POST'])
 @login_required
 def update_notes(id):
+    update_note = Notes.query.get_or_404(id)
+
+    if request.method == 'POST':
+        update_note.title = request.form.get('title')
+        update_note.user_id = current_user.id
+        #update_note.selected_module_id = request.form.get('selected_module_id')
+        update_note.content = request.form.get('content')
+
+        try:
+            db.session.commit()
+            flash('Notes Updated!')
+            return redirect(url_for('allnotes'))
+        except Exception as e:
+            flash('Error: Notes not updated!')
+            return render_template('update_notes.html', update_note=update_note)
+    else:
+        return render_template('update_notes.html', update_note=update_note)
+
+
+''''   
+@app.route('/update_notes/<id>', methods=['GET', 'POST'])
+@login_required
+def update_notes(id):
     update_notes = Notes.query.get_or_404(id)
     if request.method == 'POST':
         update_notes.title = request.form.get('title')       
@@ -894,6 +937,8 @@ def update_notes(id):
             return render_template('update_notes.html')
     else:
         return render_template('update_notes.html', update_notes=update_notes)
+'''
+
 
 """
 Developer's Page
@@ -923,6 +968,11 @@ CALENDER
 @app.route('/calender', methods=['GET', 'POST'])
 @login_required
 def calender():
+    """
+    This function renders the calender.html template which
+    contains the calender view for the user.
+    """
+    
     return render_template('calender.html')
 
 

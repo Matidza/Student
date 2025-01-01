@@ -1,3 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Account</title>
+    <!-- Add your CSS links here -->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+            <!-- Sidebar content goes here -->
+        </ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <div class="container-fluid">
+                    <div class="container">
+                        <form method="POST" action="/update/{{ current_user.id }}">
+
+                            <!-- Back Button -->
+                            <a class="dropdown" href="#" onclick="goBack()"> 
+                                <h2><i style="width:10px;height:10px;color:black;" class="uil uil-arrow-left"></i></h2>
+                            </a>
+
+                            <h1 style="text-align: center; color: var(--title-color);">Update Account</h1>
+                            <br>
+
+                            <!-- Hidden Token for CSRF protection -->
+                            {{ form.hidden_tag() }}
+
+                            <!-- Username -->
+                            <div class="form-group">
+                                {{ form.username.label(class="form-label") }}
+                                {{ form.username(class="form-control", value=current_user.username) }}
+                            </div>
+
+                            <!-- Title -->
+                            <div class="form-group">
+                                {{ form.title.label(class="form-label") }}
+                                {{ form.title(class="form-control", value=current_user.title) }}
+                            </div>
+
+                            <!-- Surname -->
+                            <div class="form-group">
+                                {{ form.surname.label(class="form-label") }}
+                                {{ form.surname(class="form-control", value=current_user.surname) }}
+                            </div>
+
+                            <!-- Name -->
+                            <div class="form-group">
+                                {{ form.name.label(class="form-label") }}
+                                {{ form.name(class="form-control", value=current_user.name) }}
+                            </div>
+
+                            <!-- Initials -->
+                            <div class="form-group">
+                                {{ form.initials.label(class="form-label") }}
+                                {{ form.initials(class="form-control", value=current_user.initials) }}
+                            </div>
+
+                            <!-- Degree -->
+                            <div class="form-group">
+                                {{ form.degree.label(class="form-label") }}
+                                {{ form.degree(class="form-control", value=current_user.degree) }}
+                            </div>
+
+                            <!-- Campus -->
+                            <div class="form-group">
+                                {{ form.campus.label(class="form-label") }}
+                                {{ form.campus(class="form-control", value=current_user.campus) }}
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="form-group">
+                                {{ form.submit(class="btn btn-primary shadow") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <br><br><br>
+        <br><br>
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2021</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript files -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="static/js/sb-admin-2.min.js"></script>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
