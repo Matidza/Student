@@ -443,7 +443,7 @@
                         {% for module_id, notes in grouped_notes.items() %}
                         <div class="module-item">
                             <div class="header">
-                                <h4>{{ notes[0].VaalNotes.Module }} Notes Module Notes</h4>
+                                <h4>{{ notes[0].VaalNotes.Module }} Notes</h4>
                             </div>
                             {% for note in notes %}
                             <a class="dropdown-item" href="javascript:void(0);" onclick="openNoteModal({{ note.id }})">
