@@ -37,7 +37,7 @@
             padding: 20px;
             background-color: white;
             border-radius: 8px;
-            width: 50%;
+            width: 90%;
         }
         .close-button {
             float: right;
@@ -575,66 +575,88 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-        <script>
-    // Open Modal with Note Details
-   // Open Modal with Note Details
-function openNoteModal(noteId) {
-    fetch(`/note/${noteId}`, {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest', // Let the backend know this is an AJAX request
-        },
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch note details');
-            }
-            return response.json();
+       <script>
+    // Function to open the modal and populate it with note details
+    function openNoteModal(noteId) {
+        fetch(`/note/${noteId}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest', // Let the backend know this is an AJAX request
+            },
         })
-        .then((data) => {
-            const noteDetailsDiv = document.getElementById('noteDetails');
-            noteDetailsDiv.innerHTML = `
-                <h2>${data.title}</h2>
-                <p>${data.content}</p>
-                <small>Created on: ${data.date_created}</small>
-            `;
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch note details');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const noteDetailsDiv = document.getElementById('noteDetails');
+                noteDetailsDiv.innerHTML = `
+                    <h2>${data.title}</h2>
+                    <p>${data.content}</p>
+                    <small>Created on: ${data.date_created}</small>
+                `;
 
-            // Set up the delete form action dynamically
-            const deleteForm = document.getElementById('deleteNoteForm');
-            deleteForm.action = `/delete_notes/${data.id}`; // Set the correct action URL for deletion
+                // Set up the delete form action dynamically
+                const deleteForm = document.getElementById('deleteNoteForm');
+                deleteForm.action = `/delete_notes/${data.id}`;
 
-            // Populate the update form but keep it hidden
-            const updateForm = document.getElementById('updateForm');
-            updateForm.action = `/update_notes/${data.id}`;
-            document.getElementById('updateTitle').value = data.title;
-            document.getElementById('updateContent').value = data.content;
+                // Populate the update form but keep it hidden
+                const updateForm = document.getElementById('updateForm');
+                updateForm.action = `/update_notes/${data.id}`;
+                document.getElementById('updateTitle').value = data.title;
+                document.getElementById('updateContent').value = data.content;
 
-            // Clear any previously added module options
-            const updateSelectedModuleId = document.getElementById('updateSelectedModuleId');
-            updateSelectedModuleId.innerHTML = '';
+                // Clear any previously added module options
+                const updateSelectedModuleId = document.getElementById('updateSelectedModuleId');
+                updateSelectedModuleId.innerHTML = '';
 
-            // Dynamically add module option
-            const option = document.createElement('option');
-            option.value = data.selected_module_id;
-            option.textContent = `Module ${data.selected_module_id}`;
-            updateSelectedModuleId.appendChild(option);
+                // Dynamically add module option (if applicable)
+                if (data.selected_module_id) {
+                    const option = document.createElement('option');
+                    option.value = data.selected_module_id;
+                    option.textContent = `Module ${data.selected_module_id}`;
+                    updateSelectedModuleId.appendChild(option);
+                }
 
-            // Hide the update form initially
-            document.getElementById('updateFormContainer').style.display = 'none';
+                // Hide the update form initially
+                document.getElementById('updateFormContainer').style.display = 'none';
 
-            // Show the modal
-            document.getElementById('noteModal').style.display = 'block';
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-}
+                // Show the modal
+                document.getElementById('noteModal').style.display = 'block';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
 
-// Show the Update Form
-function showUpdateForm() {
-    document.getElementById('updateFormContainer').style.display = 'block';
-}
+    // Function to show the update form
+    function showUpdateForm() {
+        document.getElementById('updateFormContainer').style.display = 'block';
+    }
 
+    // Function to close the modal
+    function closeNoteModal() {
+        // Hide the modal
+        document.getElementById('noteModal').style.display = 'none';
+
+        // Clear the modal content
+        document.getElementById('noteDetails').innerHTML = '';
+
+        // Hide the update form
+        document.getElementById('updateFormContainer').style.display = 'none';
+    }
+
+    // Example usage
+    // Attach an event listener to your "Update" button to show the update form
+    document.addEventListener('DOMContentLoaded', () => {
+        const closeButton = document.querySelector('.close-button');
+        if (closeButton) {
+            closeButton.addEventListener('click', closeNoteModal);
+        }
+    });
 </script>
+
     <script>
         function toggleDropdown(icon) {
             // Find the closest dropdown-content within the same module-item
