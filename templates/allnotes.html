@@ -28,7 +28,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 90%;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 1000;
         }
@@ -37,7 +37,7 @@
             padding: 20px;
             background-color: white;
             border-radius: 8px;
-            width: 90%;
+            width: 95%;
         }
         .close-button {
             float: right;
@@ -465,18 +465,18 @@
                             <span class="close-button" onclick="closeNoteModal()">&times;</span>
 
                             <!-- Note Details -->
-                            <div id="noteDetails"></div>
+                            <div id="noteDetails" style="text-wrap: wrap;"></div>
 
                             <!-- Delete Button Form (hidden by default) -->
                            <!-- Delete Button Form -->
                             <form id="deleteNoteForm" method="POST" action="">
                                 <button type="submit" class="btn btn-danger btn-sm" style="font-size: 0.95rem; font-weight: 700;">Delete</button>
                             </form>
-                            <br><br>
+                            
                             <!-- Update Button -->
                             <button type="button" class="btn btn-primary btn-sm" style="font-size: 0.95rem; font-weight: 700;" onclick="showUpdateForm()">Update</button>
 
-                            <br><br>
+                            
 
                             <!-- Update Form (hidden by default) -->
                             <div id="updateFormContainer" style="display: none; margin-top: 15px;">
@@ -496,7 +496,7 @@
                                     <label for="selected_module_id" style="color: grey; display: none;">
                                         <h6>Select Module:</h6>
                                     </label>
-                                    <br>
+                                  
                                     <select id="updateSelectedModuleId" name="selected_module_id" class="form-control form-control-lg" required style="display: none;">
                                         <!-- Options will be populated dynamically -->
                                     </select>
@@ -509,12 +509,12 @@
                                         <textarea name="content" id="updateContent" class="form-control" rows="4" required></textarea>
                                     </div>
 
-                                    <!-- File Input -->
+                                    <!-- File Input 
                                     <label for="file" style="color: grey;">
                                         <h6>Attach File</h6>
                                     </label>
                                     <input type="file" class="form-control" name="file" id="updateFile">
-                                    <br><br>
+                                   -->
 
                                     <!-- Submit Button -->
                                     <button type="submit" class="btn btn-primary">Update</button>
@@ -537,7 +537,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; StudentCard.onrender.com</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -575,7 +575,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-       <script>
+    <script>
     // Function to open the modal and populate it with note details
     function openNoteModal(noteId) {
         fetch(`/note/${noteId}`, {
