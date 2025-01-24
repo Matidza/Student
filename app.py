@@ -28,7 +28,7 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 # Rich Text Editor
 #ckeditor = CKEditor(app)
 
-#load_dotenv()
+load_dotenv()
 
 # Development
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATA')
